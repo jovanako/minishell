@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/07 17:37:11 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/06/09 13:15:01 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ $(OBJDIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 libft:
-	$(MAKE) -C libft
+	$(MAKE) -C libft bonus
 
 clean:
 	rm -rf $(OBJDIR)

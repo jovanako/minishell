@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/09 12:23:47 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:15:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(void)
 			return (1); // check exit status
 		if (*input)
 			add_history(input);
-		if (!ft_strncmp(input, "exit", 4))
+		if (ft_strncmp(input, "exit", 4) == 0)
 		{
 			free(input);
 			break ;	
