@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/13 21:10:06 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:22:30 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int main(void)
 		if (*input)
 		{
 			tokens = tokenize(input);
-			// ft_lstiter(tokens, &print);
+			ft_lstiter(tokens, &print);
 			add_history(input);
 		}
 	}

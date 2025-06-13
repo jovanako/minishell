@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/13 21:09:33 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:22:08 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		match(char expected_char, t_token_context *context)
 	return (1);
 }
 
-int	add_token(t_token_context *context, t_token_type type)
+bool	add_token(t_token_context *context, t_token_type type)
 {
 	t_token	*token;
 	t_list	*node;
@@ -34,16 +34,16 @@ int	add_token(t_token_context *context, t_token_type type)
 	lexeme_len = context->current - context->start;
 	token = malloc(sizeof(t_token));
 	if (!token)
-		return (0);
+		return (false);
 	token->type = type;
 	token->lexeme = ft_substr(context->line, context->start, lexeme_len);
 	if (!token->lexeme)
-		return (0);
+		return (false);
 	node = ft_lstnew(token);
 	if (!node)
-		return (0);
+		return (false);
 	ft_lstadd_back(&(context->tokens), node);
-	return (1);
+	return (true);
 }
 
 // int	read_dollar(t_token_context *context)
@@ -54,9 +54,9 @@ int	add_token(t_token_context *context, t_token_type type)
 void	read_token(t_token_context *context)
 {
 	char	c;
-	int		success;
+	bool	success;
 	
-	success = 0;
+	success = false;
 	c = context->line[(context->current)++]; // advance
 	if (c == '<')
 		success = add_token(context, INPUT_REDIR_TOKEN);

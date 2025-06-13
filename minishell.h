@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/13 15:54:36 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:20:33 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "libft/libft.h"
+#include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft/libft.h"
