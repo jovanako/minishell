@@ -6,24 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/13 21:22:08 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/14 10:05:04 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		match(char expected_char, t_token_context *context)
-{
-	char	current_char;
-
-	current_char = context->line[(context->current)];
-	if (current_char == '\0')
-		return (0);
-	if (current_char != expected_char)
-		return (0);
-	context->current++;
-	return (1);
-}
 
 bool	add_token(t_token_context *context, t_token_type type)
 {
@@ -46,10 +33,17 @@ bool	add_token(t_token_context *context, t_token_type type)
 	return (true);
 }
 
-// int	read_dollar(t_token_context *context)
-// {
-	
-// }
+bool	read_dollar(t_token_context *context)
+{
+	if (match('?', context))
+		return (add_token(context, EXIT_STATUS_TOKEN));
+	if (ft_isdigit(peek(context)))
+	{
+		advance(context);
+		return (add_token(context, EXPANSION_TOKEN));
+	}
+	return read_expansion(context);
+}
 
 void	read_token(t_token_context *context)
 {
@@ -57,7 +51,7 @@ void	read_token(t_token_context *context)
 	bool	success;
 	
 	success = false;
-	c = context->line[(context->current)++]; // advance
+	c = advance(context);
 	if (c == '<')
 		success = add_token(context, INPUT_REDIR_TOKEN);
 	else if (c == '>')
@@ -66,8 +60,8 @@ void	read_token(t_token_context *context)
 		success = add_token(context, PIPE_TOKEN);
 	else if (c == ' ' || c == '\t' || c == '\0')
 		return ;
-	// else if (c == '$')
-	// 	success = read_dollar(context);
+	else if (c == '$')
+		success = read_dollar(context);
 	if (!success)
 		ft_lstclear(&(context->tokens), &delete_token);
 }
