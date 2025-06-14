@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/14 10:05:04 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/14 10:11:16 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,6 @@ bool	add_token(t_token_context *context, t_token_type type)
 		return (false);
 	ft_lstadd_back(&(context->tokens), node);
 	return (true);
-}
-
-bool	read_dollar(t_token_context *context)
-{
-	if (match('?', context))
-		return (add_token(context, EXIT_STATUS_TOKEN));
-	if (ft_isdigit(peek(context)))
-	{
-		advance(context);
-		return (add_token(context, EXPANSION_TOKEN));
-	}
-	return read_expansion(context);
 }
 
 void	read_token(t_token_context *context)

@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/13 20:57:46 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/06/14 10:10:22 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ CFLAGS = -g -Wall -Wextra -Werror
 
 SRCS = main.c \
 		tokenizer.c \
-		tokenizer_helper.c
+		tokenizer_helper.c \
+		token_readers.c
 
 OBJDIR = objects
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

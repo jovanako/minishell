@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 12:53:41 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/14 09:54:27 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/14 10:09:57 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,4 @@ bool	match(char expected_char, t_token_context *context)
 		return (false);
 	context->current++;
 	return (true);
-}
-
-bool	read_expansion(t_token_context *context)
-{
-	while (ft_isalnum(peek(context)) || peek(context) == '_')
-		advance(context);
-	return (add_token(context, EXPANSION_TOKEN));
 }
