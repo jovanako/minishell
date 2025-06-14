@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/14 10:11:16 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/14 10:46:30 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	read_token(t_token_context *context)
 		return ;
 	else if (c == '$')
 		success = read_dollar(context);
+	else if (c == '\'')
+		success = read_literal(context);
 	if (!success)
 		ft_lstclear(&(context->tokens), &delete_token);
 }

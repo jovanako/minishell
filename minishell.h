@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/14 09:54:22 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/14 10:55:34 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ typedef enum e_token_type
 	APPEND_TOKEN,
 	PIPE_TOKEN,
 	EXIT_STATUS_TOKEN,
-	EXPANSION_TOKEN
+	EXPANSION_TOKEN,
+	LITERAL_TOKEN
 }	t_token_type;
 
 typedef struct s_token
@@ -44,6 +45,7 @@ typedef struct s_token_context
 	int		current;
 	char	*line;
 	t_list	*tokens;
+	char	*error;
 }	t_token_context;
 
 char	peek(t_token_context *context);
@@ -54,5 +56,7 @@ t_list	*tokenize(char *s);
 void	delete_token(void *t);
 void	print(void *t); // delete later
 bool	read_expansion(t_token_context *context);
+bool	read_dollar(t_token_context *context);
+bool	read_literal(t_token_context *context);
 
 #endif
