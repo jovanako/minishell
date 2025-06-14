@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/14 18:27:30 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/14 20:53:12 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	add_token(t_token_context *context, t_token_type type)
 	return (true);
 }
 
-void	read_token(t_token_context *context)
+static void	read_token(t_token_context *context)
 {
 	char	c;
 	bool	success;
@@ -48,12 +48,10 @@ void	read_token(t_token_context *context)
 		success = add_token(context, PIPE_TOKEN);
 	else if (c == ' ' || c == '\t' || c == '\0')
 		return ;
-	else if (c == '$')
-		success = read_dollar(context);
-	else if (c == '\'')
-		success = read_literal(context);
-	else if (c == '"')
-		success = read_double_quotes(context);
+	else if (c == '\0')
+		success = add_token(context, NULL_TERMINATOR_TOKEN);
+	else
+		success = read_word(context);
 	if (!success)
 		ft_lstclear(&(context->tokens), &delete_token);
 }

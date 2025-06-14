@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/13 21:22:30 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/14 21:07:42 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ void	print(void *t) // delete later
 	t_token *token;
 
 	token = (t_token *)t;
-	printf("-----printing list-----\n");	
 	printf("type: %d lexeme: %s\n", token->type, token->lexeme);
-	printf("--------list end-------\n");
 }
 
 int main(void)
