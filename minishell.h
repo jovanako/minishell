@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/15 13:22:59 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:22:24 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_token_context
 }	t_token_context;
 
 char	peek(t_token_context *context);
-char 	start_matches(t_token_context *context, char c);
 char	advance(t_token_context *context);
 bool	match(char expected_char, t_token_context *context);
 bool	add_token(t_token_context *context, t_token_type type);
@@ -59,4 +58,5 @@ void	print(void *t); // delete later
 bool	read_word(t_token_context *context);
 bool	read_less_than(t_token_context *context);
 bool	read_greater_than(t_token_context *context);
+bool	read_heredoc_delimiter(t_token_context *context);
 #endif

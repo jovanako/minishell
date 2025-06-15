@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:09:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/15 13:22:32 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:11:00 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ static bool	is_new_token(char c)
 static bool quotes_are_open(bool quotes_closed, bool double_quotes_closed)
 {
 	return (!quotes_closed || !double_quotes_closed);
+}
+
+static char start_matches(t_token_context *context, char c)
+{
+	return (context->line[context->start] == c);
 }
 
 bool	read_word(t_token_context *context)
@@ -40,13 +45,6 @@ bool	read_word(t_token_context *context)
 		advance(context);
 	}
 	return (add_token(context, WORD_TOKEN));
-}
-
-bool	read_less_than(t_token_context *context)
-{
-	if (match('<', context))
-		return (add_token(context, HEREDOC_TOKEN));
-	return (add_token(context, INPUT_REDIR_TOKEN));
 }
 
 bool	read_greater_than(t_token_context *context)

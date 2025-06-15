@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 12:53:41 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/14 22:15:21 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:10:36 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ void	delete_token(void *t)
 	token = (t_token *)t;
 	free(token->lexeme);
 	free(token);
-}
-
-char start_matches(t_token_context *context, char c)
-{
-	return (context->line[context->start] == c);
 }
 
 char	peek(t_token_context *context)
