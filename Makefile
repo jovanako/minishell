@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/15 14:12:01 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/06/15 19:10:52 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCS = main.c \
 		tokenizer.c \
 		tokenizer_helper.c \
 		token_readers.c \
-		heredoc_reader.c
+		heredoc_reader.c \
+		expansion.c
 
 OBJDIR = objects
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/15 14:22:24 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:51:44 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,22 @@ typedef struct s_token_context
 	char	*error;
 }	t_token_context;
 
+typedef struct s_env_var
+{
+	char	*key;
+	char	*value;
+}	t_env_var;
+
 char	peek(t_token_context *context);
 char	advance(t_token_context *context);
 bool	match(char expected_char, t_token_context *context);
 bool	add_token(t_token_context *context, t_token_type type);
 t_list	*tokenize(char *s);
 void	delete_token(void *t);
-void	print(void *t); // delete later
 bool	read_word(t_token_context *context);
 bool	read_less_than(t_token_context *context);
 bool	read_greater_than(t_token_context *context);
 bool	read_heredoc_delimiter(t_token_context *context);
+t_list	*copy_env_vars(char *envp[]);
+void	print_token(void *t); // delete later
 #endif
