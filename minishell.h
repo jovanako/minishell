@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/15 12:58:35 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 13:22:59 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,6 @@ t_list	*tokenize(char *s);
 void	delete_token(void *t);
 void	print(void *t); // delete later
 bool	read_word(t_token_context *context);
+bool	read_less_than(t_token_context *context);
+bool	read_greater_than(t_token_context *context);
 #endif
