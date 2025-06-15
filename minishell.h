@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/15 19:51:44 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:01:26 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ bool	read_less_than(t_token_context *context);
 bool	read_greater_than(t_token_context *context);
 bool	read_heredoc_delimiter(t_token_context *context);
 t_list	*copy_env_vars(char *envp[]);
+void	delete_env_var(void *var);
 void	print_token(void *t); // delete later
 #endif
