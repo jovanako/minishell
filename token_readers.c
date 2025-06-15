@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:09:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/14 21:50:03 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:57:41 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	is_new_token(char c)
 {
-	return (c == '<' || c == '>' || c == '|' || c == ' ');
+	return (c == '<' || c == '>' || c == '|' || c == ' ' || c == '=');
 }
 
 static bool quotes_are_open(bool quotes_closed, bool double_quotes_closed)

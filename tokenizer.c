@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/14 20:53:12 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:58:25 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static void	read_token(t_token_context *context)
 		success = add_token(context, PIPE_TOKEN);
 	else if (c == ' ' || c == '\t' || c == '\0')
 		return ;
+	else if (c == '=')
+		success = add_token(context, EQUALS_TOKEN);
 	else if (c == '\0')
 		success = add_token(context, NULL_TERMINATOR_TOKEN);
 	else

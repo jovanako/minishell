@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/14 22:15:16 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:58:35 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef enum e_token_type
 	APPEND_TOKEN,
 	PIPE_TOKEN,
 	NULL_TERMINATOR_TOKEN,
+	EQUALS_TOKEN,
 	WORD_TOKEN
 }	t_token_type;
 
