@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/15 20:01:36 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:07:04 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	env_vars = copy_env_vars(envp);
+	if (!env_vars)
+		return (1);
 	ft_lstiter(env_vars, &print_env_var);
 	eval_loop();
 	ft_lstclear(&env_vars, &delete_env_var);
