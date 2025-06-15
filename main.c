@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/14 21:07:42 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/15 13:04:47 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int main(void)
 			ft_lstiter(tokens, &print);
 			add_history(input);
 		}
+		ft_lstclear(&tokens, &delete_token);
 	}
 	return (0);
 }
