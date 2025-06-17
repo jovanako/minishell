@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/17 13:23:09 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:56:18 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ void	print_env_var(void *var) // delete later
 	printf("key: %s value: %s\n", env_var->key, env_var->value);
 }
 
-static void	eval_loop()
+static void	eval_loop(t_list *env_vars)
 {
     char 	*input;
 	t_list	*tokens;
 
+	(void)env_vars;
 	input = NULL;
 	while (1)
 	{
@@ -51,6 +52,11 @@ static void	eval_loop()
 			tokens = tokenize(input);
 			if (!tokens)
 				continue;
+			expand_variables(tokens, env_vars);
+			// if (!expand_variables(tokens, env_vars))
+			// {
+			// 	//free tokens
+			// }
 			ft_lstiter(tokens, &print_token);
 		}
 		ft_lstclear(&tokens, &delete_token);
@@ -67,7 +73,7 @@ int main(int argc, char *argv[], char *envp[])
 	if (!env_vars)
 		return (1);
 	ft_lstiter(env_vars, &print_env_var);
-	eval_loop();
+	eval_loop(env_vars);
 	ft_lstclear(&env_vars, &delete_env_var);
 	return (0);
 }
