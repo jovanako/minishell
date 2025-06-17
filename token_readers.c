@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:09:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/15 14:11:00 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:19:55 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ bool	read_word(t_token_context *context)
 			quotes_closed = !quotes_closed;
 		advance(context);
 	}
+	if (quotes_are_open(quotes_closed, double_quotes_closed))
+		context->error = "invalid input";
 	return (add_token(context, WORD_TOKEN));
 }
 
