@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/15 13:23:24 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:14:40 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,12 @@ t_list	*tokenize(char *s)
 	{
 		context.start = context.current;
 		read_token(&context);
+		if (context.error)
+		{
+			ft_lstclear(&(context.tokens), &delete_token);
+			printf("minishell: %s\n", context.error);
+			return (NULL);
+		}
 	}
 	return (context.tokens);
 }

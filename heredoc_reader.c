@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:11:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/15 14:23:22 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:57:30 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,10 @@ bool	read_heredoc_delimiter(t_token_context *context)
 	context->current = context->start;
 	while (context->line[context->current] != '\0')
 		advance(context);
+	if (context->current - context->start == 0)
+	{
+		context->error = "syntax error near unexpected token 'newline'";
+		return (true);
+	}
 	return (add_token(context, HEREDOC_TOKEN));
 }
