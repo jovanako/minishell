@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:21:46 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 19:51:46 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:05:55 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ char	*extract_var_key(t_expansion_context *ctx, int *start)
 	return (result);
 }
 
+bool	is_valid_env_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_');
+}
+
 bool	slice_double_quoted(t_expansion_context *ctx, t_list *env_vars)
 {
 	int			i;
@@ -72,7 +77,7 @@ bool	slice_double_quoted(t_expansion_context *ctx, t_list *env_vars)
 	i = ctx->current;
 	while (ctx->lexeme[i] != '"')
 	{
-		if (ctx->lexeme[i] == '$')
+		if (ctx->lexeme[i] == '$' && is_valid_env_var_char(ctx->lexeme[i + 1]))
 		{
 			if (!append_slice(ctx, &(ctx->lexeme[i])))
 				return (false);
