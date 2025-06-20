@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 12:47:32 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/20 21:06:02 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,16 @@ bool	read_heredoc_delimiter(t_token_context *context);
 //expansion
 t_list	*copy_env_vars(char *envp[]);
 bool	get_env_value(void *content, void *var_key);
+bool	append_slice(t_expansion_context *ctx, char *end);
 bool	append_value(t_expansion_context *ctx, char *var_value);
 void	delete_env_var(void *var);
 bool	expand_variables(t_list *tokens, t_list *env_vars);
+bool	is_valid_env_var_char(char c);
+bool	is_unquoted(char c);
+bool	is_quote(char c);
+bool	handle_dollar(t_expansion_context *ctx, t_list *env_vars, int *i);
 bool	slice_single_quoted(t_expansion_context *ctx);
 bool	slice_double_quoted(t_expansion_context *ctx, t_list *env_vars);
+bool	slice_unquoted(t_expansion_context *ctx, t_list *env_vars);
 void	print_token(void *t); // delete later
 #endif
