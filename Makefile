@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/17 15:47:04 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/06/20 20:28:48 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS = main.c \
 		heredoc_reader.c \
 		env_vars.c \
 		expansion.c \
-		expansion_helpers.c
+		expansion_helpers.c \
+		call_backs.c
 
 OBJDIR = objects
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

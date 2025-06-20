@@ -6,31 +6,37 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 10:13:04 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:23:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	expand_word(t_token *token, t_list *env_vars)
+static bool	free_result_and_return(t_expansion_context *ctx)
+{
+	free(ctx->result);
+	return (false);
+}
+
+static bool	expand_word(t_token *token, t_list *env_vars)
 {
 	t_expansion_context ctx;
 
-	// handle slice failure by freeing expansion ctx "result"
 	ctx = (t_expansion_context){ .lexeme = token->lexeme, .result = "\0" };
 	while (token->lexeme[ctx.current])
 	{
 		if (token->lexeme[ctx.current] == '\'' && !slice_single_quoted(&ctx))
-			return (false);
+			return (free_result_and_return(&ctx));
 		if (token->lexeme[ctx.current] == '"' && !slice_double_quoted(&ctx, env_vars))
-			return (false);
+			return (free_result_and_return(&ctx));
+		
 	}
 	free(token->lexeme);
 	token->lexeme = ctx.result;
 	return (true);
 }
 
-bool	expand(void *content, void *env_vars)
+static bool	expand(void *content, void *env_vars)
 {
 	t_token *token;
 	bool	success;

@@ -6,33 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:03:55 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 19:31:20 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:27:52 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	delete_env_var(void *var)
-{
-	t_env_var *env_var;
-	
-	env_var = (t_env_var *)var;
-	free(env_var->key);
-	free(env_var->value);
-	free(env_var);
-}
-
-bool	get_env_value(void *content, void *var_key)
-{
-	t_env_var	*var;
-	char		*k;
-	int			len;
-	
-	var = (t_env_var *)content;
-	k = (char *)var_key;
-	len = ft_strlen(var_key);
-	return (ft_strncmp(var->key, k, len) == 0);
-}
 
 bool	append_value(t_expansion_context *ctx, char *var_value)
 {
