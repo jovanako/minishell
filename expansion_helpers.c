@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:21:46 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 21:05:32 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/20 21:37:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ bool	handle_dollar(t_expansion_context *ctx, t_list *env_vars, int *i)
 	if (!var_key)
 		return (false);
 	var = (t_env_var *)ft_lstfind(env_vars, &get_env_value, var_key);
+	free(var_key);
 	if (var)
 		append_value(ctx, var->value);
 	return (true);
