@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/17 13:14:40 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:12:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ bool	add_token(t_token_context *context, t_token_type type)
 	return (true);
 }
 
-static void	read_token(t_token_context *context)
+static bool	read_token(t_token_context *context)
 {
 	char	c;
 	bool	success;
 	
-	success = false;
 	c = advance(context);
 	if (c == '<')
 		success = read_less_than(context);
@@ -49,30 +48,30 @@ static void	read_token(t_token_context *context)
 	else if (c == '=')
 		success = add_token(context, EQUALS_TOKEN);
 	else if (c == ' ' || c == '\t' || c == '\0')
-		return ;
+		return (true);
 	else if (c == '\0')
 		success = add_token(context, NULL_TERMINATOR_TOKEN);
 	else
 		success = read_word(context);
-	if (!success)
-		ft_lstclear(&(context->tokens), &delete_token);
+	return (success);
 }
 
-t_list	*tokenize(char *s)
+bool	tokenize(t_token_context *ctx)
 {
-	t_token_context	context;
-
-	context = (t_token_context){ .line = s };
-	while (s[context.start])
+	while (ctx->line[ctx->start])
 	{
-		context.start = context.current;
-		read_token(&context);
-		if (context.error)
+		ctx->start = ctx->current;
+		if (!read_token(ctx))
 		{
-			ft_lstclear(&(context.tokens), &delete_token);
-			printf("minishell: %s\n", context.error);
-			return (NULL);
+			ft_lstclear(&(ctx->tokens), &delete_token);
+			return (false);
+		}
+		if (ctx->error)
+		{
+			ft_lstclear(&(ctx->tokens), &delete_token);
+			printf("minishell: %s\n", ctx->error);
+			return (false);
 		}
 	}
-	return (context.tokens);
+	return (true);
 }

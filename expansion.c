@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/17 16:28:56 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/20 10:13:04 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ bool	expand_word(t_token *token, t_list *env_vars)
 {
 	t_expansion_context ctx;
 
-	(void)env_vars;
+	// handle slice failure by freeing expansion ctx "result"
 	ctx = (t_expansion_context){ .lexeme = token->lexeme, .result = "\0" };
 	while (token->lexeme[ctx.current])
 	{
 		if (token->lexeme[ctx.current] == '\'' && !slice_single_quoted(&ctx))
+			return (false);
+		if (token->lexeme[ctx.current] == '"' && !slice_double_quoted(&ctx, env_vars))
 			return (false);
 	}
 	free(token->lexeme);

@@ -6,15 +6,15 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 17:22:11 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/07 17:20:11 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/06/20 19:21:37 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-CC = cc
+CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
 DEPS = libft.h
 
@@ -28,7 +28,7 @@ OBJS = $(SRCS:.c=.o)
 
 SRCS_BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c \
 				ft_lstlast.c ft_lstadd_back.c ft_lstclear.c \
-				ft_lstiter.c ft_lstmap.c ft_lstdelone.c
+				ft_lstiter.c ft_lstmap.c ft_lstdelone.c ft_lstfind.c
 
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 

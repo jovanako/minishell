@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/17 15:56:18 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:14:41 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,39 +28,43 @@ void	print_env_var(void *var) // delete later
 	printf("key: %s value: %s\n", env_var->key, env_var->value);
 }
 
-static void	eval_loop(t_list *env_vars)
+static bool	eval_loop(t_list *env_vars)
 {
-    char 	*input;
-	t_list	*tokens;
+    char 			*input;
+	t_token_context	context;
 
-	(void)env_vars;
 	input = NULL;
 	while (1)
 	{
 		free(input);
 		input = readline("minishell$ ");
 		if (!input)
-			exit(1);
+			return (false);
 		if (ft_strncmp(input, "exit", 4) == 0)
 		{
 			free(input);
-			break ;	
+			break ;
 		}
-		if (*input)
+		if (!*input)
+			continue ;
+		add_history(input);
+		context = (t_token_context){ .line = input };
+		if (!tokenize(&context))
 		{
-			add_history(input);
-			tokens = tokenize(input);
-			if (!tokens)
-				continue;
-			expand_variables(tokens, env_vars);
-			// if (!expand_variables(tokens, env_vars))
-			// {
-			// 	//free tokens
-			// }
-			ft_lstiter(tokens, &print_token);
+			ft_lstclear(&context.tokens, &delete_token);
+			if (context.error)
+				continue ;
+			return (false);
 		}
-		ft_lstclear(&tokens, &delete_token);
+		if (!expand_variables(context.tokens, env_vars))
+		{
+			ft_lstclear(&context.tokens, &delete_token);
+			return (false);
+		}
+		ft_lstiter(context.tokens, &print_token);
+		ft_lstclear(&context.tokens, &delete_token);
 	}
+	return (true);
 }
 
 int main(int argc, char *argv[], char *envp[])
@@ -72,8 +76,11 @@ int main(int argc, char *argv[], char *envp[])
 	env_vars = copy_env_vars(envp);
 	if (!env_vars)
 		return (1);
-	ft_lstiter(env_vars, &print_env_var);
-	eval_loop(env_vars);
+	if (!eval_loop(env_vars))
+	{
+		ft_lstclear(&env_vars, &delete_env_var);
+		return (1);
+	}
 	ft_lstclear(&env_vars, &delete_env_var);
 	return (0);
 }

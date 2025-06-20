@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/17 16:01:21 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/20 12:47:32 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,24 @@ typedef struct s_expansion_context
 	char	*result;
 }	t_expansion_context;
 
+//tokenization
 char	peek(t_token_context *context);
 char	advance(t_token_context *context);
 bool	match(char expected_char, t_token_context *context);
 bool	add_token(t_token_context *context, t_token_type type);
-t_list	*tokenize(char *s);
+bool	tokenize(t_token_context *context);
 void	delete_token(void *t);
 bool	read_word(t_token_context *context);
 bool	read_less_than(t_token_context *context);
 bool	read_greater_than(t_token_context *context);
 bool	read_heredoc_delimiter(t_token_context *context);
+//expansion
 t_list	*copy_env_vars(char *envp[]);
+bool	get_env_value(void *content, void *var_key);
+bool	append_value(t_expansion_context *ctx, char *var_value);
 void	delete_env_var(void *var);
 bool	expand_variables(t_list *tokens, t_list *env_vars);
 bool	slice_single_quoted(t_expansion_context *ctx);
+bool	slice_double_quoted(t_expansion_context *ctx, t_list *env_vars);
 void	print_token(void *t); // delete later
 #endif
