@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 12:53:41 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/24 09:36:46 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/24 22:04:20 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,20 @@ bool	match(char expected_char, t_token_context *context)
 		return (false);
 	context->current++;
 	return (true);
+}
+
+bool	is_valid_identifier(t_token_context *ctx)
+{
+	int	i;
+
+	i = ctx->start;
+	if (!ft_isalpha(ctx->line[i]) && ctx->line[i] != '_')
+		return (false);
+	while (ctx->line[i] && ctx->line[i] != '=')
+	{
+		if (!ft_isalnum(ctx->line[i]) && ctx->line[i] != '_')
+			return (false);
+		i++;
+	}
+	return (ctx->line[i] == '=');
 }

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:09:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/24 09:36:41 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/24 22:07:50 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	is_new_token(char c)
 {
-	return (c == '<' || c == '>' || c == '|' || c == ' ' || c == '=');
+	return (c == '<' || c == '>' || c == '|' || c == ' ' || c == '\t');
 }
 
 static bool quotes_are_open(bool quotes_closed, bool double_quotes_closed)
@@ -46,6 +46,8 @@ bool	read_word(t_token_context *context)
 	}
 	if (quotes_are_open(quotes_closed, double_quotes_closed))
 		context->error = "invalid input";
+	if (is_valid_identifier(context))
+		return (add_token(context, ASSIGNMENT_TOKEN));
 	return (add_token(context, WORD_TOKEN));
 }
 

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 21:06:02 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/24 21:45:50 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef enum e_token_type
 	APPEND_TOKEN,
 	PIPE_TOKEN,
 	NULL_TERMINATOR_TOKEN,
-	EQUALS_TOKEN,
+	ASSIGNMENT_TOKEN,
 	WORD_TOKEN
 }	t_token_type;
 
@@ -65,6 +65,7 @@ typedef struct s_expansion_context
 char	peek(t_token_context *context);
 char	advance(t_token_context *context);
 bool	match(char expected_char, t_token_context *context);
+bool	is_valid_identifier(t_token_context *ctx);
 bool	add_token(t_token_context *context, t_token_type type);
 bool	tokenize(t_token_context *context);
 void	delete_token(void *t);
