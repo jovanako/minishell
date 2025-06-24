@@ -6,11 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:09:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/17 13:19:55 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/24 09:36:41 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static bool	is_new_token(char c)
 {

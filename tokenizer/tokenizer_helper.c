@@ -6,11 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 12:53:41 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 20:28:06 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/24 09:36:46 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	peek(t_token_context *context)
 {

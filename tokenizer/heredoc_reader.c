@@ -6,11 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:11:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/17 12:57:30 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/24 09:36:31 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 bool	read_less_than(t_token_context *context)
 {

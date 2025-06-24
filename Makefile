@@ -6,21 +6,23 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/20 20:55:06 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/06/24 09:57:46 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
+
+LIB = minishell.a
 
 CC = gcc
 
 CFLAGS = -g -Wall -Wextra -Werror
 
 SRCS = main.c \
-		tokenizer.c \
-		tokenizer_helper.c \
-		token_readers.c \
-		heredoc_reader.c \
+		tokenizer/tokenizer.c \
+		tokenizer/tokenizer_helper.c \
+		tokenizer/token_readers.c \
+		tokenizer/heredoc_reader.c \
 		env_vars.c \
 		expansion.c \
 		expansion_helpers.c \
@@ -30,14 +32,20 @@ SRCS = main.c \
 OBJDIR = objects
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 
-all: $(NAME)
+all: $(NAME) $(LIB)
 
 $(NAME) : libft $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -lreadline -o $(NAME)
 
-$(OBJDIR)/%.o: %.c
+$(OBJDIR)/%.o: %.c | $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR):
 	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@mkdir -p $@/tokenizer $@/expansion	
+#move to minishell_tests
+$(LIB): $(filter-out $(OBJDIR)/main.o, $(OBJS))
+	ar rcs $@ $^
 
 libft:
 	$(MAKE) -C libft bonus
@@ -47,9 +55,9 @@ clean:
 	$(MAKE) -C libft fclean
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(LIB)
 	$(MAKE) -C libft fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re libft package
