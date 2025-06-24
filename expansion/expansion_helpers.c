@@ -6,11 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:21:46 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 21:37:05 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:00:01 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*extract_var_key(t_expansion_context *ctx, int *start)
 {

@@ -6,11 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:33:19 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 21:24:16 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:00:13 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 bool	append_slice(t_expansion_context *ctx, char *end)
 {

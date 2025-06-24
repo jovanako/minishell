@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/24 09:57:46 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/06/24 09:59:42 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,9 @@ SRCS = main.c \
 		tokenizer/token_readers.c \
 		tokenizer/heredoc_reader.c \
 		env_vars.c \
-		expansion.c \
-		expansion_helpers.c \
-		slicing.c \
+		expansion/expansion.c \
+		expansion/expansion_helpers.c \
+		expansion/slicing.c \
 		call_backs.c
 
 OBJDIR = objects

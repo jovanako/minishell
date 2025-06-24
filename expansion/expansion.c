@@ -6,11 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 20:52:19 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/24 10:00:06 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static bool	free_result_and_return(t_expansion_context *ctx)
 {
