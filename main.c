@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/22 10:47:32 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/25 10:47:53 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,35 @@ void	print_env_var(void *var) // delete later
 	printf("key: %s value: %s\n", env_var->key, env_var->value);
 }
 
+bool	read_input(char *input)
+{
+	free(input);
+	input = readline("minishell$ ");
+	if (!input)
+		return (false);
+	return (true);
+}
+
+bool	is_exit(char *input)
+{
+	if (ft_strncmp(input, "exit", 4) == 0)
+	{
+		free(input);
+		return (true);	
+	}
+	return (false);
+}
+
+bool	expand(t_token_context *ctx, t_list *env_vars)
+{
+	if (!expand_variables(ctx->tokens, env_vars))
+		{
+			ft_lstclear(&(ctx->tokens), &delete_token);
+			return (false);
+		}
+	return (true);
+}
+
 static bool	eval_loop(t_list *env_vars)
 {
     char 			*input;
@@ -36,15 +65,10 @@ static bool	eval_loop(t_list *env_vars)
 	input = NULL;
 	while (1)
 	{
-		free(input);
-		input = readline("minishell$ ");
-		if (!input)
+		if (!read_input(input))
 			return (false);
-		if (ft_strncmp(input, "exit", 4) == 0)
-		{
-			free(input);
+		if (is_exit(input))
 			break ;
-		}
 		if (!*input)
 			continue ;
 		add_history(input);
@@ -56,12 +80,9 @@ static bool	eval_loop(t_list *env_vars)
 				continue ;
 			return (false);
 		}
-		if (!expand_variables(context.tokens, env_vars))
-		{
-			ft_lstclear(&context.tokens, &delete_token);
+		if (!expand(&context, env_vars))
 			return (false);
-		}
-		ft_lstiter(context.tokens, &print_token);
+		// ft_lstiter(context.tokens, &print_token);
 		ft_lstclear(&context.tokens, &delete_token);
 	}
 	return (true);
