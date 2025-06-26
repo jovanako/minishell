@@ -1,6 +1,6 @@
 ## Minishell grammar
 
-command_line		-> simple_command ('|' command_line)
+command_line		-> simple_command ('|' simple_command)*
 
 simple_command		-> (assignment_list)? (redirections)? command (redirections)?
 					|	assignment_list (redirections)?

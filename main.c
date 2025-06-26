@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/25 10:47:53 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/26 19:10:44 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,70 +20,64 @@ void	print_token(void *t) // delete later
 	printf("type: %d lexeme: %s\n", token->type, token->lexeme);
 }
 
-void	print_env_var(void *var) // delete later
+void	print_assignment(void *var) // delete later
 {
-	t_env_var *env_var;
+	t_assignment *assignment;
 
-	env_var = (t_env_var *)var;
-	printf("key: %s value: %s\n", env_var->key, env_var->value);
+	assignment = (t_assignment *)var;
+	printf("key: %s value: %s\n", assignment->key, assignment->value);
 }
 
-bool	read_input(char *input)
+static bool	read_input(char **input)
 {
-	free(input);
-	input = readline("minishell$ ");
-	if (!input)
+	free(*input);
+	*input = readline("minishell$ ");
+	if (!*input)
 		return (false);
+	if (*input && (ft_strncmp(*input, "exit", 4) == 0))
+		free(*input);
 	return (true);
 }
 
-bool	is_exit(char *input)
-{
-	if (ft_strncmp(input, "exit", 4) == 0)
-	{
-		free(input);
-		return (true);	
-	}
-	return (false);
-}
-
-bool	expand(t_token_context *ctx, t_list *env_vars)
+static bool	expand(t_token_context *ctx, t_list *env_vars)
 {
 	if (!expand_variables(ctx->tokens, env_vars))
-		{
-			ft_lstclear(&(ctx->tokens), &delete_token);
-			return (false);
-		}
+	{
+		ft_lstclear(&(ctx->tokens), &delete_token);
+		return (false);
+	}
 	return (true);
 }
 
 static bool	eval_loop(t_list *env_vars)
 {
-    char 			*input;
-	t_token_context	context;
+    char 				*input;
+	t_token_context		token_context;
+	t_parsing_context	parsing_context;
 
 	input = NULL;
 	while (1)
 	{
-		if (!read_input(input))
+		if (!read_input(&input))
 			return (false);
-		if (is_exit(input))
-			break ;
 		if (!*input)
 			continue ;
 		add_history(input);
-		context = (t_token_context){ .line = input };
-		if (!tokenize(&context))
+		token_context = (t_token_context){ .line = input };
+		if (!tokenize(&token_context))
 		{
-			ft_lstclear(&context.tokens, &delete_token);
-			if (context.error)
+			ft_lstclear(&token_context.tokens, &delete_token);
+			if (token_context.error)
 				continue ;
 			return (false);
 		}
-		if (!expand(&context, env_vars))
+		if (!expand(&token_context, env_vars))
 			return (false);
-		// ft_lstiter(context.tokens, &print_token);
-		ft_lstclear(&context.tokens, &delete_token);
+		parsing_context = (t_parsing_context){ .tokens = token_context.tokens, .current = token_context.tokens };
+		if (!parse(&parsing_context))
+			return (false);
+		ft_lstiter(token_context.tokens, &print_token);
+		ft_lstclear(&(token_context.tokens), &delete_token);
 	}
 	return (true);
 }

@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/24 09:59:42 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/06/25 20:24:27 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,11 @@ SRCS = main.c \
 		expansion/expansion.c \
 		expansion/expansion_helpers.c \
 		expansion/slicing.c \
-		call_backs.c
+		call_backs.c \
+		parsing/parsing.c \
+		parsing/parsing_helpers.c \
+		parsing/parsing_assignment.c \
+		parsing/parsing_redirection.c
 
 OBJDIR = objects
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
@@ -42,7 +46,7 @@ $(OBJDIR)/%.o: %.c | $(OBJDIR)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
-	@mkdir -p $@/tokenizer $@/expansion	
+	@mkdir -p $@/tokenizer $@/expansion	$@/parsing
 #move to minishell_tests
 $(LIB): $(filter-out $(OBJDIR)/main.o, $(OBJS))
 	ar rcs $@ $^
