@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 07:22:16 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 10:30:29 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	read_input(char **input)
 {
 	free(*input);
-	*input = readline("minishell$ ");
+	*input = readline("🐚minishell$ ");
 	if (!*input)
 		return (false);
 	if (*input && (ft_strncmp(*input, "exit", 4) == 0))
