@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 15:13:10 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/06/27 22:54:57 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static bool	eval_loop(t_list *env_vars)
 		if (!parse(&parsing_context))
 			return (false);
 		ft_lstclear(&(token_context.tokens), &delete_token);
+		ft_lstclear(&(parsing_context.syntax_tree), &delete_command);
 	}
 	return (true);
 }

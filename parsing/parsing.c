@@ -6,11 +6,10 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 07:31:09 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 22:51:55 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
 #include "../minishell.h"
 
 static void	print_assignment(void *var) // delete later
@@ -27,6 +26,15 @@ static void print_redirection(void *var) // delete later
 	
 	redirection = (t_redirection *)var;
 	printf("type: %d target: %s\n", redirection->type, redirection->target);
+}
+
+static void print_argv(char **argv) // delete later
+{
+	int i = 0;
+
+	while (argv[i])
+		printf("%s ", argv[i++]);
+	printf("\n");
 }
 
 bool	parse_simple_command(t_parsing_context *ctx)
@@ -47,10 +55,13 @@ bool	parse_simple_command(t_parsing_context *ctx)
 	
 	if (!parse_redirection_list(ctx, command))
 		return (false);
-	// parse command
+	if (!parse_argv(ctx, command))
+		return (false);
 	if (!parse_redirection_list(ctx, command))
 		return (false);
 
+	printf("argv ->\n"); // delete this
+	print_argv(command->argv);
 	printf("redirections ->\n"); // delete this
 	ft_lstiter(command->redirections, &print_redirection); // delete this
 		
@@ -76,6 +87,11 @@ bool	parse_command_line(t_parsing_context *ctx)
 
 bool	parse(t_parsing_context *ctx)
 {
-	// TODO: clean up parsing context if failure
-	return (parse_command_line(ctx));
+	if (!(parse_command_line(ctx)))
+	{
+		ft_lstiter(ctx->syntax_tree, &delete_command);
+		free(ctx);
+		return (false);
+	}	
+	return (true);
 }

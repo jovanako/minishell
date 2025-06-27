@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+         #
+#    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/27 14:09:51 by culbrich         ###   ########.fr        #
+#    Updated: 2025/06/27 22:50:09 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,13 @@ SRCS = main.c \
 		expansion/expansion.c \
 		expansion/expansion_helpers.c \
 		expansion/slicing.c \
-		call_backs.c \
+		utils/call_backs.c \
 		parsing/parsing.c \
 		parsing/parsing_helpers.c \
 		parsing/parsing_assignment.c \
 		parsing/parsing_redirection.c \
+		parsing/parsing_argv.c \
+		parsing/parsing_callbacks.c \
 		built-ins/cd.c built-ins/echo.c built-ins/env.c built-ins/exit.c \
 		built-ins/export.c built-ins/pwd.c built-ins/signals.c built-ins/unset.c
 
@@ -48,7 +50,7 @@ $(OBJDIR)/%.o: %.c | $(OBJDIR)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
-	@mkdir -p $@/tokenizer $@/expansion	$@/parsing $@/built-ins
+	@mkdir -p $@/tokenizer $@/expansion	$@/parsing $@/built-ins $@/utils
 #move to minishell_tests
 $(LIB): $(filter-out $(OBJDIR)/main.o, $(OBJS))
 	ar rcs $@ $^
