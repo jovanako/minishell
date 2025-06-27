@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 10:30:29 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:13:10 by culbrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,18 @@ int main(int argc, char *argv[], char *envp[])
 	ft_lstclear(&env_vars, &delete_env_var);
 	return (0);
 }
+/*
+int main(int argc, char *argv[], char *envp[])
+{
+	t_list	*env_vars;
+
+	env_vars = copy_env_vars(envp);
+	if (!env_vars)
+		return (1);
+	if (argc > 1)
+	{
+		if (argv[1] == "")
+	}
+	return (0);
+}
+*/

@@ -1,0 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 12:56:08 by culbrich          #+#    #+#             */
+/*   Updated: 2025/06/27 14:54:30 by culbrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "built_ins.h"
+
+int	ft_unset(char **keys, t_list *lst)
+{
+	int		i;
+
+	i = 1;
+	while (keys[i])
+	{
+		ft_lstdelfill(&lst, ft_getenv(lst, keys[i]));
+		i++;
+	}
+	return (0);
+}
+
+void	ft_lstdelfill(t_list **start, t_list *to_del)
+{
+	t_list	*curr;
+
+	curr = *start;
+	if (to_del)
+	{
+		if (curr == to_del)
+		{
+			// protection (start = to_del, start->next = NULL)
+			*start = curr->next;
+			ft_lstdelone(to_del, delete_env_var);
+		}
+		else
+		{
+			while (curr && to_del)
+			{
+				if (curr->next == to_del)
+				{
+					if (curr->next->next)
+						curr->next = curr->next->next;
+					else
+						curr->next = NULL;
+					ft_lstdelone(to_del, delete_env_var);
+				}
+				curr = curr->next;
+			}
+		}
+	}
+}

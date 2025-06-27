@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 07:26:05 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 13:15:53 by culbrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft/libft.h"

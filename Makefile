@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/25 20:24:27 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/06/27 14:09:51 by culbrich         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,9 @@ SRCS = main.c \
 		parsing/parsing.c \
 		parsing/parsing_helpers.c \
 		parsing/parsing_assignment.c \
-		parsing/parsing_redirection.c
+		parsing/parsing_redirection.c \
+		built-ins/cd.c built-ins/echo.c built-ins/env.c built-ins/exit.c \
+		built-ins/export.c built-ins/pwd.c built-ins/signals.c built-ins/unset.c
 
 OBJDIR = objects
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
@@ -46,7 +48,7 @@ $(OBJDIR)/%.o: %.c | $(OBJDIR)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
-	@mkdir -p $@/tokenizer $@/expansion	$@/parsing
+	@mkdir -p $@/tokenizer $@/expansion	$@/parsing $@/built-ins
 #move to minishell_tests
 $(LIB): $(filter-out $(OBJDIR)/main.o, $(OBJS))
 	ar rcs $@ $^
