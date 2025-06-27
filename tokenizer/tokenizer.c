@@ -6,13 +6,13 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 07:22:57 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 07:25:59 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_token(void *t) // delete later
+static void	print_token(void *t) // delete later
 {
 	t_token *token;
 
@@ -79,7 +79,7 @@ bool	tokenize(t_token_context *ctx)
 			return (false);
 		}
 	}
-	printf("tokens ->\n");
-	ft_lstiter(ctx->tokens, &print_token);
+	printf("tokens ->\n"); // delete this
+	ft_lstiter(ctx->tokens, &print_token);  // delete this
 	return (true);
 }

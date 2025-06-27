@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/25 21:38:08 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 07:26:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,4 @@ bool	handle_dollar(t_expansion_context *ctx, t_list *env_vars, int *i);
 bool	slice_single_quoted(t_expansion_context *ctx);
 bool	slice_double_quoted(t_expansion_context *ctx, t_list *env_vars);
 bool	slice_unquoted(t_expansion_context *ctx, t_list *env_vars);
-void	print_token(void *t); // delete later
 #endif

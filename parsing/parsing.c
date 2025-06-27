@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 07:21:02 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 07:31:09 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ static void	print_assignment(void *var) // delete later
 	printf("key: %s value: %s\n", assignment->key, assignment->value);
 }
 
+static void print_redirection(void *var) // delete later
+{
+	t_redirection *redirection;
+	
+	redirection = (t_redirection *)var;
+	printf("type: %d target: %s\n", redirection->type, redirection->target);
+}
+
 bool	parse_simple_command(t_parsing_context *ctx)
 {
 	t_command	*command;
@@ -33,13 +41,19 @@ bool	parse_simple_command(t_parsing_context *ctx)
 	command->redirections = NULL;
 	if (!parse_assignment_list(ctx, command))
 		return (false);
+	
 	printf("assignments ->\n"); // delete this
 	ft_lstiter(command->assignments, &print_assignment); // delete this
+	
 	if (!parse_redirection_list(ctx, command))
 		return (false);
 	// parse command
 	if (!parse_redirection_list(ctx, command))
 		return (false);
+
+	printf("redirections ->\n"); // delete this
+	ft_lstiter(command->redirections, &print_redirection); // delete this
+		
 	node = ft_lstnew(command);
 	if (!node)
 		return (false);
