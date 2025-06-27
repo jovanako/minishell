@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:22:25 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/25 21:24:41 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 06:43:03 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ bool	parse_redirection(t_parsing_context *ctx, t_command *command)
 
 bool 	parse_redirection_list(t_parsing_context *ctx, t_command *command)
 {
-	while (p_match(ctx, INPUT_REDIR_TOKEN)
-		|| p_match(ctx, OUTPUT_REDIR_TOKEN)
-		|| p_match(ctx, APPEND_TOKEN)
-		|| p_match(ctx, HEREDOC_TOKEN))
+	while (is_current_type(ctx, INPUT_REDIR_TOKEN)
+		|| is_current_type(ctx, OUTPUT_REDIR_TOKEN)
+		|| is_current_type(ctx, APPEND_TOKEN)
+		|| is_current_type(ctx, HEREDOC_TOKEN))
 	{
 		if (!parse_redirection(ctx, command))
 			return (false);	

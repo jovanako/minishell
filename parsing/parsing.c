@@ -6,28 +6,44 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/25 21:30:32 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 07:21:02 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
 
+static void	print_assignment(void *var) // delete later
+{
+	t_assignment *assignment;
+
+	assignment = (t_assignment *)var;
+	printf("key: %s value: %s\n", assignment->key, assignment->value);
+}
+
 bool	parse_simple_command(t_parsing_context *ctx)
 {
 	t_command	*command;
+	t_list		*node;
 
 	command = malloc(sizeof(t_command));
 	if (!command)
 		return (false);
+	command->assignments = NULL;
+	command->redirections = NULL;
 	if (!parse_assignment_list(ctx, command))
 		return (false);
-	// ft_lstiter(command->assignments, &print_assignment);
+	printf("assignments ->\n"); // delete this
+	ft_lstiter(command->assignments, &print_assignment); // delete this
 	if (!parse_redirection_list(ctx, command))
 		return (false);
 	// parse command
 	if (!parse_redirection_list(ctx, command))
 		return (false);
+	node = ft_lstnew(command);
+	if (!node)
+		return (false);
+	ft_lstadd_back(&ctx->syntax_tree, node);
 	return (true);
 }
 

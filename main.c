@@ -6,27 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/26 19:10:44 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 07:22:16 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_token(void *t) // delete later
-{
-	t_token *token;
-
-	token = (t_token *)t;
-	printf("type: %d lexeme: %s\n", token->type, token->lexeme);
-}
-
-void	print_assignment(void *var) // delete later
-{
-	t_assignment *assignment;
-
-	assignment = (t_assignment *)var;
-	printf("key: %s value: %s\n", assignment->key, assignment->value);
-}
 
 static bool	read_input(char **input)
 {
@@ -35,7 +19,10 @@ static bool	read_input(char **input)
 	if (!*input)
 		return (false);
 	if (*input && (ft_strncmp(*input, "exit", 4) == 0))
+	{
 		free(*input);
+		return (false);
+	}
 	return (true);
 }
 
@@ -73,10 +60,9 @@ static bool	eval_loop(t_list *env_vars)
 		}
 		if (!expand(&token_context, env_vars))
 			return (false);
-		parsing_context = (t_parsing_context){ .tokens = token_context.tokens, .current = token_context.tokens };
+		parsing_context = (t_parsing_context){ .tokens = token_context.tokens, .current = token_context.tokens, .syntax_tree = NULL };
 		if (!parse(&parsing_context))
 			return (false);
-		ft_lstiter(token_context.tokens, &print_token);
 		ft_lstclear(&(token_context.tokens), &delete_token);
 	}
 	return (true);

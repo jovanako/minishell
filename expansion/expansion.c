@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/24 10:00:06 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 07:11:57 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static bool	expand(void *content, void *env_vars)
 	(void)env_vars;
 	success = true;
 	token = (t_token *)content;
-	if (token->type == WORD_TOKEN)
+	if (token->type == WORD_TOKEN || token->type == ASSIGNMENT_TOKEN)
 		success = expand_word(token, (t_list *)env_vars);
 	return (success);
 }
@@ -54,7 +54,6 @@ bool	expand_variables(t_list *tokens, t_list *env_vars)
 {
 	t_list	*current_token;
 
-	(void)env_vars;
 	current_token = tokens;
 	while (current_token)
 	{

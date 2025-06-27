@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:26:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/26 20:34:41 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 07:08:17 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	is_current_type(t_parsing_context *ctx, t_token_type token_type)
 {
 	t_token	*token;
 
-	token = (t_token *)ctx->current->content;
+	token = get_current(ctx);
 	return (token->type == token_type);
 }
 
@@ -36,6 +36,11 @@ bool	p_match(t_parsing_context *ctx, t_token_type token_type)
 		return (true);
 	}
 	return (false);
+}
+
+t_token	*get_current(t_parsing_context *ctx)
+{
+	return (t_token *)ctx->current->content;
 }
 
 t_token	*p_advance(t_parsing_context *ctx)

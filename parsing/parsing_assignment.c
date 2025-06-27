@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:19:27 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/25 20:42:06 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 06:54:46 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool 	parse_assignment(t_parsing_context *ctx, t_command *command)
 	t_list			*node;
 	int				i;
 
-	token = (t_token *)ctx->current->content;
+	token = get_current(ctx);
 	assignment = malloc(sizeof(t_assignment));
 	if (!assignment)
 		return (false);
@@ -41,10 +41,11 @@ bool 	parse_assignment(t_parsing_context *ctx, t_command *command)
 
 bool	parse_assignment_list(t_parsing_context *ctx, t_command *command)
 {
-	while (p_match(ctx, ASSIGNMENT_TOKEN))
+	while (is_current_type(ctx, ASSIGNMENT_TOKEN))
 	{
 		if (!parse_assignment(ctx, command))
 			return (false);
+		p_advance(ctx);
 	}
 	return (true);
 }
