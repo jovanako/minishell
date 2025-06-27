@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:27:32 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/20 20:28:20 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:54:07 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ bool	get_env_value(void *content, void *var_key)
 	var = (t_env_var *)content;
 	k = (char *)var_key;
 	len = ft_strlen(var_key);
+	if (len != ft_strlen(var->key))
+		return (false);
 	return (ft_strncmp(var->key, k, len) == 0);
 }
 
