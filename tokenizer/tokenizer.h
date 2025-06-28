@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 21:34:56 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/25 21:37:36 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:55:26 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ typedef enum e_token_type
 	PIPE_TOKEN,
 	NULL_TERMINATOR_TOKEN,
 	ASSIGNMENT_TOKEN,
-	WORD_TOKEN
+	WORD_TOKEN,
+	UNDEFINED,
 }	t_token_type;
 
 typedef struct s_token

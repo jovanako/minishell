@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:55:41 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 22:27:32 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:55:35 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static t_token_type	get_token_type(t_list *node)
 {
 	t_token	*token;
 	
+	if (!node)
+		return (UNDEFINED);
 	token = (t_token*)node->content;
 	return token->type;
 }
