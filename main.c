@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/28 16:05:25 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:36:25 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	read_input(char **input)
 	*input = readline("🐚minishell$ ");
 	if (!*input)
 		return (false);
-	add_history(input);
+	add_history(*input);
 	return (true);
 }
 
@@ -55,6 +55,8 @@ static bool	eval_loop(t_list *env_vars)
 			return (false);
 		parsing_context = (t_parsing_context){ .tokens = token_context.tokens, .current = token_context.tokens, .syntax_tree = NULL };
 		if (!parse(&parsing_context))
+			return (false);
+		if (!execute(parsing_context.syntax_tree, env_vars))
 			return (false);
 		ft_lstclear(&(token_context.tokens), &delete_token);
 		ft_lstclear(&(parsing_context.syntax_tree), &delete_command);

@@ -6,14 +6,14 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 10:03:01 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 22:49:34 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:48:51 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-#include "../minishell.h"
+#include "../tokenizer/tokenizer.h"
 
 typedef enum e_redirect_type
 {
@@ -35,6 +35,7 @@ typedef struct s_command
 	t_list	*assignments;
 	char	**argv;
 	t_list	*redirections;
+	pid_t	pid;
 }	t_command;
 
 typedef struct s_redirection

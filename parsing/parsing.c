@@ -6,36 +6,36 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 22:51:55 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/02 21:00:23 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	print_assignment(void *var) // delete later
-{
-	t_assignment *assignment;
+// static void	print_assignment(void *var) // delete later
+// {
+// 	t_assignment *assignment;
 
-	assignment = (t_assignment *)var;
-	printf("key: %s value: %s\n", assignment->key, assignment->value);
-}
+// 	assignment = (t_assignment *)var;
+// 	printf("key: %s value: %s\n", assignment->key, assignment->value);
+// }
 
-static void print_redirection(void *var) // delete later
-{
-	t_redirection *redirection;
+// static void print_redirection(void *var) // delete later
+// {
+// 	t_redirection *redirection;
 	
-	redirection = (t_redirection *)var;
-	printf("type: %d target: %s\n", redirection->type, redirection->target);
-}
+// 	redirection = (t_redirection *)var;
+// 	printf("type: %d target: %s\n", redirection->type, redirection->target);
+// }
 
-static void print_argv(char **argv) // delete later
-{
-	int i = 0;
+// static void print_argv(char **argv) // delete later
+// {
+// 	int i = 0;
 
-	while (argv[i])
-		printf("%s ", argv[i++]);
-	printf("\n");
-}
+// 	while (argv[i])
+// 		printf("%s ", argv[i++]);
+// 	printf("\n");
+// }
 
 bool	parse_simple_command(t_parsing_context *ctx)
 {
@@ -50,8 +50,8 @@ bool	parse_simple_command(t_parsing_context *ctx)
 	if (!parse_assignment_list(ctx, command))
 		return (false);
 	
-	printf("assignments ->\n"); // delete this
-	ft_lstiter(command->assignments, &print_assignment); // delete this
+	// printf("assignments ->\n"); // delete this
+	// ft_lstiter(command->assignments, &print_assignment); // delete this
 	
 	if (!parse_redirection_list(ctx, command))
 		return (false);
@@ -60,10 +60,10 @@ bool	parse_simple_command(t_parsing_context *ctx)
 	if (!parse_redirection_list(ctx, command))
 		return (false);
 
-	printf("argv ->\n"); // delete this
-	print_argv(command->argv);
-	printf("redirections ->\n"); // delete this
-	ft_lstiter(command->redirections, &print_redirection); // delete this
+	// printf("argv ->\n"); // delete this
+	// print_argv(command->argv);
+	// printf("redirections ->\n"); // delete this
+	// ft_lstiter(command->redirections, &print_redirection); // delete this
 		
 	node = ft_lstnew(command);
 	if (!node)

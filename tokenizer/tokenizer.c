@@ -6,19 +6,19 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 07:25:59 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/02 20:59:35 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	print_token(void *t) // delete later
-{
-	t_token *token;
+// static void	print_token(void *t) // delete later
+// {
+// 	t_token *token;
 
-	token = (t_token *)t;
-	printf("type: %d lexeme: %s\n", token->type, token->lexeme);
-}
+// 	token = (t_token *)t;
+// 	printf("type: %d lexeme: %s\n", token->type, token->lexeme);
+// }
 
 bool	add_token(t_token_context *context, t_token_type type)
 {
@@ -79,7 +79,9 @@ bool	tokenize(t_token_context *ctx)
 			return (false);
 		}
 	}
-	printf("tokens ->\n"); // delete this
-	ft_lstiter(ctx->tokens, &print_token);  // delete this
+	
+	// printf("tokens ->\n"); // delete this
+	// ft_lstiter(ctx->tokens, &print_token);  // delete this
+	
 	return (true);
 }

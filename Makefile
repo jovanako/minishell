@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/06/27 22:50:09 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/02 19:03:00 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,12 @@ SRCS = main.c \
 		expansion/expansion.c \
 		expansion/expansion_helpers.c \
 		expansion/slicing.c \
+		execution/execution.c \
+		execution/execution_execve.c \
+		execution/execution_built_in.c \
+		execution/execution_helpers.c \
 		utils/call_backs.c \
+		utils/strings.c \
 		parsing/parsing.c \
 		parsing/parsing_helpers.c \
 		parsing/parsing_assignment.c \
@@ -50,7 +55,7 @@ $(OBJDIR)/%.o: %.c | $(OBJDIR)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
-	@mkdir -p $@/tokenizer $@/expansion	$@/parsing $@/built-ins $@/utils
+	@mkdir -p $@/tokenizer $@/expansion	$@/parsing $@/execution $@/built-ins $@/utils
 #move to minishell_tests
 $(LIB): $(filter-out $(OBJDIR)/main.o, $(OBJS))
 	ar rcs $@ $^
