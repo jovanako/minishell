@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/02 19:03:00 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/03 21:41:21 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS = main.c \
 		execution/execution_execve.c \
 		execution/execution_built_in.c \
 		execution/execution_helpers.c \
+		execution/cmdpath.c \
 		utils/call_backs.c \
 		utils/strings.c \
 		parsing/parsing.c \
@@ -39,8 +40,14 @@ SRCS = main.c \
 		parsing/parsing_redirection.c \
 		parsing/parsing_argv.c \
 		parsing/parsing_callbacks.c \
-		built-ins/cd.c built-ins/echo.c built-ins/env.c built-ins/exit.c \
-		built-ins/export.c built-ins/pwd.c built-ins/signals.c built-ins/unset.c
+		built-ins/cd.c \
+		built-ins/echo.c \
+		built-ins/env.c \
+		built-ins/exit.c \
+		built-ins/export.c \
+		built-ins/pwd.c \
+		built-ins/signals.c \
+		built-ins/unset.c
 
 OBJDIR = objects
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

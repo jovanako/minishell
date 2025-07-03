@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 08:36:15 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 09:49:13 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/03 21:39:21 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,5 @@ bool	is_valid_env_var_char(char c);
 bool	is_unquoted(char c);
 bool	is_quote(char c);
 bool	expand_variables(t_list *tokens, t_list *env_vars);
+char	*ft_cmdpath(t_list *lst, char *cmd);;
 #endif

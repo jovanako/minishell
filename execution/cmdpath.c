@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   cmdpath.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:00:02 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/03 15:32:54 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/07/03 21:43:09 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
+#include "../built-ins/built_ins.h"
+
+void	ft_free_strarray(char **s_a)
+{
+	int i;
+
+	i = 0;
+	if (s_a)
+	{
+		while (s_a[i])
+			free(s_a[i++]);
+		free(s_a);
+	}
+}
 
 char	*ft_cmdpath(t_list *lst, char *cmd)
 {
@@ -39,17 +53,4 @@ char	*ft_cmdpath(t_list *lst, char *cmd)
 	ft_free_strarray(path_array);
 	free(full_cmd);
 	return (NULL);
-}
-
-void	ft_free_strarray(char **s_a)
-{
-	int i;
-
-	i = 0;
-	if (s_a)
-	{
-		while (s_a[i])
-			free(s_a[i++]);
-		free(s_a);
-	}
 }

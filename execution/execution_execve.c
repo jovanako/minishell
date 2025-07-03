@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 10:55:23 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/03 21:40:11 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 
 static char	*resolve_exec_path(char *relative, t_list *env_vars)
 {
-	// TODO implement
-	(void)env_vars; // remove after impl
-	return (relative);
+	char	*result;
+
+	result = ft_cmdpath(env_vars, relative);
+	return (result);
 }
 
 static bool	child_process(t_command *cmd, t_list *ev, t_fork_streams *fork_streams)
