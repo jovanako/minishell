@@ -6,11 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:27:32 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/02 20:44:12 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/03 08:43:21 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "utils.h"
 
 void	delete_env_var(void *var)
 {

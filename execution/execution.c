@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/02 22:02:02 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:47:42 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,31 @@ static void	execute_fork(t_command *command, t_fork_streams *fs, t_list *env_var
 		fork_built_in(command, assignments, fs);
 	}
 	else
-		fork_execve(command, assignments, fs);	
+		fork_execve(command, env_vars, fs);	
 }
 
-static t_fork_streams	*scan_redirs(t_list *redirections)
+static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
 {
 	t_list			*current_node;
 	t_redirection	*current_redir;
-	t_fork_streams	*fork_streams;
 
 	current_node = redirections;
-	fork_streams = allocate_fork_streams();
 	while (current_node)
 	{
 		current_redir = (t_redirection *)current_node->content;
 		if (current_redir->type == INPUT_REDIRECT)
 		{
 			if (open_input_redir(fork_streams, current_redir) == -1)
-				return (0); // error: open failed
+				return (false); // error: open failed
 		}
 		else if (current_redir->type == OUTPUT_REDIRECT)
 		{
 			if (open_output_redir(fork_streams, current_redir) == -1)
-				return (0); // error: open failed
+				return (false); // error: open failed
 		}
 		current_node = current_node->next;
 	}
-	return (fork_streams);
+	return (true);
 }
 
 // last input and output redirections win
@@ -77,20 +75,20 @@ static bool	execute_command(t_list* commands, t_list* env_vars, int input_fd)
 	fork_streams = malloc(sizeof(t_fork_streams));
 	if (!fork_streams)
 		return (false);
+	fork_streams->input_fd = input_fd;
+	fork_streams->output_fd = STDOUT_FILENO;
 	if (commands->next)
 	{
 		if (pipe(fd) == -1)
-			return (false); // error: pipe failed
-		fork_streams->input_fd = input_fd;
+			return (false);
 		fork_streams->output_fd = fd[1];
 	}
-	fork_streams = scan_redirs(command->redirections);
+	if (!add_redirs(fork_streams, command->redirections))
+		return (false);
 	execute_fork(command, fork_streams, env_vars);
 	if (commands->next)
 	{
-		// use read end as input
-		if (dup2(fd[0], STDIN_FILENO) == -1)
-		return (false);
+		// use read end as input for the next command
 		execute_command(commands->next, env_vars, fd[0]);
 		close(fd[1]);
 		close(fd[0]);

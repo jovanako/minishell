@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:24:40 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/02 20:46:17 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/03 08:30:26 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_fork_streams
 }	t_fork_streams;
 
 bool 			execute(t_list* commands, t_list* env_vars);
-t_fork_streams	*allocate_fork_streams();
 bool			fork_execve(t_command *cmd, t_list *ev, t_fork_streams *s);
 bool			fork_built_in(t_command *command, t_list *ev, t_fork_streams *s);
 int				open_input_redir(t_fork_streams *fork_streams, t_redirection *redir);

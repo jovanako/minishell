@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/02 18:35:14 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:29:47 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	**ev_list_to_arr(t_list *env_vars)
 		result[i++] = str_var;
 		env_vars = env_vars->next;
 	}
+	result[i] = NULL;
 	return (result);
 }
 
@@ -43,16 +44,6 @@ t_list	*resolve_assignments(t_list *assignments, t_list *env_vars)
 	// TODO create a copy of env_vars and apply assignments to the copy
 	(void)assignments;
 	return (env_vars); // temp impl for testing
-}
-
-t_fork_streams	*allocate_fork_streams()
-{
-	t_fork_streams	*streams;
-
-	streams = malloc(sizeof(t_fork_streams));
-	streams->input_fd = 0;
-	streams->output_fd = 1;
-	return (streams);
 }
 
 int	open_input_redir(t_fork_streams *fork_streams, t_redirection *redir)

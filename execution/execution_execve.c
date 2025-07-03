@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/02 21:35:51 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/03 10:55:23 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ bool	fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fork_streams)
 		if (!child_process(cmd, ev, fork_streams))
 			return (false);
 	}
-	close(fork_streams->input_fd);
-	close(fork_streams->output_fd);
+	if (fork_streams->input_fd != STDIN_FILENO)
+		close(fork_streams->input_fd);
+	if (fork_streams->output_fd != STDOUT_FILENO)
+		close(fork_streams->output_fd);
 	cmd->pid = pid;
 	return (true);
 }
