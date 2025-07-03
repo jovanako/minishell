@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:03:55 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 10:30:03 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:25:26 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,6 @@ static t_list	*parse_env_var(char *s)
 		return (NULL);
 	return (ft_lstnew(new_var));
 }
-
-// int		get_arr_size(char **arr)
-// {
-// 	int	size;
-// 	int	i;
-
-// 	size = 0;
-// 	i = 0;
-// 	while (arr[i])
-// 	{
-// 		size++;
-// 		i++;
-// 	}
-// 	return (size);
-// }
-
 t_list	*copy_env_vars(char *envp[])
 {
 	int		i;
