@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 09:50:56 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:45:09 by culbrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 #include "parsing/parsing.h"
 #include "execution/execution.h"
 #include "expansion/expansion.h"
+#include "built-ins/built_ins.h"
 
 t_list	*copy_env_vars(char *envp[]);
+
 #endif

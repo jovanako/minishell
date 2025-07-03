@@ -6,7 +6,7 @@
 /*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:34 by culbrich          #+#    #+#             */
-/*   Updated: 2025/06/27 14:41:54 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:23:13 by culbrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ t_list	*ft_getenv(t_list *lst, char *key)
 	while (lst)
 	{
 		env_var = (t_env_var *)lst->content;
-		if (ft_strncmp(env_var->key, key, ft_strlen(key)))
+		if (!ft_strcmp(env_var->key, key))
 			return (lst);
 		lst = lst->next;
 	}
 	return (NULL);
 }
 
+// returns the value (str) of env pointed to by lst
 char	*ft_getenv_v(t_list *lst)
 {
 	t_env_var	*env_var;
@@ -70,6 +71,7 @@ char	*ft_getenv_v(t_list *lst)
 	return (NULL);
 }
 
+// returns the key (str) of env pointed to by lst
 char	*ft_getenv_k(t_list *lst)
 {
 	t_env_var	*env_var;

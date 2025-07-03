@@ -6,7 +6,7 @@
 /*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:42 by culbrich          #+#    #+#             */
-/*   Updated: 2025/06/27 14:18:07 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:38:46 by culbrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_exit(t_list **lst, int exit_code)
  * 	1	- General Error
  * 	2	- Misuse of built-ins
  * 	126	- Invoked command failed to execute
- * 	127	- Command not fund
+ * 	127	- Command not found
  * 	128	- Invalid exit argument
  * 	130	- Termination by ctrl-c
  * 	255	- Exit status out of range/custom fatal error
