@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 10:29:47 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:29:26 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,16 @@ t_list	*resolve_assignments(t_list *assignments, t_list *env_vars)
 
 int	open_input_redir(t_fork_streams *fork_streams, t_redirection *redir)
 {
-	close(fork_streams->input_fd);
+	if (fork_streams->input_fd != STDIN_FILENO)
+		close(fork_streams->input_fd);
 	fork_streams->input_fd = open(redir->target, O_RDONLY);
 	return (fork_streams->input_fd);
 }
 
 int	open_output_redir(t_fork_streams *fork_streams, t_redirection *redir)
 {
-	close(fork_streams->output_fd);
+	if (fork_streams->output_fd != STDOUT_FILENO)
+		close(fork_streams->output_fd);
 	fork_streams->output_fd = open(redir->target, O_CREAT 
 		| O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	return (fork_streams->output_fd);
