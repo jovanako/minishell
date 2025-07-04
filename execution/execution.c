@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 14:16:44 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:49:01 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,13 @@ bool	execute(t_list* commands, t_list* env_vars)
 	int			status;
 
 	if (!commands)
-		return (true);
-	
-	if (is_special_built_in(commands))
+		return (true);	
+	cmd = commands->content;
+	if (!cmd->argv[0])
+		status = handle_no_command(cmd, env_vars);
+	else if (is_special_built_in(commands))
 	{
 		// do assignments and redirects
-		cmd = commands->content;
 		status = exec_built_in(find_built_in_name(cmd->argv[0]), cmd->argv, env_vars);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 21:39:06 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:01:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@
 #include "execution/execution.h"
 #include "expansion/expansion.h"
 #include "built-ins/built_ins.h"
-
-t_list	*copy_env_vars(char *envp[]);
+#include "env_vars/env_vars.h"
 #endif

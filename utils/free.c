@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 18:23:17 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/04 22:33:24 by jkovacev         ###   ########.fr       */
+/*   Created: 2025/07/04 21:58:42 by jkovacev          #+#    #+#             */
+/*   Updated: 2025/07/04 22:33:14 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "utils.h"
 
-#include <stdbool.h>
-#include "../expansion/expansion.h"
-
-bool	is_str_equal(char *s1, char *s2);
-bool	get_env_value(void *content, void *var_key);
-void	delete_env_var(void *var);
-void	delete_token(void *t);
-char	*ft_strcpy(char *s);
-int		free_ev_and_return(t_env_var *ev, int n);
-#endif
+int		free_ev_and_return(t_env_var *ev, int n)
+{
+	if (ev->key)
+		free(ev->key);
+	if (ev->value)
+		free(ev->value);
+	free(ev);
+	return (n);
+}

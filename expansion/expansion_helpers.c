@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:21:46 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 08:40:03 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:09:08 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,17 @@ char	*extract_var_key(t_expansion_context *ctx, int *start)
 	return (result);
 }
 
-bool	is_valid_env_var_char(char c)
+static bool	append_value(t_expansion_context *ctx, char *var_value)
 {
-	return (ft_isalnum(c) || c == '_');
+	char	*tmp;
+
+	tmp = ctx->result;
+	ctx->result = ft_strjoin(ctx->result, var_value);
+	if (*tmp)
+		free(tmp);
+	if (!(ctx->result))
+		return (false);
+	return (true);
 }
 
 bool	is_unquoted(char c)

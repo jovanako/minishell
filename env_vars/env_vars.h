@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   env_vars.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 18:23:17 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/04 22:33:24 by jkovacev         ###   ########.fr       */
+/*   Created: 2025/07/04 13:59:47 by jkovacev          #+#    #+#             */
+/*   Updated: 2025/07/04 16:01:11 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef ENV_VARS_H
+# define ENV_VARS_H
 
-#include <stdbool.h>
-#include "../expansion/expansion.h"
+#include "../libft/libft.h"
+#include "../utils/utils.h"
 
-bool	is_str_equal(char *s1, char *s2);
-bool	get_env_value(void *content, void *var_key);
-void	delete_env_var(void *var);
-void	delete_token(void *t);
-char	*ft_strcpy(char *s);
-int		free_ev_and_return(t_env_var *ev, int n);
+typedef struct s_env_var
+{
+	char	*key;
+	char	*value;
+	bool	exported;
+}	t_env_var;
+
+bool	is_valid_env_var_char(char c);
+bool	add_env_var(t_list *env_vars, char *key, char *val, bool exported);
+t_list	*create_env_vars(char *envp[]);
 #endif

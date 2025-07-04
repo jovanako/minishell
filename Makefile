@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/03 21:41:21 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/04 22:05:31 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS = main.c \
 		tokenizer/tokenizer_helper.c \
 		tokenizer/token_readers.c \
 		tokenizer/heredoc_reader.c \
-		env_vars.c \
+		env_vars/env_vars.c \
+		env_vars/env_vars_helpers.c \
 		expansion/expansion.c \
 		expansion/expansion_helpers.c \
 		expansion/slicing.c \
@@ -31,9 +32,11 @@ SRCS = main.c \
 		execution/execution_execve.c \
 		execution/execution_built_in.c \
 		execution/execution_helpers.c \
+		execution/execution_no_command.c \
 		execution/cmdpath.c \
 		utils/call_backs.c \
 		utils/strings.c \
+		utils/free.c \
 		parsing/parsing.c \
 		parsing/parsing_helpers.c \
 		parsing/parsing_assignment.c \
@@ -62,7 +65,7 @@ $(OBJDIR)/%.o: %.c | $(OBJDIR)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
-	@mkdir -p $@/tokenizer $@/expansion	$@/parsing $@/execution $@/built-ins $@/utils
+	@mkdir -p $@/tokenizer $@/expansion	$@/parsing $@/env_vars $@/execution $@/built-ins $@/utils
 #move to minishell_tests
 $(LIB): $(filter-out $(OBJDIR)/main.o, $(OBJS))
 	ar rcs $@ $^

@@ -6,24 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:03:55 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 11:25:26 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/04 16:01:02 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-bool	append_value(t_expansion_context *ctx, char *var_value)
-{
-	char	*tmp;
-
-	tmp = ctx->result;
-	ctx->result = ft_strjoin(ctx->result, var_value);
-	if (*tmp)
-		free(tmp);
-	if (!(ctx->result))
-		return (false);
-	return (true);
-}
+#include "env_vars.h"
 
 static t_list	*parse_env_var(char *s)
 {
@@ -44,9 +31,16 @@ static t_list	*parse_env_var(char *s)
 	new_var->value = ft_substr(s, key_len + 1, value_len);
 	if (!(new_var->value))
 		return (NULL);
+	new_var->exported = true;
 	return (ft_lstnew(new_var));
 }
-t_list	*copy_env_vars(char *envp[])
+
+bool	is_valid_env_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_');
+}
+
+t_list	*create_env_vars(char *envp[])
 {
 	int		i;
 	t_list	*env_vars;

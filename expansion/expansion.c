@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 08:40:16 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:47:47 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static bool	expand(void *content, void *env_vars)
 	t_token *token;
 	bool	success;
 
-	(void)env_vars;
 	success = true;
 	token = (t_token *)content;
 	if (token->type == WORD_TOKEN || token->type == ASSIGNMENT_TOKEN)
