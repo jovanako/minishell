@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:03:55 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/04 16:01:02 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/05 11:35:28 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ static t_list	*parse_env_var(char *s)
 		return (NULL);
 	new_var->exported = true;
 	return (ft_lstnew(new_var));
+}
+
+void	delete_env_var(void *var)
+{
+	t_env_var *env_var;
+	
+	env_var = (t_env_var *)var;
+	free(env_var->key);
+	free(env_var->value);
+	free(env_var);
 }
 
 bool	is_valid_env_var_char(char c)

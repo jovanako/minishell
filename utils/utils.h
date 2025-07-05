@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:17 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/05 10:49:32 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/05 11:36:11 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "../expansion/expansion.h"
 
 bool	is_str_equal(char *s1, char *s2);
-void	delete_env_var(void *var);
 void	delete_token(void *t);
 char	*ft_strcpy(char *s);
 #endif
