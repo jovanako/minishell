@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/04 22:05:31 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/05 10:49:25 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS = main.c \
 		tokenizer/token_readers.c \
 		tokenizer/heredoc_reader.c \
 		env_vars/env_vars.c \
-		env_vars/env_vars_helpers.c \
+		env_vars/add_env_var.c \
+		env_vars/get_env_var.c \
 		expansion/expansion.c \
 		expansion/expansion_helpers.c \
 		expansion/slicing.c \
@@ -36,7 +37,6 @@ SRCS = main.c \
 		execution/cmdpath.c \
 		utils/call_backs.c \
 		utils/strings.c \
-		utils/free.c \
 		parsing/parsing.c \
 		parsing/parsing_helpers.c \
 		parsing/parsing_assignment.c \

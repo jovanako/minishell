@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:23:17 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/04 22:33:24 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/05 10:49:32 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@
 #include "../expansion/expansion.h"
 
 bool	is_str_equal(char *s1, char *s2);
-bool	get_env_value(void *content, void *var_key);
 void	delete_env_var(void *var);
 void	delete_token(void *t);
 char	*ft_strcpy(char *s);
-int		free_ev_and_return(t_env_var *ev, int n);
 #endif

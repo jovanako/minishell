@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   get_env_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 21:58:42 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/04 22:33:14 by jkovacev         ###   ########.fr       */
+/*   Created: 2025/07/05 10:05:14 by jkovacev          #+#    #+#             */
+/*   Updated: 2025/07/05 10:09:53 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "env_vars.h"
 
-int		free_ev_and_return(t_env_var *ev, int n)
+static bool	get_env_value(void *content, void *var_key)
 {
-	if (ev->key)
-		free(ev->key);
-	if (ev->value)
-		free(ev->value);
-	free(ev);
-	return (n);
+	t_env_var	*var;
+	char		*k;
+	size_t		len;
+	
+	var = content;
+	k = var_key;
+	len = ft_strlen(k);
+	if (len != ft_strlen(var->key))
+		return (false);
+	return (ft_strncmp(var->key, k, len) == 0);
+}
+
+t_env_var	*get_env_var(t_list *env_vars, char *key)
+{
+	return (ft_lstfind(env_vars, &get_env_value, key));
 }

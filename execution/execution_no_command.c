@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:08:33 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/04 22:33:51 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/05 10:52:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,22 @@
 static int	handle_assignments(t_list *assignments, t_list *ev)
 {
 	t_assignment	*assignment;
-	t_env_var		*new_var;
-	t_list			*node;
+	char			*key;
+	char			*val;
 
+	key = NULL;
+	val = NULL;
 	while (assignments)
 	{
 		assignment = assignments->content;		
-		new_var = malloc(sizeof(t_env_var));
-		if (!new_var)
+		key = ft_strcpy(assignment->key);
+		val = ft_strcpy(assignment->value);
+		if (!key || !val || !add_env_var(ev, key, val, false))
+		{
+			free(key);
+			free(val);
 			return (1);
-		new_var->exported = false;
-		new_var->key = ft_strcpy(assignment->key);
-		if (!new_var->key)
-			return (free_ev_and_return(new_var, 1));
-		new_var->value = ft_strcpy(assignment->value);
-		if (!new_var->value)
-			return (free_ev_and_return(new_var, 1));
-		node = ft_lstnew(new_var);
-		if (!node)
-			return (free_ev_and_return(new_var, 1));
-		ft_lstadd_back(&ev, node);
+		}
 		assignments = assignments->next;
 	}
 	return (0);
