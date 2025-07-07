@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/04 08:47:54 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/07 09:03:27 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,14 @@ int	open_output_redir(t_fork_streams *fork_streams, t_redirection *redir)
 		close(fork_streams->output_fd);
 	fork_streams->output_fd = open(redir->target, O_CREAT 
 		| O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	return (fork_streams->output_fd);
+}
+
+int	open_append_redir(t_fork_streams *fork_streams, t_redirection *redir)
+{
+	if (fork_streams->output_fd != STDOUT_FILENO)
+		close(fork_streams->output_fd);
+	fork_streams->output_fd = open(redir->target, O_CREAT 
+		| O_WRONLY | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	return (fork_streams->output_fd);
 }

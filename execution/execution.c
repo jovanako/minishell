@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/04 20:49:01 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/07 09:03:38 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
 		else if (current_redir->type == OUTPUT_REDIRECT)
 		{
 			if (open_output_redir(fork_streams, current_redir) == -1)
+				return (false); // error: open failed
+		}
+		else if (current_redir->type == APPEND_REDIRECT)
+		{
+			if (open_append_redir(fork_streams, current_redir) == -1)
 				return (false); // error: open failed
 		}
 		current_node = current_node->next;

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:08:33 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/05 10:52:05 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/07 08:47:26 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static int	handle_redirections(t_list	*redirections)
 		}	
 		else if (redirection->type == APPEND_REDIRECT)
 		{
-			fd = open(redirection->target, O_CREAT | O_WRONLY, rights_flags);
+			fd = open(redirection->target, O_CREAT 
+				| O_WRONLY | O_APPEND, rights_flags);
 			close(fd);
 		} 
 		redirections = redirections->next;
