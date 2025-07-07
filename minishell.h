@@ -27,4 +27,21 @@
 #include "expansion/expansion.h"
 #include "built-ins/built_ins.h"
 #include "env_vars/env_vars.h"
+
+/*	Enum?
+ *	Exit code Conventions:
+ *	0	- Success
+ * 	1	- General Error
+ * 	2	- Misuse of built-ins
+ * 	126	- Invoked command failed to execute
+ * 	127	- Command not found
+ * 	128	- Invalid exit argument
+ * 	130	- Termination by ctrl-c
+ * 	255	- Exit status out of range/custom fatal error
+ * 
+ * 	129-255	- Exit via signal (128 + signum)
+*/
+
+extern int	g_exit_code;
+
 #endif

@@ -27,13 +27,13 @@ int	ft_echo(char **tokens)
 	}
 	while (tokens[i])
 	{
-		printf("%s", tokens[i]);
+		ft_putstr_fd(tokens[i], STDOUT_FILENO);
 		i++;
 		if (tokens[i])
-			printf(" ");
+			ft_putstr_fd(" ", STDOUT_FILENO);
 	}
 	if (!n)
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }
 

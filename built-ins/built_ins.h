@@ -38,7 +38,7 @@ char	*ft_getenv_v(t_list *lst);
 char	*ft_getenv_k(t_list *lst);
 
 // exit
-void	ft_exit(t_list **lst, int exit_code);
+int		ft_exit(int exit_code);
 
 // export
 

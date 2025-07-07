@@ -21,7 +21,12 @@ int	ft_env(t_list *lst)
 	{
 		env_var = (t_env_var *)lst->content;
 		if (env_var->value)
-			printf("%s=%s\n", env_var->key, env_var->value);
+		{
+			ft_putstr_fd(env_var->key, STDOUT_FILENO);
+			ft_putstr_fd("=", STDOUT_FILENO);
+			ft_putstr_fd(env_var->value, STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+		}
 		lst = lst->next;
 	}
 	return (0);

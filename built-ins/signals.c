@@ -19,6 +19,7 @@ void	ft_sig_interactive(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_exit_code = 130;
 		printf("\n");
 		// weird functions, needs testing
 		rl_on_new_line();
