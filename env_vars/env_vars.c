@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:03:55 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/05 11:35:28 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:11:58 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_list	*create_env_vars(char *envp[])
 	t_list	*current_node;
 
 	i = 0;
-	env_vars = NULL;	
+	env_vars = NULL;
 	while (envp[i])
 	{
 		current_node = parse_env_var(envp[i++]);
