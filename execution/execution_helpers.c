@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/07 09:03:27 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/07 10:46:52 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**ev_list_to_arr(t_list *env_vars)
 
 	i = 0;
 	len = ft_lstsize(env_vars);
-	result = malloc(len * sizeof(char *) + 1);
+	result = malloc((len + 1) * sizeof(char *));
 	if (!result)
 		return NULL;
 	while (env_vars)
