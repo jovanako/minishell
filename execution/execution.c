@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/07 09:03:38 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:31:41 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static bool	execute_command(t_list* commands, t_list* env_vars, int input_fd)
 		close(fd[1]);
 		close(fd[0]);
 	}
-	// close input_fd and output_fd
+	free(fork_streams);
 	return (true);
 }
 

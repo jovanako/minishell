@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 21:21:51 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:07:38 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ bool	add_token(t_token_context *context, t_token_type type)
 		return (false);
 	node = ft_lstnew(token);
 	if (!node)
-	{
-		free(token->lexeme);
 		return (false);
-	}
 	ft_lstadd_back(&(context->tokens), node);
 	return (true);
 }
