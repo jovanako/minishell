@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/08 17:18:49 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:49:16 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_list	*resolve_fork_ev(t_list *assignments, t_list *env_vars)
 	{
 		assignment = assignments->content;
 		// TODO make a copy of key and value strings
-		if (!add_env_var(copy, assignment->key, assignment->value, true))
+		if (!add_env_var(&copy, assignment->key, assignment->value, true))
 			return (NULL);
 		assignments = assignments->next;
 	}
@@ -60,7 +60,7 @@ t_list	*resolve_fork_ev(t_list *assignments, t_list *env_vars)
 		if (env_var->exported)
 		{
 			// TODO make a copy of key and value strings
-			if (!add_env_var(copy, env_var->key, env_var->value, true))
+			if (!add_env_var(&copy, env_var->key, env_var->value, true))
 				return (NULL);
 		}
 		env_vars = env_vars->next;	
