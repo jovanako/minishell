@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/07 10:46:52 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:18:49 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,35 +39,31 @@ char	**ev_list_to_arr(t_list *env_vars)
 	return (result);
 }
 
-t_list	*resolve_assignments(t_list *assignments, t_list *env_vars)
+t_list	*resolve_fork_ev(t_list *assignments, t_list *env_vars)
 {
-	// TODO create a copy of env_vars and apply assignments to the copy
-	(void)assignments;
-	return (env_vars); // temp impl for testing
-}
+	t_list			*copy;
+	t_assignment	*assignment;
+	t_env_var		*env_var;
 
-int	open_input_redir(t_fork_streams *fork_streams, t_redirection *redir)
-{
-	if (fork_streams->input_fd != STDIN_FILENO)
-		close(fork_streams->input_fd);
-	fork_streams->input_fd = open(redir->target, O_RDONLY);
-	return (fork_streams->input_fd);
-}
-
-int	open_output_redir(t_fork_streams *fork_streams, t_redirection *redir)
-{
-	if (fork_streams->output_fd != STDOUT_FILENO)
-		close(fork_streams->output_fd);
-	fork_streams->output_fd = open(redir->target, O_CREAT 
-		| O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	return (fork_streams->output_fd);
-}
-
-int	open_append_redir(t_fork_streams *fork_streams, t_redirection *redir)
-{
-	if (fork_streams->output_fd != STDOUT_FILENO)
-		close(fork_streams->output_fd);
-	fork_streams->output_fd = open(redir->target, O_CREAT 
-		| O_WRONLY | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	return (fork_streams->output_fd);
+	copy = NULL;
+	while (assignments)
+	{
+		assignment = assignments->content;
+		// TODO make a copy of key and value strings
+		if (!add_env_var(copy, assignment->key, assignment->value, true))
+			return (NULL);
+		assignments = assignments->next;
+	}
+	while (env_vars)
+	{
+		env_var = env_vars->content;
+		if (env_var->exported)
+		{
+			// TODO make a copy of key and value strings
+			if (!add_env_var(copy, env_var->key, env_var->value, true))
+				return (NULL);
+		}
+		env_vars = env_vars->next;	
+	}
+	return (copy);
 }
