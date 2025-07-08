@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 21:34:56 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/28 15:55:26 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:54:53 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	peek(t_token_context *context);
 char	advance(t_token_context *context);
 bool	match(char expected_char, t_token_context *context);
 bool	is_valid_identifier(t_token_context *ctx);
+bool	is_previous_token(t_token_context *ctx, t_token_type type);
 bool	add_token(t_token_context *context, t_token_type type);
 bool	tokenize(t_token_context *context);
 void	delete_token(void *t);

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 12:53:41 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/24 22:04:20 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:08:08 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,19 @@ bool	is_valid_identifier(t_token_context *ctx)
 		i++;
 	}
 	return (ctx->line[i] == '=');
+}
+
+bool	is_previous_token(t_token_context *ctx, t_token_type type)
+{
+	t_list	*tokens;
+	t_token	*current_token;
+
+	tokens = ctx->tokens;
+	current_token = NULL;
+	while (tokens)
+	{		
+		current_token = tokens->content;
+		tokens = tokens->next;
+	}
+	return (current_token && current_token->type == type);
 }

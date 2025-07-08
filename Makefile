@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/05 10:49:25 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/08 12:51:29 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS = main.c \
 		execution/execution_built_in.c \
 		execution/execution_helpers.c \
 		execution/execution_no_command.c \
+		execution/open_fork_stream.c \
 		execution/cmdpath.c \
 		utils/call_backs.c \
 		utils/strings.c \

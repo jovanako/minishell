@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:24:40 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/07 09:01:52 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:05:54 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int				open_input_redir(t_fork_streams *fork_streams, t_redirection *redir);
 int				open_output_redir(t_fork_streams *fork_streams, t_redirection *redir);
 int				open_append_redir(t_fork_streams *fork_streams, t_redirection *redir);
 t_built_in_name	find_built_in_name(char *cmd_name);
-t_list			*resolve_assignments(t_list *assignments, t_list *env_vars);
+t_list			*resolve_fork_ev(t_list *assignments, t_list *env_vars);
 bool			is_built_in(char *cmd_name);
 bool			is_special_built_in(t_list *commands);
 int				exec_built_in(t_built_in_name built_in, char *av[], t_list *ev);

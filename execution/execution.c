@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/07 19:31:41 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:19:50 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,17 @@ static int	wait_for_children(t_list *commands)
 
 static void	execute_fork(t_command *command, t_fork_streams *fs, t_list *env_vars)
 {
-	t_list	*assignments;
+	t_list	*copy_ev;
 	
-	assignments = resolve_assignments(command->assignments, env_vars);
+	copy_ev = resolve_fork_ev(command->assignments, env_vars);
+	// TODO NULL-check copy_ev - NULL if function failed
 	if (is_built_in(command->argv[0]))
 	{
-		fork_built_in(command, assignments, fs);
+		fork_built_in(command, copy_ev, fs);
 	}
 	else
-		fork_execve(command, env_vars, fs);	
+		fork_execve(command, copy_ev, fs);	
+	// TODO free copy_ev
 }
 
 static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)

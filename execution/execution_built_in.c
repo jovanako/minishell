@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/02 20:24:58 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:03:58 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 int	exec_built_in(t_built_in_name built_in, char *av[], t_list *ev)
 {
+	int i = 0;
+	while (av[i])
+		printf("%s\n", av[i++]);
 	if (built_in == ECHO)
 		return (ft_echo(av));
 	if (built_in == CD)
