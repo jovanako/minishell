@@ -19,4 +19,6 @@
 bool	is_str_equal(char *s1, char *s2);
 void	delete_token(void *t);
 char	*ft_strcpy(char *s);
+void	ft_free_strarray(char **s_a);
+
 #endif

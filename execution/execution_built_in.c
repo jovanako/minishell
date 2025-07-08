@@ -22,8 +22,8 @@ int	exec_built_in(t_built_in_name built_in, char *av[], t_list *ev)
 		return (ft_cd(av[1], ev)); // check if av[1] exists
 	if (built_in == PWD)
 		return (ft_pwd(ev));
-	// if (built_in == EXPORT) 
-	// 	return (ft_export(...));
+	if (built_in == EXPORT) 
+	 	return (ft_export(av, ev));
 	if (built_in == UNSET) 
 		return (ft_unset(av, ev));
 	if (built_in == ENV)

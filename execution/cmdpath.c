@@ -13,19 +13,6 @@
 #include "execution.h"
 #include "../built-ins/built_ins.h"
 
-void	ft_free_strarray(char **s_a)
-{
-	int i;
-
-	i = 0;
-	if (s_a)
-	{
-		while (s_a[i])
-			free(s_a[i++]);
-		free(s_a);
-	}
-}
-
 char	*ft_cmdpath(t_list *lst, char *cmd)
 {
     int		i;

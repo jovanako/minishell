@@ -20,7 +20,11 @@ int	ft_env(t_list *lst)
 	while (lst)
 	{
 		env_var = (t_env_var *)lst->content;
+<<<<<<< Updated upstream
 		if (env_var->value)
+=======
+		if (env_var->value && env_var->exported)
+>>>>>>> Stashed changes
 		{
 			ft_putstr_fd(env_var->key, STDOUT_FILENO);
 			ft_putstr_fd("=", STDOUT_FILENO);
@@ -33,14 +37,14 @@ int	ft_env(t_list *lst)
 }
 
 // modifies a given environment variable to a new value
-int	ft_modenv(t_list *lst, char *key)
+int	ft_modenv(t_list *lst, char *value)
 {
 	t_env_var	*env_var;
 
 	if (!lst)
 		return (1);
 	env_var = (t_env_var *)lst->content;
-	env_var->value = key;
+	env_var->value = value;
 	lst->content = (void *)env_var;
 	return (0);
 }

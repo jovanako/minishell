@@ -40,3 +40,16 @@ char	*ft_strcpy(char *s)
 	result[i] = '\0';
 	return (result);
 }
+
+void	ft_free_strarray(char **s_a)
+{
+	int i;
+
+	i = 0;
+	if (s_a)
+	{
+		while (s_a[i])
+			free(s_a[i++]);
+		free(s_a);
+	}
+}

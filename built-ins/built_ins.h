@@ -32,7 +32,7 @@ int	    ft_echo_option(char *s);
 
 // env
 int	    ft_env(t_list *lst);
-int	    ft_modenv(t_list *lst, char *key);
+int	    ft_modenv(t_list *lst, char *value);
 t_list	*ft_getenv(t_list *lst, char *key);
 char	*ft_getenv_v(t_list *lst);
 char	*ft_getenv_k(t_list *lst);
@@ -41,6 +41,8 @@ char	*ft_getenv_k(t_list *lst);
 int		ft_exit(int exit_code);
 
 // export
+int		ft_export(char **tokens, t_list *ev);
+char	**ft_get_pair(char *token, t_list *ev);
 
 // pwd
 int	    ft_pwd(t_list *lst);
