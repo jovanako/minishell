@@ -21,7 +21,6 @@ void	ft_sig_interactive(int sig)
 	{
 		g_exit_code = 130;
 		printf("\n");
-		// weird functions, needs testing
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();

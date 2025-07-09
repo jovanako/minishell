@@ -15,6 +15,7 @@
 static bool	read_input(char **input)
 {
 	free(*input);
+	ft_change_sigmode(1);
 	*input = readline("🐚minishell$ ");
 	if (!*input)
 		return (false);
@@ -56,6 +57,7 @@ static bool	eval_loop(t_list *env_vars)
 		parsing_context = (t_parsing_context){ .tokens = token_context.tokens, .current = token_context.tokens, .syntax_tree = NULL };
 		if (!parse(&parsing_context))
 			return (false);
+		ft_change_sigmode(0);
 		if (!execute(parsing_context.syntax_tree, env_vars))
 			return (false);
 		ft_lstclear(&(token_context.tokens), &delete_token);
