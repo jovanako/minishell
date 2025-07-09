@@ -12,16 +12,19 @@
 
 #include "built_ins.h"
 
-// 
+//	TODO:
+//	exit (0)	= e + "exit"
+//	exit  x 	= e + "exit" + "minishell: exit: aa: numeric argument required"
+//	exit  0 x	= e + "exit" + "minishell: exit: too many arguments"
 int	ft_exit(char **tokens)
 {
 	if (tokens[1] && tokens[2])
 	{
-		printf("bash: exit: too many arguments");
+		printf("minishell: exit: too many arguments");
 		return (1);
 	}
 	else
-	if (tokens[1] && ft_isnumber(tokens[1]))
+	if (!tokens[1] || (tokens[1] && ft_isnumber(tokens[1])))
 		printf("exit\n");
 	return (1);
 }

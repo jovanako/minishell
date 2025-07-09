@@ -13,12 +13,13 @@
 #include "built_ins.h"
 
 // print current working directory
-int	ft_pwd(t_list *lst)
+int	ft_pwd(void)
 {
-	t_env_var	*env_var;
+	char	cwd[PATH_MAX];
 
-	env_var = get_env_var(lst, "PWD");
-	if (env_var->value)
-		printf("%s\n", env_var->value);
+	if (getcwd(cwd, PATH_MAX))
+		printf("%s\n", cwd);
+	else
+		return (1);
 	return (0);
 }

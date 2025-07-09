@@ -46,7 +46,7 @@ void    ft_get_pair(char **pair, char *token, t_list *ev);
 void    ft_env_split(char **pair, char *s);
 
 // pwd
-int	    ft_pwd(t_list *lst);
+int	    ft_pwd(void);
 
 // signals
 void	ft_sig_interactive(int sig);
