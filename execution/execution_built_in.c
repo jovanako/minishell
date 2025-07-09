@@ -16,9 +16,6 @@
 
 int	exec_built_in(t_built_in_name built_in, char *av[], t_list *ev)
 {
-	int i = 0;
-	while (av[i])
-		printf("%s\n", av[i++]);
 	if (built_in == ECHO)
 		return (ft_echo(av));
 	if (built_in == CD)

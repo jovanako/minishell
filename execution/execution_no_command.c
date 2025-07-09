@@ -26,7 +26,7 @@ static int	handle_assignments(t_list *assignments, t_list *ev)
 		assignment = assignments->content;		
 		key = ft_strcpy(assignment->key);
 		val = ft_strcpy(assignment->value);
-		if (!key || !val || !add_env_var(ev, key, val, false))
+		if (!key || !val || !add_env_var(&ev, key, val, false))
 		{
 			free(key);
 			free(val);

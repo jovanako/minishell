@@ -42,7 +42,8 @@ int		ft_exit(int exit_code);
 
 // export
 int		ft_export(char **tokens, t_list *ev);
-char	**ft_get_pair(char *token, t_list *ev);
+void    ft_get_pair(char **pair, char *token, t_list *ev);
+void    ft_env_split(char **pair, char *s);
 
 // pwd
 int	    ft_pwd(t_list *lst);

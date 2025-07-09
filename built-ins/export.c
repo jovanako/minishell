@@ -12,7 +12,10 @@
 
 #include "built_ins.h"
 
-// currently doesn't work, tokens elements containing '=' are NULL
+/*	adds one or more given env vals to global scope
+/	creates a new env val if needed
+/	returns 0 if all tokens were exported, 1 if at least one failed
+*/
 int	ft_export(char **tokens, t_list *ev)
 {
 	int		i;
@@ -21,38 +24,60 @@ int	ft_export(char **tokens, t_list *ev)
 
 	i = 1;
 	exit_code = 0;
+	pair = (char **)malloc(sizeof(char *) * 2);
+	if (!pair)
+		return (1);
 	while (tokens[i])
 	{
-		pair = ft_get_pair(tokens[i], ev);
-		if (pair && *pair)
-			exit_code |= add_env_var(ev, pair[0], pair[1], 1);
+		ft_get_pair(pair, tokens[i], ev);
+		if (pair[0])
+		{
+			if (!add_env_var(&ev, pair[0], pair[1], 1))
+			{
+				exit_code = 1;
+				if (pair[0])
+					free(pair[0]);
+				if (pair[1])
+					free(pair[1]);
+			}
+		}
 		else
 			exit_code = 1;
-		ft_free_strarray(pair);
 		i++;
 	}
+	free(pair);
 	return (exit_code);
 }
 
-/* takes a token containing env variables and duplicates key and value pair into a new array
-/  new variables are only handled in case of assigment ('='). returns NULL on error
+/*	takes a token containing env variables, duplicates key & value
+/	new variables are only handled in case of assigment ('=')
 */ 
-char	**ft_get_pair(char *token, t_list *ev)
+void	ft_get_pair(char **pair, char *token, t_list *ev)
 {
-	char	**pair;
-
-	pair = NULL;
 	if (!ft_strchr(token, '='))
 	{
 		if (ft_getenv(ev, token))
 		{
-			pair = (char **)malloc(sizeof(char *) * 3);
 			pair[0] = ft_strdup(token);
 			pair[1] = ft_strdup(ft_getenv_v(ft_getenv(ev, token)));
-			pair[2] = NULL;
+		}
+		else
+		{
+			pair[0] = NULL;
+			pair[1] = NULL;
 		}
 	}
 	else
-		pair = ft_split(token, '=');
-	return (pair);
+		ft_env_split(pair, token);
+}
+
+void	ft_env_split(char **pair, char *s)
+{
+	int		i;
+
+	i = 0;
+	while (s[i] != '=')
+		i++;
+	pair[0] = ft_substr(s, 0, i);
+	pair[1] = ft_substr(s, i + 1, ft_strlen(s) - i);
 }
