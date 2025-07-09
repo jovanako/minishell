@@ -28,8 +28,8 @@ int	exec_built_in(t_built_in_name built_in, char *av[], t_list *ev)
 		return (ft_unset(av, ev));
 	if (built_in == ENV)
 		return (ft_env(ev));
-	// if (built_in == EXIT)
-	// 	return (ft_exit(av)); handle as a signal
+	if (built_in == EXIT)
+	 	return (ft_exit(av)); // handle as a signal
 	return (0); // TODO fix
 }
 

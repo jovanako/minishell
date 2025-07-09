@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+volatile sig_atomic_t	g_last_sig;
+
 static bool	read_input(char **input)
 {
 	free(*input);

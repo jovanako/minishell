@@ -12,14 +12,15 @@
 
 #include "built_ins.h"
 
-// TODO main loop needs to check for EOF input -> cleanly exits shell
+// TODO SIGQUIT still prints "^\", should do nothing
+// TODO EOF (ctrl-d) needs to print/call exit
 
-// in interactive mode SIGINT resets the prompt, SIQUIT is ignored
+// in interactive mode SIGINT resets the prompt, SIGQUIT is ignored
 void	ft_sig_interactive(int sig)
 {
+	g_last_sig = sig;
 	if (sig == SIGINT)
 	{
-		g_exit_code = 130;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -27,10 +28,11 @@ void	ft_sig_interactive(int sig)
 	}
 }
 
-// in noninteractive mod SIGINT and SIGQUIT both print a newline
+// in noninteractive mode SIGINT and SIGQUIT both print a newline
 void	ft_sig_noninteractive(int sig)
 {
-	(void)sig;
+	// TODO kill child process (via global var?)
+	g_last_sig = sig;
 	rl_on_new_line();
 }
 
@@ -39,7 +41,6 @@ void	ft_change_sigmode(int interactive)
 {
 	struct sigaction	action;
 
-	// might need init
 	if (interactive)
 		action.sa_handler = &ft_sig_interactive;
 	else

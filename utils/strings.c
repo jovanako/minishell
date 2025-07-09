@@ -53,3 +53,16 @@ void	ft_free_strarray(char **s_a)
 		free(s_a);
 	}
 }
+
+bool	ft_isnumber(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i++]))
+			return (false);
+	}
+	return (true);
+}
