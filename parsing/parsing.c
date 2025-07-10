@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/02 21:00:23 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:23:30 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	parse_simple_command(t_parsing_context *ctx)
 	node = ft_lstnew(command);
 	if (!node)
 		return (false);
-	ft_lstadd_back(&ctx->syntax_tree, node);
+	ft_lstadd_back(&ctx->commands, node);
 	return (true);
 }
 
@@ -89,9 +89,9 @@ bool	parse(t_parsing_context *ctx)
 {
 	if (!(parse_command_line(ctx)))
 	{
-		ft_lstiter(ctx->syntax_tree, &delete_command);
+		ft_lstiter(ctx->commands, &delete_command);
 		free(ctx);
 		return (false);
-	}	
+	}
 	return (true);
 }

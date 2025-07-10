@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/08 14:03:58 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:19:21 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 #include "../utils/utils.h"
 #include "../built-ins/built_ins.h"
 
-int	exec_built_in(t_built_in_name built_in, char *av[], t_list *ev)
+int	exec_built_in(t_execution_context *ctx, char *av[], t_list *ev)
 {
+	t_built_in_name	built_in;
+
+	built_in = find_built_in_name(av[0]);
 	if (built_in == ECHO)
 		return (ft_echo(av));
 	if (built_in == CD)
@@ -29,7 +32,7 @@ int	exec_built_in(t_built_in_name built_in, char *av[], t_list *ev)
 	if (built_in == ENV)
 		return (ft_env(ev));
 	if (built_in == EXIT)
-	 	return (ft_exit(av)); // handle as a signal
+	 	return (ft_exit(ctx, av)); // handle as a signal
 	return (0); // TODO fix
 }
 
@@ -76,12 +79,10 @@ t_built_in_name	find_built_in_name(char *cmd_name)
 	return (INVALID);
 }
 
-bool	fork_built_in(t_command *command, t_list *ev, t_fork_streams *s)
+bool	fork_built_in(t_execution_context *ctx, t_command *command, t_list *ev, t_fork_streams *s)
 {
 	pid_t			pid;
-	t_built_in_name	built_in;
 
-	built_in = find_built_in_name(command->argv[0]);
 	pid = fork();
 	if (pid == -1)
 		return (false);
@@ -99,7 +100,7 @@ bool	fork_built_in(t_command *command, t_list *ev, t_fork_streams *s)
 				return (false);
 			close(s->output_fd);
 		}
-		exit (exec_built_in(built_in, command->argv, ev));
+		exit (exec_built_in(ctx, command->argv, ev));
 	}
 	command->pid = pid;
 	return (true);

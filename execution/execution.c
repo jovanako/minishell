@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/08 17:19:50 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:25:10 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static int	wait_for_children(t_list *commands)
 	return (exit_status);
 }
 
-static void	execute_fork(t_command *command, t_fork_streams *fs, t_list *env_vars)
+static void	execute_fork(t_execution_context *ctx, t_command *command, t_fork_streams *fs)
 {
 	t_list	*copy_ev;
 	
-	copy_ev = resolve_fork_ev(command->assignments, env_vars);
+	copy_ev = resolve_fork_ev(command->assignments, ctx->env_vars);
 	// TODO NULL-check copy_ev - NULL if function failed
 	if (is_built_in(command->argv[0]))
 	{
-		fork_built_in(command, copy_ev, fs);
+		fork_built_in(ctx, command, copy_ev, fs);
 	}
 	else
 		fork_execve(command, copy_ev, fs);	
@@ -72,19 +72,19 @@ static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
 
 // last input and output redirections win
 // input redirection takes precedence over input_fd
-static bool	execute_command(t_list* commands, t_list* env_vars, int input_fd)
+static bool	execute_command(t_execution_context *ctx, int input_fd)
 {
 	int				fd[2]; // read end: 0 write end: 1
 	t_command		*command;
 	t_fork_streams	*fork_streams;
 
-	command = commands->content;
+	command = ctx->commands->content;
 	fork_streams = malloc(sizeof(t_fork_streams));
 	if (!fork_streams)
 		return (false);
 	fork_streams->input_fd = input_fd;
 	fork_streams->output_fd = STDOUT_FILENO;
-	if (commands->next)
+	if (ctx->commands->next)
 	{
 		if (pipe(fd) == -1)
 			return (false);
@@ -92,11 +92,11 @@ static bool	execute_command(t_list* commands, t_list* env_vars, int input_fd)
 	}
 	if (!add_redirs(fork_streams, command->redirections))
 		return (false);
-	execute_fork(command, fork_streams, env_vars);
-	if (commands->next)
+	execute_fork(ctx, command, fork_streams);
+	if (ctx->commands->next)
 	{
 		// use read end as input for the next command
-		execute_command(commands->next, env_vars, fd[0]);
+		execute_command(ctx, fd[0]);
 		close(fd[1]);
 		close(fd[0]);
 	}
@@ -104,25 +104,25 @@ static bool	execute_command(t_list* commands, t_list* env_vars, int input_fd)
 	return (true);
 }
 
-bool	execute(t_list* commands, t_list* env_vars)
+bool	execute(t_execution_context *ctx)
 {
 	t_command 	*cmd;
 	int			status;
-
-	if (!commands)
+	
+	if (!ctx->commands)
 		return (true);	
-	cmd = commands->content;
+	cmd = ctx->commands->content;
 	if (!cmd->argv[0])
-		status = handle_no_command(cmd, env_vars);
-	else if (is_special_built_in(commands))
+		status = handle_no_command(cmd, ctx->env_vars);
+	else if (is_special_built_in(ctx->commands))
 	{
-		// do assignments and redirects
-		status = exec_built_in(find_built_in_name(cmd->argv[0]), cmd->argv, env_vars);
+		ctx->env_vars = resolve_fork_ev(cmd->assignments, ctx->env_vars);
+		status = exec_built_in(ctx, cmd->argv, ctx->env_vars);
 	}
 	else
 	{
-		execute_command(commands, env_vars, 0);
-		status = wait_for_children(commands);
+		execute_command(ctx, 0);
+		status = wait_for_children(ctx->commands);
 	}
 	(void)status;
 	return (true); // TODO return status

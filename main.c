@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/07 19:32:46 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:27:30 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	read_input(char **input)
 {
 	free(*input);
 	ft_change_sigmode(1);
-	*input = readline("🐚minishell$ ");
+	*input = readline("🐚" CYN BOLD "minishell$ " RESET UNBOLD);
 	if (!*input)
 		return (false);
 	add_history(*input);
@@ -38,32 +38,37 @@ static bool	expand(t_token_context *ctx, t_list *env_vars)
 static bool	eval_loop(t_list *env_vars)
 {
     char 				*input;
-	t_token_context		token_context;
-	t_parsing_context	parsing_context;
+	t_token_context		t_ctx;
+	t_parsing_context	p_ctx;
+	t_execution_context	e_ctx;
 
 	input = NULL;
-	while (1)
+	e_ctx = (t_execution_context){ .exit = false };
+	while (!e_ctx.exit)
 	{
 		if (!read_input(&input))
 			return (false);
-		token_context = (t_token_context){ .line = input };
-		if (!tokenize(&token_context))
+		t_ctx = (t_token_context){ .line = input };
+		if (!tokenize(&t_ctx))
 		{
-			ft_lstclear(&token_context.tokens, &delete_token);
-			if (token_context.error)
+			ft_lstclear(&t_ctx.tokens, &delete_token);
+			if (t_ctx.error)
 				continue ;
 			return (false);
 		}
-		if (!expand(&token_context, env_vars))
+		if (!expand(&t_ctx, env_vars))
 			return (false);
-		parsing_context = (t_parsing_context){ .tokens = token_context.tokens, .current = token_context.tokens, .syntax_tree = NULL };
-		if (!parse(&parsing_context))
+		p_ctx = (t_parsing_context){ .tokens = t_ctx.tokens,
+			.current = t_ctx.tokens, .commands = NULL };
+		if (!parse(&p_ctx))
 			return (false);
 		ft_change_sigmode(0);
-		if (!execute(parsing_context.syntax_tree, env_vars))
+		e_ctx.commands = p_ctx.commands;
+		e_ctx.env_vars = env_vars;
+		if (!execute(&e_ctx))
 			return (false);
-		ft_lstclear(&(token_context.tokens), &delete_token);
-		ft_lstclear(&(parsing_context.syntax_tree), &delete_command);
+		ft_lstclear(&(t_ctx.tokens), &delete_token);
+		ft_lstclear(&(p_ctx.commands), &delete_command);
 	}
 	return (true);
 }

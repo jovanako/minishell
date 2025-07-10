@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:19:27 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 06:54:46 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:16:23 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ bool 	parse_assignment(t_parsing_context *ctx, t_command *command)
 	assignment->key = ft_substr(token->lexeme, 0, i);
 	if (!assignment->key)
 		return (false);
-	assignment->value = ft_substr(token->lexeme, i + 1,	ft_strlen(token->lexeme) - i - 1);
+	assignment->value = ft_substr(token->lexeme, i + 1,
+		ft_strlen(token->lexeme) - i - 1);
 	if (!assignment->value)
 		return (false);
 	node = ft_lstnew(assignment);

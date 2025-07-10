@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:14:42 by culbrich          #+#    #+#             */
-/*   Updated: 2025/06/27 14:42:03 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:22:24 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_getenv_v(t_list *lst);
 char	*ft_getenv_k(t_list *lst);
 
 // exit
-int		ft_exit(char **tokens);
+int		ft_exit(t_execution_context *ctx, char *argv[]);
 
 // export
 int		ft_export(char **tokens, t_list *ev);

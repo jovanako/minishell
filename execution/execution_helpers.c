@@ -6,33 +6,49 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/08 21:49:16 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/08 22:38:28 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
+static char	**free_and_return(char **str_arr)
+{
+	int	i;
+
+	i = 0;
+	while (str_arr[i])
+	{
+		free(str_arr[i]);
+		i++;
+	}
+	free(str_arr);
+	return (NULL); 
+}
+
 char	**ev_list_to_arr(t_list *env_vars)
 {
-	int			len;
 	int			i;
 	char		**result;
 	t_env_var	*var;
-	char		*str_var;
+	char		*str_var1;
+	char		*str_var2;
 
 	i = 0;
-	len = ft_lstsize(env_vars);
-	result = malloc((len + 1) * sizeof(char *));
+	result = malloc((ft_lstsize(env_vars) + 1) * sizeof(char *));
 	if (!result)
-		return NULL;
+		return (NULL);
 	while (env_vars)
 	{
 		var = (t_env_var *)env_vars->content;
-		str_var = ft_strjoin(var->key, "=");
-		// TODO check ft_strjoin success and free result and elements on fail
-		str_var = ft_strjoin(str_var, var->value);
-		// TODO check ft_strjoin success and free result and elements on fail
-		result[i++] = str_var;
+		str_var1 = ft_strjoin(var->key, "=");
+		if (!str_var1)
+			return (free_and_return(result));
+		str_var2 = ft_strjoin(str_var1, var->value);
+		free(str_var1);
+		if (!str_var2)
+			return (free_and_return(result));
+		result[i++] = str_var2;
 		env_vars = env_vars->next;
 	}
 	result[i] = NULL;
