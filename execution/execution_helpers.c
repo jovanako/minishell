@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/08 22:38:28 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/10 20:48:23 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,20 @@ t_list	*resolve_fork_ev(t_list *assignments, t_list *env_vars)
 	t_list			*copy;
 	t_assignment	*assignment;
 	t_env_var		*env_var;
+	char			*key;
+	char			*value;
 
 	copy = NULL;
 	while (assignments)
 	{
 		assignment = assignments->content;
-		// TODO make a copy of key and value strings
-		if (!add_env_var(&copy, assignment->key, assignment->value, true))
+		key = ft_strcpy(assignment->key);
+		if (!key)
+			return (NULL);
+		value = ft_strcpy(assignment->value);
+		if (!value)
+			return (NULL);
+		if (!add_env_var(&copy, key, value, true))
 			return (NULL);
 		assignments = assignments->next;
 	}
@@ -75,8 +82,13 @@ t_list	*resolve_fork_ev(t_list *assignments, t_list *env_vars)
 		env_var = env_vars->content;
 		if (env_var->exported)
 		{
-			// TODO make a copy of key and value strings
-			if (!add_env_var(&copy, env_var->key, env_var->value, true))
+			key = ft_strcpy(env_var->key);
+			if (!key)
+				return (NULL);
+			value = ft_strcpy(env_var->value);
+			if (!value)
+				return (NULL);
+			if (!add_env_var(&copy, key, value, true))
 				return (NULL);
 		}
 		env_vars = env_vars->next;	
