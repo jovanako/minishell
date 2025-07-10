@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/07 15:07:38 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/10 20:55:28 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,5 @@ bool	tokenize(t_token_context *ctx)
 			return (false);
 		}
 	}
-	
-	// printf("tokens ->\n"); // delete this
-	// ft_lstiter(ctx->tokens, &print_token);  // delete this
-	
 	return (true);
 }
