@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/10 19:19:21 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/10 20:24:28 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,10 @@ bool	fork_built_in(t_execution_context *ctx, t_command *command, t_list *ev, t_f
 		}
 		exit (exec_built_in(ctx, command->argv, ev));
 	}
+	if (s->input_fd != STDIN_FILENO)
+		close(s->input_fd);
+	if (s->output_fd != STDOUT_FILENO)
+		close(s->output_fd);
 	command->pid = pid;
 	return (true);
 }
