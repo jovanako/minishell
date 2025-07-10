@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/10 19:25:10 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:35:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ static bool	execute_command(t_execution_context *ctx, int input_fd)
 	execute_fork(ctx, command, fork_streams);
 	if (ctx->commands->next)
 	{
-		// use read end as input for the next command
-		execute_command(ctx, fd[0]);
+		ctx->commands = ctx->commands->next;
+		execute_command(ctx, fd[0]); 
 		close(fd[1]);
 		close(fd[0]);
 	}
