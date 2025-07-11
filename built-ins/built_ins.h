@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:14:42 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/10 19:22:24 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:26:54 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_getenv_k(t_list *lst);
 int		ft_exit(t_execution_context *ctx, char *argv[]);
 
 // export
-int		ft_export(char **tokens, t_list *ev);
+int		ft_export(char **tokens, t_list *ev, t_list *assignments);
 void    ft_get_pair(char **pair, char *token, t_list *ev);
 void    ft_env_split(char **pair, char *s);
 
@@ -54,7 +54,7 @@ void	ft_sig_noninteractive(int sig);
 void	ft_change_sigmode(int interactive);
 
 // unset
-int	    ft_unset(char **keys, t_list *lst);
+int	    ft_unset(char **keys, t_list *lst, t_list *assignments);
 void	ft_lstdelfill(t_list **start, t_list *to_del);
 
 #endif

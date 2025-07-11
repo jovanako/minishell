@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/11 19:40:46 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:16:30 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ bool	execute(t_execution_context *ctx)
 	if (!cmd->argv[0])
 		status = handle_no_command(cmd, ctx->env_vars);
 	else if (is_special_built_in(ctx->commands))
-		status = exec_built_in(ctx, cmd->argv);
+		status = exec_built_in(ctx, cmd);
 	else
 	{
 		execute_command(ctx, 0);

@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:56:08 by culbrich          #+#    #+#             */
-/*   Updated: 2025/06/27 14:54:30 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:31:38 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_ins.h"
 
-int	ft_unset(char **keys, t_list *lst)
+int	ft_unset(char **keys, t_list *lst, t_list *assignments)
 {
 	int		i;
 
 	i = 1;
 	while (keys[i])
 	{
-		ft_lstdelfill(&lst, ft_getenv(lst, keys[i]));
+		if (!ft_getenv(assignments, keys[i]))
+			ft_lstdelfill(&lst, ft_getenv(lst, keys[i]));
 		i++;
 	}
 	return (0);

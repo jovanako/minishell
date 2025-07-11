@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:49 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/08 16:22:39 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:26:16 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 /	creates a new env val if needed
 /	returns 0 if all tokens were exported, 1 if at least one failed
 */
-int	ft_export(char **tokens, t_list *ev)
+int	ft_export(char **tokens, t_list *ev, t_list *assignments)
 {
 	int		i;
 	int		exit_code;
 	char	**pair;
 
+	(void)assignments; // remove after impl
 	i = 1;
 	exit_code = 0;
 	pair = (char **)malloc(sizeof(char *) * 2);
