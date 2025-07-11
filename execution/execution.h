@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:24:40 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/11 20:09:17 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:11:56 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,6 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-
-typedef enum e_built_in_name 
-{
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT,
-	INVALID
-}	t_built_in_name;
 
 typedef struct s_fork_streams
 {
