@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/11 19:12:47 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 19:40:46 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,15 @@ static int	wait_for_children(t_list *commands)
 
 static void	execute_fork(t_execution_context *ctx, t_command *command, t_fork_streams *fs)
 {
-	t_list	*copy_ev;
-	
-	copy_ev = resolve_fork_ev(command->assignments, ctx->env_vars);
-	// TODO NULL-check copy_ev - NULL if function failed
+	ctx->env_vars = resolve_fork_ev(command->assignments, ctx->env_vars);
+	// TODO NULL-check ctx->env_vars - NULL if function failed
 	if (is_built_in(command->argv[0]))
 	{
-		fork_built_in(ctx, command, copy_ev, fs);
+		fork_built_in(ctx, command, fs);
 	}
 	else
-		fork_execve(command, copy_ev, fs);	
-	// TODO free copy_ev
+		fork_execve(command, ctx->env_vars, fs);	
+	// TODO free ctx->env_vars
 }
 
 static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
@@ -113,7 +111,7 @@ bool	execute(t_execution_context *ctx)
 	if (!cmd->argv[0])
 		status = handle_no_command(cmd, ctx->env_vars);
 	else if (is_special_built_in(ctx->commands))
-		status = exec_built_in(ctx, cmd->argv, ctx->env_vars);
+		status = exec_built_in(ctx, cmd->argv);
 	else
 	{
 		execute_command(ctx, 0);

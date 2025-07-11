@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/10 20:24:28 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 19:38:40 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../utils/utils.h"
 #include "../built-ins/built_ins.h"
 
-int	exec_built_in(t_execution_context *ctx, char *av[], t_list *ev)
+int	exec_built_in(t_execution_context *ctx, char *av[])
 {
 	t_built_in_name	built_in;
 
@@ -22,15 +22,15 @@ int	exec_built_in(t_execution_context *ctx, char *av[], t_list *ev)
 	if (built_in == ECHO)
 		return (ft_echo(av));
 	if (built_in == CD)
-		return (ft_cd(av[1], ev)); // check if av[1] exists
+		return (ft_cd(av[1], ctx->env_vars)); // check if av[1] exists
 	if (built_in == PWD)
 		return (ft_pwd());
 	if (built_in == EXPORT) 
-	 	return (ft_export(av, ev));
+	 	return (ft_export(av, ctx->env_vars));
 	if (built_in == UNSET) 
-		return (ft_unset(av, ev));
+		return (ft_unset(av, ctx->env_vars));
 	if (built_in == ENV)
-		return (ft_env(ev));
+		return (ft_env(ctx->env_vars));
 	if (built_in == EXIT)
 	 	return (ft_exit(ctx, av)); // handle as a signal
 	return (0); // TODO fix
@@ -79,7 +79,7 @@ t_built_in_name	find_built_in_name(char *cmd_name)
 	return (INVALID);
 }
 
-bool	fork_built_in(t_execution_context *ctx, t_command *command, t_list *ev, t_fork_streams *s)
+bool	fork_built_in(t_execution_context *ctx, t_command *command, t_fork_streams *s)
 {
 	pid_t			pid;
 
@@ -100,7 +100,7 @@ bool	fork_built_in(t_execution_context *ctx, t_command *command, t_list *ev, t_f
 				return (false);
 			close(s->output_fd);
 		}
-		exit (exec_built_in(ctx, command->argv, ev));
+		exit (exec_built_in(ctx, command->argv));
 	}
 	if (s->input_fd != STDIN_FILENO)
 		close(s->input_fd);
