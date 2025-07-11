@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/10 20:26:34 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 19:12:47 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,7 @@ bool	execute(t_execution_context *ctx)
 	if (!cmd->argv[0])
 		status = handle_no_command(cmd, ctx->env_vars);
 	else if (is_special_built_in(ctx->commands))
-	{
-		ctx->env_vars = resolve_fork_ev(cmd->assignments, ctx->env_vars);
 		status = exec_built_in(ctx, cmd->argv, ctx->env_vars);
-	}
 	else
 	{
 		execute_command(ctx, 0);
