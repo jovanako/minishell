@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:42 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/10 19:20:52 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 21:26:49 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ int	ft_exit(t_execution_context *ctx, char *argv[])
 	return (1);
 }
 
-int	ft_exit_shell(t_list **env_vars, int exit_code)
+int	ft_exit_shell(int exit_code)
 {
-	ft_lstclear(env_vars, &delete_env_var);
 	exit(exit_code);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/11 20:16:30 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 21:09:53 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ static int	wait_for_children(t_list *commands)
 	return (exit_status);
 }
 
-static void	execute_fork(t_execution_context *ctx, t_command *command, t_fork_streams *fs)
+static bool	execute_fork(t_execution_context *ctx, t_command *command, t_fork_streams *fs)
 {
-	ctx->env_vars = resolve_fork_ev(command->assignments, ctx->env_vars);
-	// TODO NULL-check ctx->env_vars - NULL if function failed
+	if (!ctx->env_vars)
+		return (false);
 	if (is_built_in(command->argv[0]))
 	{
 		fork_built_in(ctx, command, fs);
 	}
 	else
-		fork_execve(command, ctx->env_vars, fs);	
-	// TODO free ctx->env_vars
+		fork_execve(command, ctx->env_vars, fs);
+	return (true);
 }
 
 static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
@@ -90,7 +90,8 @@ static bool	execute_command(t_execution_context *ctx, int input_fd)
 	}
 	if (!add_redirs(fork_streams, command->redirections))
 		return (false);
-	execute_fork(ctx, command, fork_streams);
+	if (!execute_fork(ctx, command, fork_streams))
+		return (false);
 	if (ctx->commands->next)
 	{
 		ctx->commands = ctx->commands->next;
@@ -103,20 +104,19 @@ static bool	execute_command(t_execution_context *ctx, int input_fd)
 bool	execute(t_execution_context *ctx)
 {
 	t_command 	*cmd;
-	int			status;
 	
 	if (!ctx->commands)
 		return (true);	
 	cmd = ctx->commands->content;
 	if (!cmd->argv[0])
-		status = handle_no_command(cmd, ctx->env_vars);
+		ctx->status = handle_no_command(cmd, ctx->env_vars);
 	else if (is_special_built_in(ctx->commands))
-		status = exec_built_in(ctx, cmd);
+		ctx->status = exec_built_in(ctx, cmd);
 	else
 	{
-		execute_command(ctx, 0);
-		status = wait_for_children(ctx->commands);
+		if (!execute_command(ctx, 0))
+			return (false);
+		ctx->status = wait_for_children(ctx->commands);
 	}
-	(void)status;
-	return (true); // TODO return status
+	return (true);
 }

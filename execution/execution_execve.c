@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 21:40:11 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 21:09:29 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,16 @@ static bool	child_process(t_command *cmd, t_list *ev, t_fork_streams *fork_strea
 bool	fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fork_streams)
 {
 	pid_t	pid;
+	t_list	*env_cpy;
 
 	pid = fork();
 	if (pid == -1)
 		return (false);
 	if (pid == 0) // child
 	{
+		env_cpy = resolve_fork_ev(cmd->assignments, ev);
+		if (!env_cpy)
+			return (false);
 		if (!child_process(cmd, ev, fork_streams))
 			return (false);
 	}

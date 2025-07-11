@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/11 20:32:20 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 21:05:58 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	is_special_built_in(t_list *commands)
 
 bool	fork_built_in(t_execution_context *ctx, t_command *command, t_fork_streams *s)
 {
-	pid_t			pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
@@ -81,6 +81,8 @@ bool	fork_built_in(t_execution_context *ctx, t_command *command, t_fork_streams 
 				return (false);
 			close(s->output_fd);
 		}
+		ctx->env_vars = resolve_fork_ev(command->assignments, ctx->env_vars);
+		// TODO check resolve_fork_ev success
 		exit (exec_built_in(ctx, command));
 	}
 	if (s->input_fd != STDIN_FILENO)
