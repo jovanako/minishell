@@ -19,6 +19,7 @@ static bool	read_input(char **input)
 	free(*input);
 	ft_change_sigmode(1);
 	*input = readline("🐚" CYN BOLD "minishell$ " RESET UNBOLD);
+	ft_change_sigmode(0);
 	if (!*input)
 		return (false);
 	add_history(*input);
@@ -62,7 +63,6 @@ static bool	eval_loop(t_list *env_vars)
 			.current = t_ctx.tokens, .commands = NULL };
 		if (!parse(&p_ctx))
 			return (false);
-		ft_change_sigmode(0);
 		e_ctx.commands = p_ctx.commands;
 		e_ctx.env_vars = env_vars;
 		if (!execute(&e_ctx))

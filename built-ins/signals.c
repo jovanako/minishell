@@ -21,7 +21,7 @@ void	ft_sig_interactive(int sig)
 	g_last_sig = sig;
 	if (sig == SIGINT)
 	{
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -31,7 +31,6 @@ void	ft_sig_interactive(int sig)
 // in noninteractive mode SIGINT and SIGQUIT both print a newline
 void	ft_sig_noninteractive(int sig)
 {
-	// TODO kill child process (via global var?)
 	g_last_sig = sig;
 	rl_on_new_line();
 }
