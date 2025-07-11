@@ -18,6 +18,11 @@ int	ft_echo(char **tokens)
 	int	i;
 	int	n;
 
+	if (!tokens[1])
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		return (0);
+	}
 	i = 1;
 	n = 0;
 	while (ft_echo_option(tokens[i]) && tokens[i])

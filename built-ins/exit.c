@@ -12,24 +12,24 @@
 
 #include "built_ins.h"
 
-//	TODO:
 //	exit (0)	= e + "exit"
-//	exit  x 	= e + "exit" + "minishell: exit: aa: numeric argument required"
-//	exit  0 x	= e + "exit" + "minishell: exit: too many arguments"
+//	exit  x ( )	= e + "exit" + "minishell: exit: aa: numeric argument required"
+//	exit  0  x	= e + "exit" + "minishell: exit: too many arguments"
 int	ft_exit(t_execution_context *ctx, char *argv[])
 {
-	if (argv[1] && argv[2])
-	{
-		printf("minishell: exit: too many arguments");
-		return (1);
-	}
+	int	exit_code;
+
+	printf("exit\n");
+	if (!argv[1])
+		exit_code = 0;
+	else if (!ft_isnumber(argv[1]))
+		printf("minishell: exit: aa: numeric argument required\n");
+	else if (argv[2])
+		printf("minishell: exit: too many arguments\n");
 	else
-	if (!argv[1] || (argv[1] && ft_isnumber(argv[1])))
-	{
-		printf("exit\n");
-		ctx->exit = true;
-	}
-	return (1);
+		exit_code = ft_atoi(argv[1]);
+	ctx->exit = true;
+	return (exit_code);
 }
 
 int	ft_exit_shell(t_list **env_vars, int exit_code)
