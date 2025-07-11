@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/11 19:38:40 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/11 20:10:19 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,22 @@
 #include "../utils/utils.h"
 #include "../built-ins/built_ins.h"
 
-int	exec_built_in(t_execution_context *ctx, char *av[])
+int	exec_built_in(t_execution_context *ctx, char *argv[])
 {
-	t_built_in_name	built_in;
-
-	built_in = find_built_in_name(av[0]);
-	if (built_in == ECHO)
-		return (ft_echo(av));
-	if (built_in == CD)
-		return (ft_cd(av[1], ctx->env_vars)); // check if av[1] exists
-	if (built_in == PWD)
+	if (is_str_equal(argv[0], "echo"))
+		return (ft_echo(argv));
+	if (is_str_equal(argv[0], "cd"))
+		return (ft_cd(argv[1], ctx->env_vars)); // check if argv[1] exists
+	if (is_str_equal(argv[0], "pwd"))
 		return (ft_pwd());
-	if (built_in == EXPORT) 
-	 	return (ft_export(av, ctx->env_vars));
-	if (built_in == UNSET) 
-		return (ft_unset(av, ctx->env_vars));
-	if (built_in == ENV)
+	if (is_str_equal(argv[0], "export")) 
+	 	return (ft_export(argv, ctx->env_vars));
+	if (is_str_equal(argv[0], "unset")) 
+		return (ft_unset(argv, ctx->env_vars));
+	if (is_str_equal(argv[0],"env"))
 		return (ft_env(ctx->env_vars));
-	if (built_in == EXIT)
-	 	return (ft_exit(ctx, av)); // handle as a signal
+	if (is_str_equal(argv[0], "exit"))
+	 	return (ft_exit(ctx, argv)); // handle as a signal
 	return (0); // TODO fix
 }
 
@@ -58,25 +55,6 @@ bool	is_special_built_in(t_list *commands)
 			|| is_str_equal(cmd_name, "unset")
 			|| is_str_equal(cmd_name, "exit")
 			|| is_str_equal(cmd_name, "cd"));
-}
-
-t_built_in_name	find_built_in_name(char *cmd_name)
-{
-	if (is_str_equal(cmd_name, "echo"))
-		return (ECHO);
-	if (is_str_equal(cmd_name, "cd"))
-		return (CD);
-	if (is_str_equal(cmd_name, "pwd"))
-		return (PWD);
-	if (is_str_equal(cmd_name, "export"))
-		return (EXPORT);
-	if (is_str_equal(cmd_name, "unset"))
-		return (UNSET);
-	if (is_str_equal(cmd_name, "env"))
-		return (ENV);
-	if (is_str_equal(cmd_name, "exit"))
-		return (EXIT);
-	return (INVALID);
 }
 
 bool	fork_built_in(t_execution_context *ctx, t_command *command, t_fork_streams *s)
