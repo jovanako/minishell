@@ -17,9 +17,9 @@ volatile sig_atomic_t	g_last_sig;
 static bool	read_input(char **input)
 {
 	free(*input);
-	ft_change_sigmode(1);
+	ft_change_sigmode(true);
 	*input = readline("🐚" CYN BOLD "minishell$ " RESET UNBOLD);
-	ft_change_sigmode(0);
+	ft_change_sigmode(false);
 	if (!*input)
 		return (false);
 	add_history(*input);
@@ -84,6 +84,7 @@ int main(int argc, char *argv[], char *envp[])
 		return (1);
 	if (!eval_loop(env_vars))
 	{
+		printf("exit\n");
 		ft_lstclear(&env_vars, &delete_env_var);
 		return (1);
 	}

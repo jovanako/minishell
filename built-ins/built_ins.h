@@ -51,7 +51,7 @@ int	    ft_pwd(void);
 // signals
 void	ft_sig_interactive(int sig);
 void	ft_sig_noninteractive(int sig);
-void	ft_change_sigmode(int interactive);
+void	ft_change_sigmode(bool interactive);
 
 // unset
 int	    ft_unset(char **keys, t_list *lst, t_list *assignments);

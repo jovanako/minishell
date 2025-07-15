@@ -36,15 +36,17 @@ void	ft_sig_noninteractive(int sig)
 }
 
 // changes the function that handles incoming SIGINT and SIGQUIT signals
-void	ft_change_sigmode(int interactive)
+void	ft_change_sigmode(bool interactive)
 {
 	struct sigaction	action;
 
+	ft_bzero(&action, sizeof(action));
 	if (interactive)
 		action.sa_handler = &ft_sig_interactive;
 	else
 		action.sa_handler = &ft_sig_noninteractive;
 	sigaction(SIGINT, &action, NULL);
 	sigaction(SIGQUIT, &action, NULL);
+	rl_catch_signals = interactive;
 }
 
