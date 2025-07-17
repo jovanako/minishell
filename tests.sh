@@ -39,6 +39,6 @@ test_output_contains "$USER" 'echo $USER'
 test_output_contains "USER=$USER" "env | grep USER="
 test_output_contains "XXX=$XXX" "XXX=xxx env | grep XXX"
 test_output_contains "/home/jovana/Desktop/42Berlin/minishell" "pwd"
-# test_output_contains "/home/jovana/Desktop/42Berlin" \
-# 'cd ..
-# pwd'
+test_output_contains "/home/jovana/Desktop/42Berlin" \
+'cd ..
+pwd'
