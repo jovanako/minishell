@@ -45,3 +45,7 @@ pwd'
 test_output_contains "BLA=bla" \
 'export BLA=bla
 env | grep BLA'
+test_output_contains "BLA=a" \
+'export BLA=bla
+BLA=a
+env | grep BLA'
