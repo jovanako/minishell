@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/08 12:51:29 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/18 22:30:40 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ SRCS = main.c \
 		tokenizer/tokenizer.c \
 		tokenizer/tokenizer_helper.c \
 		tokenizer/token_readers.c \
-		tokenizer/heredoc_reader.c \
 		env_vars/env_vars.c \
 		env_vars/add_env_var.c \
 		env_vars/get_env_var.c \

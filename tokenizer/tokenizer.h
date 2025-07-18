@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 21:34:56 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/08 16:54:53 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/18 22:29:55 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,4 @@ bool	add_token(t_token_context *context, t_token_type type);
 bool	tokenize(t_token_context *context);
 void	delete_token(void *t);
 bool	read_word(t_token_context *context);
-bool	read_less_than(t_token_context *context);
-bool	read_greater_than(t_token_context *context);
-bool	read_heredoc_delimiter(t_token_context *context);
 #endif

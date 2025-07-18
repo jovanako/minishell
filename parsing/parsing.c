@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/10 20:56:15 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/18 21:54:59 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ bool	parse(t_parsing_context *ctx)
 	if (!(parse_command_line(ctx)))
 	{
 		ft_lstiter(ctx->commands, &delete_command);
-		free(ctx);
 		return (false);
 	}
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:22:25 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/06/27 07:26:28 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/18 22:25:11 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ bool	parse_redirection(t_parsing_context *ctx, t_command *command)
 	token = (t_token *)ctx->current->content;
 	if (!is_current_type(ctx, WORD_TOKEN))
 	{
-		ctx->error = "Syntax error\n";
+		ctx->error = "Syntax error\n"; // change to printf
 		return (false);
 	}	 
 	redirection->target = token->lexeme; 
