@@ -42,3 +42,6 @@ test_output_contains "/home/jovana/Desktop/42Berlin/minishell" "pwd"
 test_output_contains "/home/jovana/Desktop/42Berlin" \
 'cd ..
 pwd'
+test_output_contains "BLA=bla" \
+'export BLA=bla
+env | grep BLA'
