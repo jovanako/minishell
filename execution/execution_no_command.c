@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:08:33 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/20 20:42:38 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/20 20:52:23 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	handle_redirections(t_list	*redirections)
 	int 			rights_flags;
 	char			*input;
 
+	input = NULL;
 	rights_flags = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	while (redirections)
 	{
@@ -65,10 +66,12 @@ static int	handle_redirections(t_list	*redirections)
 		{
 			while (1)
 			{
+				free(input);
 				input = readline("> ");
 				if (!input || ft_strcmp(redirection->target, input) == 0)
 					break ;
 			}
+			free(input);
 		}
 		redirections = redirections->next;
 	}
