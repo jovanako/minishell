@@ -63,13 +63,10 @@ static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
 			if (open_append_redir(fork_streams, current_redir) == -1)
 				return (false); // error: open failed
 		}
-
 		else if (current_redir->type == HEREDOC_REDIRECT)
 		{
-			// open temporary file for writing
-			// accept user input and write it to the temp file until the input is the delimiter
-			// close temp file and open it for reading
-			// assign the file descriptor of the temp file open for reading to fork_streams->input_fd
+			if (open_heredoc_redir(fork_streams, current_redir) == -1)
+				return (false); // error: open failed
 		}
 		current_node = current_node->next;
 	}

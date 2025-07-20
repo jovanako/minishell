@@ -43,7 +43,8 @@ int		ft_exit(t_execution_context *ctx, char *argv[]);
 // export
 int		ft_export(char **tokens, t_list *ev, t_list *assignments);
 void    ft_get_pair(char **pair, char *token, t_list *ev);
-void    ft_env_split(char **pair, char *s);
+int	    ft_env_split(char **pair, char *s);
+void	ft_free_pair(char **pair);
 
 // pwd
 int	    ft_pwd(void);
