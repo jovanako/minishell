@@ -6,21 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:56:08 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/18 12:15:58 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/19 10:32:18 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_ins.h"
-
-static bool match_assignment_key(void *a, void *k)
-{
-	t_assignment	*assignment;
-	char			*key;
-	
-	key = k;
-	assignment = a;
-	return (ft_strcmp(assignment->key, key) == 0);
-}
 
 int	ft_unset(char **keys, t_list *lst, t_list *assignments)
 {
