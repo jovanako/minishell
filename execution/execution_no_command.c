@@ -6,11 +6,12 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:08:33 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/07 08:47:26 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/20 20:42:38 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "../minishell.h"
 #include "../utils/utils.h"
 
 static int	handle_assignments(t_list *assignments, t_list *ev)
@@ -42,6 +43,7 @@ static int	handle_redirections(t_list	*redirections)
 	t_redirection	*redirection;
 	int				fd;
 	int 			rights_flags;
+	char			*input;
 
 	rights_flags = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 	while (redirections)
@@ -58,7 +60,16 @@ static int	handle_redirections(t_list	*redirections)
 			fd = open(redirection->target, O_CREAT 
 				| O_WRONLY | O_APPEND, rights_flags);
 			close(fd);
-		} 
+		}
+		else if (redirection->type == HEREDOC_REDIRECT)
+		{
+			while (1)
+			{
+				input = readline("> ");
+				if (!input || ft_strcmp(redirection->target, input) == 0)
+					break ;
+			}
+		}
 		redirections = redirections->next;
 	}
 	return (0);
