@@ -20,14 +20,11 @@ int	ft_export(char **tokens, t_list *ev, t_list *assignments)
 {
 	int		i;
 	int		exit_code;
-	char	**pair;
+	char	*pair[2];
 
 	(void)assignments; // remove after impl
 	i = 1;
 	exit_code = 0;
-	pair = (char **)malloc(sizeof(char *) * 2);
-	if (!pair)
-		return (1);
 	while (tokens[i])
 	{
 		ft_get_pair(pair, tokens[i], ev);
@@ -36,17 +33,13 @@ int	ft_export(char **tokens, t_list *ev, t_list *assignments)
 			if (!add_env_var(&ev, pair[0], pair[1], 1))
 			{
 				exit_code = 1;
-				if (pair[0])
-					free(pair[0]);
-				if (pair[1])
-					free(pair[1]);
+				ft_free_pair(pair);
 			}
 		}
 		else
 			exit_code = 1;
 		i++;
 	}
-	free(pair);
 	return (exit_code);
 }
 
@@ -72,7 +65,7 @@ void	ft_get_pair(char **pair, char *token, t_list *ev)
 		ft_env_split(pair, token);
 }
 
-void	ft_env_split(char **pair, char *s)
+int	ft_env_split(char **pair, char *s)
 {
 	int		i;
 
@@ -81,4 +74,15 @@ void	ft_env_split(char **pair, char *s)
 		i++;
 	pair[0] = ft_substr(s, 0, i);
 	pair[1] = ft_substr(s, i + 1, ft_strlen(s) - i);
+	if (!pair[0] || !pair[1])
+		return (1);
+	return (0);
+}
+
+void	ft_free_pair(char **pair)
+{
+	if (pair[0])
+		free(pair[0]);
+	if (pair[1])
+		free(pair[1]);
 }

@@ -63,6 +63,11 @@ static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
 			if (open_append_redir(fork_streams, current_redir) == -1)
 				return (false); // error: open failed
 		}
+		else if (current_redir->type == HEREDOC_REDIRECT)
+		{
+			if (open_heredoc_redir(fork_streams, current_redir) == -1)
+				return (false); // error: open failed
+		}
 		current_node = current_node->next;
 	}
 	return (true);
