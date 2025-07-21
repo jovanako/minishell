@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:24 by culbrich          #+#    #+#             */
-/*   Updated: 2025/06/27 14:17:46 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:08:03 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_ins.h"
+
+// returns 1 if s is structured "-n...n"
+static int	ft_echo_option(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s[i++] != '-')
+		return (0);
+	while (s[i] == 'n')
+		i++;
+	if (s[i])
+		return (0);
+	return (1);
+}
 
 // prints all non-flag arguments to the standard output
 int	ft_echo(char **tokens)
@@ -40,19 +55,4 @@ int	ft_echo(char **tokens)
 	if (!n)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
-}
-
-// returns 1 if s is structured "-n...n"
-int	ft_echo_option(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (s[i++] != '-')
-		return (0);
-	while (s[i] == 'n')
-		i++;
-	if (s[i])
-		return (0);
-	return (1);
 }

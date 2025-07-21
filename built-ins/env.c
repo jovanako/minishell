@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:34 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/03 15:23:13 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:11:20 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_ins.h"
+
+// returns the key (str) of env pointed to by lst
+// static char	*ft_getenv_k(t_list *lst)
+// {
+// 	t_env_var	*env_var;
+
+// 	if (lst)
+// 	{
+// 		env_var = (t_env_var *)lst->content;
+// 		if (env_var->key)
+// 			return (env_var->key);
+// 	}
+// 	return (NULL);
+// }
 
 // prints all environment variables
 int	ft_env(t_list *lst)
@@ -72,20 +86,6 @@ char	*ft_getenv_v(t_list *lst)
 		env_var = (t_env_var *)lst->content;
 		if (env_var->value)
 			return (env_var->value);
-	}
-	return (NULL);
-}
-
-// returns the key (str) of env pointed to by lst
-char	*ft_getenv_k(t_list *lst)
-{
-	t_env_var	*env_var;
-
-	if (lst)
-	{
-		env_var = (t_env_var *)lst->content;
-		if (env_var->key)
-			return (env_var->key);
 	}
 	return (NULL);
 }

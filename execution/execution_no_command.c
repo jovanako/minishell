@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:08:33 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/20 20:52:23 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/21 13:53:59 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,31 @@ static int	handle_assignments(t_list *assignments, t_list *ev)
 	return (0);
 }
 
-static int	handle_redirections(t_list	*redirections)
+static void	is_output_or_append(t_redirection *redirection, int *fd, int rights_flags)
+{
+	if (redirection->type == OUTPUT_REDIRECT)
+		{
+			*fd = open(redirection->target, O_CREAT 
+				| O_WRONLY | O_TRUNC, rights_flags);
+			close(*fd);
+		}	
+		else if (redirection->type == APPEND_REDIRECT)
+		{
+			*fd = open(redirection->target, O_CREAT 
+				| O_WRONLY | O_APPEND, rights_flags);
+			close(*fd);
+		}
+}
+
+static void	is_heredoc(char *input, t_redirection *redirection)
+{
+		free(input);
+		input = readline("> ");
+		if (!input || ft_strcmp(redirection->target, input) == 0)
+			return ;
+}
+
+static int	handle_redirections(t_list *redirections)
 {
 	t_redirection	*redirection;
 	int				fd;
@@ -50,26 +74,14 @@ static int	handle_redirections(t_list	*redirections)
 	while (redirections)
 	{
 		redirection = redirections->content;
-		if (redirection->type == OUTPUT_REDIRECT)
-		{
-			fd = open(redirection->target, O_CREAT 
-				| O_WRONLY | O_TRUNC, rights_flags);
-			close(fd);
-		}	
-		else if (redirection->type == APPEND_REDIRECT)
-		{
-			fd = open(redirection->target, O_CREAT 
-				| O_WRONLY | O_APPEND, rights_flags);
-			close(fd);
-		}
+		if (redirection->type == OUTPUT_REDIRECT
+			|| redirection->type == APPEND_REDIRECT)
+			is_output_or_append(redirection, &fd, rights_flags);
 		else if (redirection->type == HEREDOC_REDIRECT)
 		{
 			while (1)
 			{
-				free(input);
-				input = readline("> ");
-				if (!input || ft_strcmp(redirection->target, input) == 0)
-					break ;
+				is_heredoc(input, redirection);
 			}
 			free(input);
 		}

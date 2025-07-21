@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:56:02 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/10 15:53:01 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:06:43 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // TODO EOF (ctrl-d) needs to print/call exit
 
 // in interactive mode SIGINT resets the prompt, SIGQUIT is ignored
-void	ft_sig_interactive(int sig)
+static void	ft_sig_interactive(int sig)
 {
 	g_last_sig = sig;
 	if (sig == SIGINT)
@@ -29,7 +29,7 @@ void	ft_sig_interactive(int sig)
 }
 
 // in noninteractive mode SIGINT and SIGQUIT both print a newline
-void	ft_sig_noninteractive(int sig)
+static void	ft_sig_noninteractive(int sig)
 {
 	g_last_sig = sig;
 	rl_on_new_line();
