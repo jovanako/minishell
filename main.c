@@ -17,9 +17,9 @@ volatile sig_atomic_t	g_last_sig;
 static bool	read_input(char **input)
 {
 	free(*input);
-	ft_change_sigmode(true);
+	ft_change_sigmode(SIG_INTERACTIVE);
 	*input = readline("🐚" CYN BOLD "minishell$ " RESET UNBOLD);
-	ft_change_sigmode(false);
+	ft_change_sigmode(SIG_NONINTERACTIVE);
 	if (!*input)
 		return (false);
 	add_history(*input);

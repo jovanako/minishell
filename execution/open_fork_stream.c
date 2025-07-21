@@ -43,24 +43,40 @@ int	open_heredoc_redir(t_fork_streams *fork_streams, t_redirection *redir)
 {
 	char	*input;
 	int		tmp_file;
+	int		i;
 
-	tmp_file = open(".tmp", O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+	tmp_file = open("/tmp/minishell.tmp", O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (!tmp_file)
-		return 0;
+		return (0);
 	input = NULL;
+	i = 1;
 	while (1)
 	{
 		free(input);
+		rl_event_hook = ft_sig_heredoc;
 		input = readline("> ");
-		if (ft_strcmp(input, redir->target) == 0)
+		if (!input)
+		{
+			printf("-minishell: warning: here-document at line %d delimited by end-of-file (wanted '%s')\n", i, redir->target);
+			break;
+		}
+		if (ft_strcmp(input, redir->target) == 0 || g_last_sig == SIGINT)
 			break;
 		write(tmp_file, input, ft_strlen(input));
 		write(tmp_file, "\n", 1);
+		i++;
     }
 	close(tmp_file);
-	tmp_file = open(".tmp", O_RDONLY);
+	if (g_last_sig == SIGINT)
+	{
+		rl_done = 0;
+		rl_event_hook = 0;
+		tmp_file = open("/tmp/minishell.tmp", O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR);
+	}
+	else
+		tmp_file = open("/tmp/minishell.tmp", O_RDONLY);
 	if (!tmp_file)
-		return 0;
+		return (0);
 	fork_streams->input_fd = tmp_file;
 	return(fork_streams->input_fd);
 }

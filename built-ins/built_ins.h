@@ -19,6 +19,13 @@
 
 # include "../minishell.h"
 
+typedef enum e_sig_mode
+{
+    SIG_INTERACTIVE,
+    SIG_NONINTERACTIVE,
+    SIG_HEREDOC,
+}	t_sig_mode;
+
 /*---------------------------------------------------*/
 /*---------------------FUNCTIONS---------------------*/
 /*---------------------------------------------------*/
@@ -52,10 +59,13 @@ int	    ft_pwd(void);
 // signals
 void	ft_sig_interactive(int sig);
 void	ft_sig_noninteractive(int sig);
-void	ft_change_sigmode(bool interactive);
+int 	ft_sig_heredoc(void);
+void	ft_change_sigmode(t_sig_mode mode);
 
 // unset
 int	    ft_unset(char **keys, t_list *lst, t_list *assignments);
 void	ft_lstdelfill(t_list **start, t_list *to_del);
+
+
 
 #endif

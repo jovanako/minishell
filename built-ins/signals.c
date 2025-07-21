@@ -35,18 +35,25 @@ void	ft_sig_noninteractive(int sig)
 	rl_on_new_line();
 }
 
+int	ft_sig_heredoc(void)
+{
+	if (g_last_sig == SIGINT)
+		rl_done = 1;
+	return (0);
+}
+
 // changes the function that handles incoming SIGINT and SIGQUIT signals
-void	ft_change_sigmode(bool interactive)
+void	ft_change_sigmode(t_sig_mode mode)
 {
 	struct sigaction	action;
 
+	g_last_sig = 0;
 	ft_bzero(&action, sizeof(action));
-	if (interactive)
+	if (mode == SIG_INTERACTIVE)
 		action.sa_handler = &ft_sig_interactive;
-	else
+	else if (mode == SIG_NONINTERACTIVE)
 		action.sa_handler = &ft_sig_noninteractive;
 	sigaction(SIGINT, &action, NULL);
 	sigaction(SIGQUIT, &action, NULL);
-	rl_catch_signals = interactive;
 }
 
