@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:49 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/21 15:22:12 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:09:08 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,67 +22,76 @@ static int	ft_env_split(char **pair, char *s)
 	pair[0] = ft_substr(s, 0, i);
 	pair[1] = ft_substr(s, i + 1, ft_strlen(s) - i);
 	if (!pair[0] || !pair[1])
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
-/*	takes a token containing env variables, duplicates key & value
-/	new variables are only handled in case of assigment ('=')
-*/ 
-static void	ft_get_pair(char **pair, char *token, t_list *ev)
+static bool	is_valid_key(char *token)
 {
-	if (!ft_strchr(token, '='))
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(token[i]) && token[i] != '_')
+		return (false);
+	i++;
+	while (token[i] && token[i] != '=')
 	{
-		if (ft_getenv(ev, token))
-		{
-			pair[0] = ft_strdup(token);
-			pair[1] = ft_strdup(ft_getenv_v(ft_getenv(ev, token)));
-		}
-		else
-		{
-			pair[0] = NULL;
-			pair[1] = NULL;
-		}
+		if (!ft_isalnum(token[i]) && token[i] != '_')
+			return (false);
+		i++;
 	}
-	else
-		ft_env_split(pair, token);
+	return (true);
 }
 
 static void	ft_free_pair(char **pair)
 {
-	if (pair[0])
-		free(pair[0]);
-	if (pair[1])
-		free(pair[1]);
+	free(pair[0]);
+	free(pair[1]);
 }
 
-/*	adds one or more given env vals to global scope
-/	creates a new env val if needed
-/	returns 0 if all tokens were exported, 1 if at least one failed
-*/
-int	ft_export(char **tokens, t_list *ev, t_list *assignments)
+static bool	handle_key_value_pair(t_list **ev, char **pair, char *token)
+{
+	if (ft_strchr(token, '='))
+	{
+		if (!ft_env_split(pair, token))
+		{
+			ft_free_pair(pair);
+			return (false);
+		}
+	}
+	else
+	{
+		pair[0] = ft_strdup(token);
+		if (!pair[0])
+			return (false);
+	}
+	if (!add_env_var(ev, pair[0], pair[1], true))
+	{
+		ft_free_pair(pair);	
+		return (false);
+	}
+	return (true);
+}
+
+int	ft_export(char **argv, t_list *ev, t_list *assignments)
 {
 	int		i;
-	int		exit_code;
 	char	*pair[2];
-
+	
 	(void)assignments; // remove after impl
 	i = 1;
-	exit_code = 0;
-	while (tokens[i])
+	if (!is_valid_key(argv[i]))
 	{
-		ft_get_pair(pair, tokens[i], ev);
-		if (pair[0])
-		{
-			if (!add_env_var(&ev, pair[0], pair[1], 1))
-			{
-				exit_code = 1;
-				ft_free_pair(pair);
-			}
-		}
-		else
-			exit_code = 1;
-		i++;
+		printf("bash: export: %s: not a valid identifier\n", argv[i]);
+		return (1);
 	}
-	return (exit_code);
+	while (argv[i])
+	{
+		pair[0] = NULL;
+		pair[1] = NULL;
+		if (!handle_key_value_pair(&ev, pair, argv[i]))
+			return (1);
+		i++;		
+	}
+	return (0);
 }

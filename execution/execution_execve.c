@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/11 21:09:29 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:07:43 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ bool	fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fork_streams)
 	{
 		env_cpy = resolve_fork_ev(cmd->assignments, ev);
 		if (!env_cpy)
-			return (false);
-		if (!child_process(cmd, ev, fork_streams))
-			return (false);
+			exit(1);
+		if (!child_process(cmd, env_cpy, fork_streams))
+			exit(1);
+		exit(0);
 	}
 	if (fork_streams->input_fd != STDIN_FILENO)
 		close(fork_streams->input_fd);

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/10 20:48:23 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/22 18:23:01 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_list	*resolve_fork_ev(t_list *assignments, t_list *env_vars)
 	while (env_vars)
 	{
 		env_var = env_vars->content;
-		if (env_var->exported)
+		if (env_var->value && env_var->exported)
 		{
 			key = ft_strcpy(env_var->key);
 			if (!key)
