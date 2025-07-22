@@ -62,3 +62,23 @@ bool	expand_variables(t_list *tokens, t_list *env_vars)
 	}
 	return (true);
 }
+
+bool	handle_dollar(t_expansion_context *ctx, t_list *env_vars, int *i)
+{
+	char		*var_key;
+	t_env_var	*var;
+
+	if (!append_slice(ctx, &(ctx->lexeme[*i])))
+		return (false);
+	(*i)++;
+	if (handle_exit_expand(ctx, i))
+		return (true);
+	var_key = extract_var_key(ctx, i);
+	if (!var_key)
+		return (false);
+	var = get_env_var(env_vars, var_key);
+	free(var_key);
+	if (var)
+		append_value(ctx, var->value);
+	return (true);
+}

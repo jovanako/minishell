@@ -13,7 +13,15 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+/*---------------------------------------------------*/
+/*---------------------INCLUDES----------------------*/
+/*---------------------------------------------------*/
+
 #include "../tokenizer/tokenizer.h"
+
+/*---------------------------------------------------*/
+/*----------------------STRUCTS----------------------*/
+/*---------------------------------------------------*/
 
 typedef enum e_redirect_type
 {
@@ -51,6 +59,10 @@ typedef struct s_parsing_context
 	t_list	*commands;
 	char	*error;
 }	t_parsing_context;
+
+/*---------------------------------------------------*/
+/*---------------------FUNCTIONS---------------------*/
+/*---------------------------------------------------*/
 
 bool	is_current_type(t_parsing_context *ctx, t_token_type token_type);
 bool	is_at_end(t_parsing_context *ctx);
