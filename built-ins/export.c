@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:49 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/22 20:09:08 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/22 21:06:20 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ static int	ft_env_split(char **pair, char *s)
 	return (1);
 }
 
-static bool	is_valid_key(char *token)
+static bool	is_valid_key(char *arg)
 {
 	int	i;
 
 	i = 0;
-	if (!ft_isalpha(token[i]) && token[i] != '_')
+	if (!ft_isalpha(arg[i]) && arg[i] != '_')
 		return (false);
 	i++;
-	while (token[i] && token[i] != '=')
+	while (arg[i] && arg[i] != '=')
 	{
-		if (!ft_isalnum(token[i]) && token[i] != '_')
+		if (!ft_isalnum(arg[i]) && arg[i] != '_')
 			return (false);
 		i++;
 	}
@@ -49,11 +49,13 @@ static void	ft_free_pair(char **pair)
 	free(pair[1]);
 }
 
-static bool	handle_key_value_pair(t_list **ev, char **pair, char *token)
+static bool	handle_kv_pair(t_list **ev, t_list *asgn, char **pair, char *arg)
 {
-	if (ft_strchr(token, '='))
+	t_assignment *a;
+	
+	if (ft_strchr(arg, '='))
 	{
-		if (!ft_env_split(pair, token))
+		if (!ft_env_split(pair, arg))
 		{
 			ft_free_pair(pair);
 			return (false);
@@ -61,9 +63,19 @@ static bool	handle_key_value_pair(t_list **ev, char **pair, char *token)
 	}
 	else
 	{
-		pair[0] = ft_strdup(token);
+		pair[0] = ft_strdup(arg);
 		if (!pair[0])
 			return (false);
+	}
+	a = ft_lstfind(asgn, &match_assignment_key, pair[0]);
+	if (!pair[1] && a)
+	{
+		pair[1] = ft_strdup(a->value);
+		if (!pair[1])
+		{
+			free(pair[0]);
+			return (false);		
+		}
 	}
 	if (!add_env_var(ev, pair[0], pair[1], true))
 	{
@@ -89,7 +101,7 @@ int	ft_export(char **argv, t_list *ev, t_list *assignments)
 	{
 		pair[0] = NULL;
 		pair[1] = NULL;
-		if (!handle_key_value_pair(&ev, pair, argv[i]))
+		if (!handle_kv_pair(&ev, assignments, pair, argv[i]))
 			return (1);
 		i++;		
 	}
