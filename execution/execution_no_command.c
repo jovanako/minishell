@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:08:33 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/21 13:53:59 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/22 20:34:40 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	handle_assignments(t_list *assignments, t_list *ev)
 	t_assignment	*assignment;
 	char			*key;
 	char			*val;
+	t_env_var		*existing_env_var;
+	bool			is_exported;
 
 	key = NULL;
 	val = NULL;
@@ -27,7 +29,9 @@ static int	handle_assignments(t_list *assignments, t_list *ev)
 		assignment = assignments->content;		
 		key = ft_strcpy(assignment->key);
 		val = ft_strcpy(assignment->value);
-		if (!key || !val || !add_env_var(&ev, key, val, false))
+		existing_env_var = get_env_var(ev, assignment->key);
+		is_exported = existing_env_var && existing_env_var->exported;
+		if (!key || !val || !add_env_var(&ev, key, val, is_exported))
 		{
 			free(key);
 			free(val);
