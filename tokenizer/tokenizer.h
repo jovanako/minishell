@@ -13,7 +13,15 @@
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
+/*---------------------------------------------------*/
+/*---------------------INCLUDES----------------------*/
+/*---------------------------------------------------*/
+
 #include "../libft/libft.h"
+
+/*---------------------------------------------------*/
+/*----------------------STRUCTS----------------------*/
+/*---------------------------------------------------*/
 
 typedef enum e_token_type
 {
@@ -43,6 +51,10 @@ typedef struct s_token_context
 	char	*error;
 }	t_token_context;
 
+/*---------------------------------------------------*/
+/*---------------------FUNCTIONS---------------------*/
+/*---------------------------------------------------*/
+
 char	peek(t_token_context *context);
 char	advance(t_token_context *context);
 bool	match(char expected_char, t_token_context *context);
@@ -52,4 +64,5 @@ bool	add_token(t_token_context *context, t_token_type type);
 bool	tokenize(t_token_context *context);
 void	delete_token(void *t);
 bool	read_word(t_token_context *context);
+
 #endif

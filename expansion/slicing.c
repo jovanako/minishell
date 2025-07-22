@@ -17,7 +17,7 @@ bool	append_slice(t_expansion_context *ctx, char *end)
 	char	*slice;
 	char	*tmp;
 	int		len;
-
+	
 	len = end - &(ctx->lexeme[ctx->current]);
 	slice = ft_substr(ctx->lexeme, ctx->current, len);
 	if (!slice)
@@ -50,7 +50,9 @@ bool	slice_double_quoted(t_expansion_context *ctx, t_list *env_vars)
 	i = ctx->current;
 	while (ctx->lexeme[i] != '"')
 	{
-		if (ctx->lexeme[i] == '$' && is_valid_env_var_char(ctx->lexeme[i + 1]))
+		if (ctx->lexeme[i] == '$'
+			&& (is_valid_env_var_char(ctx->lexeme[i + 1])
+			|| ctx->lexeme[i + 1] == '?'))
 		{
 			if (!handle_dollar(ctx, env_vars, &i))
 				return (false);
@@ -71,7 +73,9 @@ bool	slice_unquoted(t_expansion_context *ctx, t_list *env_vars)
 	i = ctx->current;
 	while (is_unquoted(ctx->lexeme[i]))
 	{
-		if (ctx->lexeme[i] == '$' && is_valid_env_var_char(ctx->lexeme[i + 1]))
+		if (ctx->lexeme[i] == '$'
+			&& (is_valid_env_var_char(ctx->lexeme[i + 1])
+			|| ctx->lexeme[i + 1] == '?'))
 		{
 			if (!handle_dollar(ctx, env_vars, &i))
 				return (false);

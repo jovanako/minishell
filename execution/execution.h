@@ -13,6 +13,10 @@
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
+/*---------------------------------------------------*/
+/*---------------------INCLUDES----------------------*/
+/*---------------------------------------------------*/
+
 #include "../libft/libft.h"
 #include "../parsing/parsing.h"
 #include "../utils/utils.h"
@@ -20,6 +24,10 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+
+/*---------------------------------------------------*/
+/*----------------------STRUCTS----------------------*/
+/*---------------------------------------------------*/
 
 typedef struct s_fork_streams
 {
@@ -34,6 +42,10 @@ typedef struct s_execution_context
 	bool	exit;
 	int		status;
 }	t_execution_context;
+
+/*---------------------------------------------------*/
+/*---------------------FUNCTIONS---------------------*/
+/*---------------------------------------------------*/
 
 bool 	execute(t_execution_context *ctx);
 bool	fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fork_streams);

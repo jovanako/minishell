@@ -31,7 +31,7 @@ char	*extract_var_key(t_expansion_context *ctx, int *start)
 	return (result);
 }
 
-static bool	append_value(t_expansion_context *ctx, char *var_value)
+bool	append_value(t_expansion_context *ctx, char *var_value)
 {
 	char	*tmp;
 
@@ -54,20 +54,13 @@ bool	is_quote(char c)
 	return (c == '\'' || c == '"');
 }
 
-bool	handle_dollar(t_expansion_context *ctx, t_list *env_vars, int *i)
+bool	handle_exit_expand(t_expansion_context *ctx, int *i)
 {
-	char		*var_key;
-	t_env_var	*var;
-	
-	if (!append_slice(ctx, &(ctx->lexeme[*i])))
+	if (ctx->lexeme[*i] != '?')
 		return (false);
+	//append_value(ctx, ctx->status);
+	append_value(ctx, "0");
 	(*i)++;
-	var_key = extract_var_key(ctx, i);
-	if (!var_key)
-		return (false);
-	var = get_env_var(env_vars, var_key);
-	free(var_key);
-	if (var)
-		append_value(ctx, var->value);
+	ctx->current = *i;
 	return (true);
 }
