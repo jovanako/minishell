@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 12:53:41 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/08 17:08:08 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/22 12:47:50 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ bool	is_valid_identifier(t_token_context *ctx)
 	i = ctx->start;
 	if (!ft_isalpha(ctx->line[i]) && ctx->line[i] != '_')
 		return (false);
+	i++;
 	while (ctx->line[i] && ctx->line[i] != '=')
 	{
 		if (!ft_isalnum(ctx->line[i]) && ctx->line[i] != '_')
