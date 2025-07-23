@@ -10,77 +10,79 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+#---------------------------------------------------#
+#---------------------DEFINES-----------------------#
+#---------------------------------------------------#
 
-LIB = minishell.a
+NAME = minishell
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-SRCS = main.c \
-		tokenizer/tokenizer.c \
-		tokenizer/tokenizer_helper.c \
-		tokenizer/token_readers.c \
-		env_vars/env_vars.c \
-		env_vars/add_env_var.c \
-		env_vars/get_env_var.c \
-		expansion/expansion.c \
-		expansion/expansion_helpers.c \
-		expansion/slicing.c \
-		execution/execution.c \
-		execution/execution_execve.c \
-		execution/execution_built_in.c \
-		execution/execution_helpers.c \
-		execution/execution_no_command.c \
-		execution/open_fork_stream.c \
-		execution/cmdpath.c \
-		utils/call_backs.c \
-		utils/strings.c \
-		parsing/parsing.c \
-		parsing/parsing_helpers.c \
-		parsing/parsing_assignment.c \
-		parsing/parsing_redirection.c \
-		parsing/parsing_argv.c \
-		parsing/parsing_callbacks.c \
-		built-ins/cd.c \
-		built-ins/echo.c \
-		built-ins/env.c \
-		built-ins/exit.c \
-		built-ins/export.c \
-		built-ins/pwd.c \
-		built-ins/signals.c \
-		built-ins/unset.c
+INC = -Llibft -lft -lreadline
 
-OBJDIR = objects
-OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
+#---------------------------------------------------#
+#---------------------SOURCES-----------------------#
+#---------------------------------------------------#
 
-all: $(NAME) $(LIB)
+BUILTINS = cd echo env exit export pwd signals unset
 
-$(NAME) : libft $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -Llibft -lft -lreadline -o $(NAME)
+ENV = env_vars add_env_var get_env_var
 
-$(OBJDIR)/%.o: %.c | $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+EXEC = execution execution_execve execution_built_in execution_helpers execution_no_command open_fork_stream cmdpath
 
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
-	@mkdir -p $@/tokenizer $@/expansion	$@/parsing $@/env_vars $@/execution $@/built-ins $@/utils
-#move to minishell_tests
-$(LIB): $(filter-out $(OBJDIR)/main.o, $(OBJS))
-	ar rcs $@ $^
+EXPANSION = expansion expansion_helpers slicing
 
-libft:
-	$(MAKE) -C libft bonus
+MAIN = main
+
+PARSING = parsing parsing_helpers parsing_assignment parsing_redirection parsing_argv parsing_callbacks
+
+TOKENIZER = tokenizer tokenizer_helper token_readers
+
+UTILS = call_backs strings		
+
+SRC = $(addsuffix .c, $(addprefix built-ins/, $(BUILTINS))) \
+	  $(addsuffix .c, $(addprefix env_vars/, $(ENV))) \
+	  $(addsuffix .c, $(addprefix execution/, $(EXEC))) \
+	  $(addsuffix .c, $(addprefix expansion/, $(EXPANSION))) \
+	  $(addsuffix .c, $(addprefix parsing/, $(PARSING))) \
+	  $(addsuffix .c, $(addprefix tokenizer/, $(TOKENIZER))) \
+	  $(addsuffix .c, $(addprefix utils/, $(UTILS))) \
+	  $(addsuffix .c, $(MAIN)) \
+
+OBJ = $(SRC:c=o)
+
+#---------------------------------------------------#
+#----------------------RULES------------------------#
+#---------------------------------------------------#
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	@echo "\n"
+	@make -C libft/ bonus
+	@echo "\033[0;32mCompiling..."
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(INC)
+	@echo "\n\033[0mDone !"
+
+%.o: %.c
+	@printf "\033[0;33mGenerating objects... %-33.33s\r" $@
+	@${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	rm -rf $(OBJDIR)
-	$(MAKE) -C libft fclean
+	@echo "\033[0;31mCleaning libft..."
+	@make fclean -C libft/
+	@echo "\nRemoving objects..."
+	@rm -f $(OBJ)
+	@echo "\033[0m"
 
-fclean: clean
-	rm -f $(NAME) $(LIB)
-	$(MAKE) -C libft fclean
+fclean:
+	@make clean
+	@echo "\nDeleting executable..."
+	@rm -f $(NAME)
+	@echo "\033[0m"
 
 re: fclean all
 
-.PHONY: all clean fclean re libft package
+.PHONY: all clean fclean re
