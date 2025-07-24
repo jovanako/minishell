@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:22:23 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/04 21:54:26 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/24 19:49:10 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,14 @@ bool	ft_isnumber(char *s)
 			return (false);
 	}
 	return (true);
+}
+
+int	array_size(char **arr)
+{
+	int	count;
+
+	count = 0;
+	while (arr[count])
+		count++;
+	return (count);
 }

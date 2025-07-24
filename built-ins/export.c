@@ -6,11 +6,12 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:49 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/22 21:06:20 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/24 20:45:29 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_ins.h"
+#include "../utils/utils.h"
 
 static int	ft_env_split(char **pair, char *s)
 {
@@ -51,6 +52,7 @@ static void	ft_free_pair(char **pair)
 
 static bool	handle_kv_pair(t_list **ev, t_list *asgn, char **pair, char *arg)
 {
+	// refactor in export_Helpers
 	t_assignment *a;
 	
 	if (ft_strchr(arg, '='))
@@ -90,7 +92,12 @@ int	ft_export(char **argv, t_list *ev, t_list *assignments)
 	int		i;
 	char	*pair[2];
 	
-	(void)assignments; // remove after impl
+	if (array_size(argv) == 1)
+	{
+		if (!export_no_args(ev))
+			return (false);
+		return (true);
+	}
 	i = 1;
 	if (!is_valid_key(argv[i]))
 	{

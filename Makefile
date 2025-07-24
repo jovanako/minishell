@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/18 22:30:40 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/24 19:52:31 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
 INC = -Llibft -lft -lreadline
 
@@ -26,7 +26,7 @@ INC = -Llibft -lft -lreadline
 #---------------------SOURCES-----------------------#
 #---------------------------------------------------#
 
-BUILTINS = cd echo env exit export pwd signals unset
+BUILTINS = cd echo env exit export export_helpers pwd signals unset
 
 ENV = env_vars add_env_var get_env_var
 

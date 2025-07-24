@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:14:42 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/21 18:42:39 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/24 20:45:42 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		ft_exit(t_execution_context *ctx, char *argv[]);
 
 // export
 int		ft_export(char **tokens, t_list *ev, t_list *assignments);
+bool	export_no_args(t_list *ev);
 
 // pwd
 int	    ft_pwd(void);
