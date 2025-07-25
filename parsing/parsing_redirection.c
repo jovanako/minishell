@@ -6,13 +6,13 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:22:25 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/18 22:25:11 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/25 19:59:50 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_redirect_type	resolve_redirect_type(t_token_type token_type)
+static t_redirect_type	resolve_redirect_type(t_token_type token_type)
 {
 	if (token_type == INPUT_REDIR_TOKEN)
 		return (INPUT_REDIRECT);
@@ -25,11 +25,21 @@ t_redirect_type	resolve_redirect_type(t_token_type token_type)
 	return (UNKNOWN_REDIRECT);
 }
 
-bool	parse_redirection(t_parsing_context *ctx, t_command *command)
+static bool add_redirection(t_command *cmd, t_redirection *redir)
+{
+	t_list			*node;
+	
+	node = ft_lstnew(redir);
+	if (!node)
+		return (false);
+	ft_lstadd_back(&(cmd->redirections), node);
+	return (true);
+}
+
+static bool	parse_redirection(t_parsing_context *ctx, t_command *command)
 {
 	t_token			*token;
 	t_redirection	*redirection;
-	t_list			*node;
 	
 	token = (t_token *)ctx->current->content;
 	redirection = malloc(sizeof(t_redirection));
@@ -38,19 +48,18 @@ bool	parse_redirection(t_parsing_context *ctx, t_command *command)
 	redirection->type = resolve_redirect_type(token->type);
 	if (redirection->type == UNKNOWN_REDIRECT)
 		return (false);
-	p_advance(ctx);
-	token = (t_token *)ctx->current->content;
-	if (!is_current_type(ctx, WORD_TOKEN))
+	if (redirection->type != HEREDOC_REDIRECT)
 	{
-		ctx->error = "Syntax error\n"; // change to printf
-		return (false);
-	}	 
-	redirection->target = token->lexeme; 
-	node = ft_lstnew(redirection);
-	if (!node)
-		return (false);
-	ft_lstadd_back(&(command->redirections), node);
-	return (true);
+		p_advance(ctx);
+		token = (t_token *)ctx->current->content;
+		if (!is_current_type(ctx, WORD_TOKEN))
+		{
+			ctx->error = "Syntax error\n"; // change to printf
+			return (false);
+		}	 
+	}
+	redirection->target = token->lexeme;
+	return (add_redirection(command, redirection));
 }
 
 bool 	parse_redirection_list(t_parsing_context *ctx, t_command *command)

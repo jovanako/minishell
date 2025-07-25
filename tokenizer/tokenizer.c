@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/22 12:32:41 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/25 19:32:22 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,7 @@
 static bool	read_less_than(t_token_context *context)
 {
 	if (match('<', context))
-	{
-		context->start = context->current;
-		while (context->line[context->start] == ' '
-			|| context->line[context->start] == '\t')
-			context->start++;
-		context->current = context->start;
-		return (add_token(context, HEREDOC_TOKEN));
-	}
+		return (read_heredoc_delimiter(context));
 	return (add_token(context, INPUT_REDIR_TOKEN));
 }
 
@@ -100,5 +93,15 @@ bool	tokenize(t_token_context *ctx)
 			return (false);
 		}
 	}
+	// t_list *tokens = ctx->tokens;
+	// while (tokens && tokens->next)
+	// 	tokens = tokens->next;
+	// t_token *print_token;
+	// if (tokens)
+	// {
+	// 	print_token = (t_token *)tokens->content;
+	// 	printf("token type: %d\n", print_token->type);
+	// }
+	// printf("type: %d, lexeme: %s\n", token->type, token->lexeme);
 	return (true);
 }

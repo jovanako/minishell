@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 10:03:01 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/10 18:22:43 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/25 19:39:51 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ t_token	*get_current(t_parsing_context *ctx);
 bool	parse_assignment_list(t_parsing_context *ctx, t_command *command);
 bool 	parse_assignment(t_parsing_context *ctx, t_command *command);
 bool 	parse_redirection_list(t_parsing_context *ctx, t_command *command);
-bool	parse_redirection(t_parsing_context *ctx, t_command *command);
 bool	parse_argv(t_parsing_context *ctx, t_command *command);
 bool	parse(t_parsing_context *ctx);
 void	delete_command(void *content);
