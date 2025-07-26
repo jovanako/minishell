@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:55:41 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/08 17:09:13 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:24:48 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_token_type	get_token_type(t_list *node)
 	return token->type;
 }
 
-static int	size_of_argv(t_parsing_context *ctx)
+static int	size_of_argv(t_parse_ctx *ctx)
 {
 	int		size;
 	t_list	*node;
@@ -37,7 +37,7 @@ static int	size_of_argv(t_parsing_context *ctx)
 	return (size);
 }
 
-bool	parse_argv(t_parsing_context *ctx, t_command *command)
+bool	parse_argv(t_parse_ctx *ctx, t_command *command)
 {
 	int		i;
 	char 	**argv;

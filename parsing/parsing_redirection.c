@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:22:25 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 18:22:13 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:24:48 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool add_redirection(t_command *cmd, t_redirection *redir)
 	return (true);
 }
 
-static bool	parse_redirection(t_parsing_context *ctx, t_command *command)
+static bool	parse_redirection(t_parse_ctx *ctx, t_command *command)
 {
 	t_token			*token;
 	t_redirection	*redirection;
@@ -63,7 +63,7 @@ static bool	parse_redirection(t_parsing_context *ctx, t_command *command)
 	return (add_redirection(command, redirection));
 }
 
-bool 	parse_redirection_list(t_parsing_context *ctx, t_command *command)
+bool 	parse_redirection_list(t_parse_ctx *ctx, t_command *command)
 {
 	while (is_current_type(ctx, INPUT_REDIR_TOKEN)
 		|| is_current_type(ctx, OUTPUT_REDIR_TOKEN)

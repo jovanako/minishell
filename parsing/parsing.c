@@ -6,13 +6,13 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/22 12:32:34 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:33:15 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	parse_simple_command(t_parsing_context *ctx)
+bool	parse_simple_command(t_parse_ctx *ctx)
 {
 	t_command	*command;
 	t_list		*node;
@@ -37,7 +37,7 @@ bool	parse_simple_command(t_parsing_context *ctx)
 	return (true);
 }
 
-bool	parse_command_line(t_parsing_context *ctx)
+bool	parse_command_line(t_parse_ctx *ctx)
 {
 	if (!parse_simple_command(ctx))
 		return (false);
@@ -50,12 +50,19 @@ bool	parse_command_line(t_parsing_context *ctx)
 	return (true);
 }
 
-bool	parse(t_parsing_context *ctx)
+t_parse_ctx	*parse(t_token_context *t_ctx)
 {
+	t_parse_ctx *ctx;
+	
+	if (!t_ctx)
+		return (NULL);
+	ctx = new_parsing_ctx(t_ctx);
+	if (!ctx)
+		return (NULL);
 	if (!(parse_command_line(ctx)))
 	{
-		ft_lstiter(ctx->commands, &delete_command);
-		return (false);
+		free_parsing_ctx(ctx);
+		return (NULL);
 	}
-	return (true);
+	return (ctx);
 }

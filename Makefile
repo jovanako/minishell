@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/26 18:29:10 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/26 19:36:28 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ EXPANSION = expansion expansion_helpers slicing
 
 MAIN = main
 
-PARSING = parsing parsing_helpers parsing_assignment parsing_redirection parsing_argv parsing_callbacks
+PARSING = parsing parsing_helpers parsing_assignment parsing_redirection parsing_argv parsing_callbacks parsing_context
 
 TOKENIZER = tokenizer tokenizer_helper token_readers heredoc_reader token_context
 

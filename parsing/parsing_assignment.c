@@ -6,13 +6,13 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:19:27 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/10 18:16:23 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:24:48 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-bool 	parse_assignment(t_parsing_context *ctx, t_command *command)
+bool 	parse_assignment(t_parse_ctx *ctx, t_command *command)
 {
 	t_token			*token;
 	t_assignment	*assignment;
@@ -40,7 +40,7 @@ bool 	parse_assignment(t_parsing_context *ctx, t_command *command)
 	return (true);
 }
 
-bool	parse_assignment_list(t_parsing_context *ctx, t_command *command)
+bool	parse_assignment_list(t_parse_ctx *ctx, t_command *command)
 {
 	while (is_current_type(ctx, ASSIGNMENT_TOKEN))
 	{

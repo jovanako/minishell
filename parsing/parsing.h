@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 10:03:01 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 18:28:27 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:33:57 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,23 @@ typedef struct s_parsing_context
 	t_list	*current;
 	t_list	*commands;
 	bool	error;
-}	t_parsing_context;
+}	t_parse_ctx;
 
 /*---------------------------------------------------*/
 /*---------------------FUNCTIONS---------------------*/
 /*---------------------------------------------------*/
 
-bool	is_current_type(t_parsing_context *ctx, t_token_type token_type);
-bool	is_at_end(t_parsing_context *ctx);
-bool	p_match(t_parsing_context *ctx, t_token_type token_type);
-t_token	*p_advance(t_parsing_context *ctx);
-t_token	*get_current(t_parsing_context *ctx);
-bool	parse_assignment_list(t_parsing_context *ctx, t_command *command);
-bool 	parse_assignment(t_parsing_context *ctx, t_command *command);
-bool 	parse_redirection_list(t_parsing_context *ctx, t_command *command);
-bool	parse_argv(t_parsing_context *ctx, t_command *command);
-bool	parse(t_parsing_context *ctx);
-void	delete_command(void *content);
+bool		is_current_type(t_parse_ctx *ctx, t_token_type token_type);
+bool		is_at_end(t_parse_ctx *ctx);
+bool		p_match(t_parse_ctx *ctx, t_token_type token_type);
+t_token		*p_advance(t_parse_ctx *ctx);
+t_token		*get_current(t_parse_ctx *ctx);
+bool		parse_assignment_list(t_parse_ctx *ctx, t_command *command);
+bool		parse_assignment(t_parse_ctx *ctx, t_command *command);
+bool		parse_redirection_list(t_parse_ctx *ctx, t_command *command);
+bool		parse_argv(t_parse_ctx *ctx, t_command *command);
+t_parse_ctx	*parse(t_token_context *t_ctx);
+t_parse_ctx	*new_parsing_ctx(t_token_context *t_ctx);
+void		delete_command(void *content);
+void		*free_parsing_ctx(t_parse_ctx *ctx);
 #endif

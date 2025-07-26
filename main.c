@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 17:59:29 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:35:59 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static bool	eval_loop(t_list *env_vars)
 {
     char 				*input;
 	t_token_context		*t_ctx;
-	t_parsing_context	p_ctx;
+	t_parse_ctx			*p_ctx;
 	t_execution_context	e_ctx;
 
 	input = NULL;
@@ -56,17 +56,16 @@ static bool	eval_loop(t_list *env_vars)
 			continue;
 		if (!expand(t_ctx, env_vars))
 			return (false);
-		p_ctx = (t_parsing_context){ .tokens = t_ctx->tokens,
-			.current = t_ctx->tokens, .commands = NULL };
-		if (!parse(&p_ctx))
+		p_ctx = parse(t_ctx);
+		if (!p_ctx)
 			return (false);
-		e_ctx.commands = p_ctx.commands;
+		e_ctx.commands = p_ctx->commands;
 		e_ctx.env_vars = env_vars;
 		if (!execute(&e_ctx))
 			return (false);
 		// free contexts	
 		ft_lstclear(&(t_ctx->tokens), &delete_token);
-		ft_lstclear(&(p_ctx.commands), &delete_command);
+		ft_lstclear(&(p_ctx->commands), &delete_command);
 	}
 	return (true);
 }
