@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:22:25 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/25 19:59:50 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/25 22:00:04 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static bool	parse_redirection(t_parsing_context *ctx, t_command *command)
 		token = (t_token *)ctx->current->content;
 		if (!is_current_type(ctx, WORD_TOKEN))
 		{
-			ctx->error = "Syntax error\n"; // change to printf
+			ctx->error = "minishell: syntax error near unexpected token `newline'\n"; // change to printf
 			return (false);
 		}	 
 	}
