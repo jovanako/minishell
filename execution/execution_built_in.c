@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/22 19:28:30 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:49:35 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../utils/utils.h"
 #include "../built-ins/built_ins.h"
 
-int	exec_built_in(t_execution_context *ctx, t_command *cmd)
+int	exec_built_in(t_exec_ctx *ctx, t_command *cmd)
 {
 	char	**argv;
 	
@@ -60,7 +60,7 @@ bool	is_special_built_in(t_list *commands)
 			|| is_str_equal(cmd_name, "cd"));
 }
 
-bool	fork_built_in(t_execution_context *ctx, t_command *command, t_fork_streams *s)
+bool	fork_built_in(t_exec_ctx *ctx, t_command *command, t_fork_streams *s)
 {
 	pid_t	pid;
 

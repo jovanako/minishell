@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:42 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/11 21:26:49 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 19:49:35 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //	exit (0)	= e + "exit"
 //	exit  x ( )	= e + "exit" + "minishell: exit: aa: numeric argument required"
 //	exit  0  x	= e + "exit" + "minishell: exit: too many arguments"
-int	ft_exit(t_execution_context *ctx, char *argv[])
+int	ft_exit(t_exec_ctx *ctx, char *argv[])
 {
 	int	exit_code;
 

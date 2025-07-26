@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:33:19 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/03 08:40:28 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 21:37:04 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ bool	append_slice(t_expansion_context *ctx, char *end)
 	ctx->current = ctx->current + len + 1;
 	tmp = ctx->result;
 	ctx->result = ft_strjoin(ctx->result, slice);
-	if (*tmp)
-		free(tmp);
+	free(tmp);
 	free(slice);
 	if (!(ctx->result))
 		return (false);

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/20 18:54:28 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 20:05:18 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	wait_for_children(t_list *commands)
 	return (exit_status);
 }
 
-static bool	execute_fork(t_execution_context *ctx, t_command *command, t_fork_streams *fs)
+static bool	execute_fork(t_exec_ctx *ctx, t_command *command, t_fork_streams *fs)
 {
 	if (!ctx->env_vars)
 		return (false);
@@ -75,7 +75,7 @@ static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
 
 // last input and output redirections win
 // input redirection takes precedence over input_fd
-static bool	execute_command(t_execution_context *ctx, int input_fd)
+static bool	execute_command(t_exec_ctx *ctx, int input_fd)
 {
 	int				fd[2]; // read end: 0 write end: 1
 	t_command		*command;
@@ -106,12 +106,18 @@ static bool	execute_command(t_execution_context *ctx, int input_fd)
 	return (true);
 }
 
-bool	execute(t_execution_context *ctx)
+t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars)
 {
+	t_exec_ctx	*ctx;
 	t_command 	*cmd;
 	
+	if (!p_ctx)
+		return (NULL);
+	ctx = new_exec_ctx(p_ctx, env_vars);
+	if (!ctx)
+		return (NULL);
 	if (!ctx->commands)
-		return (true);	
+		return (NULL);	
 	cmd = ctx->commands->content;
 	if (!cmd->argv[0])
 		ctx->status = handle_no_command(cmd, ctx->env_vars);
@@ -120,8 +126,8 @@ bool	execute(t_execution_context *ctx)
 	else
 	{
 		if (!execute_command(ctx, 0))
-			return (false);
+			return (NULL);
 		ctx->status = wait_for_children(ctx->commands);
 	}
-	return (true);
+	return (ctx);
 }

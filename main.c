@@ -6,13 +6,20 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 19:35:59 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 21:37:46 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 volatile sig_atomic_t	g_last_sig;
+
+static void clean_up(t_token_context **t, t_parse_ctx **p, t_exec_ctx **e)
+{
+	t = free_token_ctx(*t);
+	p = free_parsing_ctx(*p);
+	e = free_exec_ctx(*e);
+}
 
 static bool	read_input(char **input)
 {
@@ -28,6 +35,8 @@ static bool	read_input(char **input)
 
 static bool	expand(t_token_context *ctx, t_list *env_vars)
 {
+	if (!ctx)
+		return (false);
 	if (!expand_variables(ctx->tokens, env_vars))
 	{
 		ft_lstclear(&(ctx->tokens), &delete_token);
@@ -41,31 +50,26 @@ static bool	eval_loop(t_list *env_vars)
     char 				*input;
 	t_token_context		*t_ctx;
 	t_parse_ctx			*p_ctx;
-	t_execution_context	e_ctx;
+	t_exec_ctx			*e_ctx;
+	bool				exit;
 
 	input = NULL;
-	e_ctx = (t_execution_context){ .exit = false };
-	while (!e_ctx.exit)
+	exit = false;
+	while (!exit)
 	{
-		if (!read_input(&input))
-			return (false);
+		read_input(&input);
 		t_ctx = tokenize(input);
-		if (!t_ctx)
-			return(false);
-		if (t_ctx->error)
-			continue;
-		if (!expand(t_ctx, env_vars))
-			return (false);
+		if (t_ctx && t_ctx->error)
+			continue ;
+		expand(t_ctx, env_vars);
 		p_ctx = parse(t_ctx);
-		if (!p_ctx)
+		if (p_ctx && p_ctx->error)
+			continue ;
+		e_ctx = execute(p_ctx, env_vars);
+		if (!e_ctx)
 			return (false);
-		e_ctx.commands = p_ctx->commands;
-		e_ctx.env_vars = env_vars;
-		if (!execute(&e_ctx))
-			return (false);
-		// free contexts	
-		ft_lstclear(&(t_ctx->tokens), &delete_token);
-		ft_lstclear(&(p_ctx->commands), &delete_command);
+		exit = e_ctx->exit;
+		clean_up(&t_ctx, &p_ctx, &e_ctx);
 	}
 	return (true);
 }

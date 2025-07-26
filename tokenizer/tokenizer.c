@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 18:23:20 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 20:07:07 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ t_token_context	*tokenize(char *input)
 {
 	t_token_context *ctx;
 
+	if (!input)
+		return (NULL);
 	ctx = new_ctx(input);
 	if (!ctx)
 		return (NULL);

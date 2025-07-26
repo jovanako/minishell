@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_context.c                                    :+:      :+:    :+:   */
+/*   execution_context.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/26 18:02:50 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 20:07:25 by jkovacev         ###   ########.fr       */
+/*   Created: 2025/07/26 19:42:14 by jkovacev          #+#    #+#             */
+/*   Updated: 2025/07/26 20:37:40 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "execution.h"
 
-t_token_context *new_ctx(char *input)
+t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars)
 {
-	t_token_context	*ctx;
+	t_exec_ctx	*ctx;
 
-	ctx = malloc(sizeof(t_token_context));
+	ctx = malloc(sizeof(t_exec_ctx));
 	if (!ctx)
 		return (NULL);
-	ctx->line = input;
-	ctx->start = 0;
-	ctx->current = 0;
-	ctx->tokens = NULL;
-	ctx->error = false;
+	ctx->commands = p_ctx->commands;
+	ctx->env_vars = env_vars;
+	ctx->exit = false;
+	ctx->status = 0;
 	return (ctx);
 }
 
-void	*free_token_ctx(t_token_context *ctx)
+void *free_exec_ctx(t_exec_ctx *ctx)
 {
-	ft_lstclear(&(ctx->tokens), &delete_token);
 	free(ctx);
 	return (NULL);
 }
