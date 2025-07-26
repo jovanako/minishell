@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 19:00:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/25 19:28:03 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:25:09 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ bool	read_heredoc_delimiter(t_token_context *context)
 		advance(context);
 	if (context->current - context->start == 0)
 	{
-		context->error = "syntax error near unexpected token 'newline'";
+		printf("minishell: syntax error near unexpected token 'newline'\n");
+		context->error = true;
 		return (true);
 	}
 	return (add_token(context, HEREDOC_TOKEN));

@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/25 19:31:10 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/26 18:29:10 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror #remove g
 
 INC = -Llibft -lft -lreadline
 
@@ -38,7 +38,7 @@ MAIN = main
 
 PARSING = parsing parsing_helpers parsing_assignment parsing_redirection parsing_argv parsing_callbacks
 
-TOKENIZER = tokenizer tokenizer_helper token_readers heredoc_reader
+TOKENIZER = tokenizer tokenizer_helper token_readers heredoc_reader token_context
 
 UTILS = call_backs strings		
 

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:09:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/25 21:56:25 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:26:13 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ bool	read_word(t_token_context *context)
 		advance(context);
 	}
 	if (quotes_are_open(quotes_closed, double_quotes_closed))
-		context->error = "invalid input";
+	{
+		printf("minishell: invalid input\n");
+		context->error = true;
+	}
 	if (!is_previous_token(context, WORD_TOKEN) 
 		&& is_valid_identifier(context))
 		return (add_token(context, ASSIGNMENT_TOKEN));

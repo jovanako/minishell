@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/21 16:44:00 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:59:29 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool	expand(t_token_context *ctx, t_list *env_vars)
 static bool	eval_loop(t_list *env_vars)
 {
     char 				*input;
-	t_token_context		t_ctx;
+	t_token_context		*t_ctx;
 	t_parsing_context	p_ctx;
 	t_execution_context	e_ctx;
 
@@ -49,25 +49,23 @@ static bool	eval_loop(t_list *env_vars)
 	{
 		if (!read_input(&input))
 			return (false);
-		t_ctx = (t_token_context){ .line = input };
-		if (!tokenize(&t_ctx))
-		{
-			ft_lstclear(&t_ctx.tokens, &delete_token);
-			if (t_ctx.error)
-				continue ;
+		t_ctx = tokenize(input);
+		if (!t_ctx)
+			return(false);
+		if (t_ctx->error)
+			continue;
+		if (!expand(t_ctx, env_vars))
 			return (false);
-		}
-		if (!expand(&t_ctx, env_vars))
-			return (false);
-		p_ctx = (t_parsing_context){ .tokens = t_ctx.tokens,
-			.current = t_ctx.tokens, .commands = NULL };
+		p_ctx = (t_parsing_context){ .tokens = t_ctx->tokens,
+			.current = t_ctx->tokens, .commands = NULL };
 		if (!parse(&p_ctx))
 			return (false);
 		e_ctx.commands = p_ctx.commands;
 		e_ctx.env_vars = env_vars;
 		if (!execute(&e_ctx))
 			return (false);
-		ft_lstclear(&(t_ctx.tokens), &delete_token);
+		// free contexts	
+		ft_lstclear(&(t_ctx->tokens), &delete_token);
 		ft_lstclear(&(p_ctx.commands), &delete_command);
 	}
 	return (true);

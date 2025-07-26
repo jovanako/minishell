@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/25 19:32:22 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:23:20 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,32 +76,20 @@ static bool	read_token(t_token_context *context)
 	return (success);
 }
 
-bool	tokenize(t_token_context *ctx)
+t_token_context	*tokenize(char *input)
 {
+	t_token_context *ctx;
+
+	ctx = new_ctx(input);
+	if (!ctx)
+		return (NULL);
 	while (ctx->line[ctx->start])
 	{
 		ctx->start = ctx->current;
 		if (!read_token(ctx))
-		{
-			ft_lstclear(&(ctx->tokens), &delete_token);
-			return (false);
-		}
+			return (free_token_ctx(ctx));
 		if (ctx->error)
-		{
-			ft_lstclear(&(ctx->tokens), &delete_token);
-			printf("minishell: %s\n", ctx->error);
-			return (false);
-		}
+			return (ctx);
 	}
-	// t_list *tokens = ctx->tokens;
-	// while (tokens && tokens->next)
-	// 	tokens = tokens->next;
-	// t_token *print_token;
-	// if (tokens)
-	// {
-	// 	print_token = (t_token *)tokens->content;
-	// 	printf("token type: %d\n", print_token->type);
-	// }
-	// printf("type: %d, lexeme: %s\n", token->type, token->lexeme);
-	return (true);
+	return (ctx);
 }

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 10:03:01 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/25 19:39:51 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:28:27 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_parsing_context
 	t_list	*tokens;
 	t_list	*current;
 	t_list	*commands;
-	char	*error;
+	bool	error;
 }	t_parsing_context;
 
 /*---------------------------------------------------*/
