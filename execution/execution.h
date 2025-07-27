@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:24:40 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 14:18:29 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:49:35 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ char		**ev_list_to_arr(t_list *env_vars);
 int			handle_no_command(t_command *cmd, t_list *env_vars);
 t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars);
 void		*free_exec_ctx(t_exec_ctx *ctx);
+bool		check_can_read(char *target);
 
 #endif

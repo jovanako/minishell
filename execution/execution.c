@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 15:33:09 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:28:01 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,24 @@ static bool	execute_fork(t_exec_ctx *ctx, t_command *command, t_fork_streams *fs
 
 static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
 {
-	t_list			*current_node;
 	t_redirection	*current_redir;
 
-	current_node = redirections;
-	while (current_node)
+	while (redirections)
 	{
-		current_redir = (t_redirection *)current_node->content;
-		if (current_redir->type == INPUT_REDIRECT)
-		{
-			if (open_input_redir(fork_streams, current_redir) == -1)
-				return (false); // error: open failed
-		}
-		else if (current_redir->type == OUTPUT_REDIRECT)
-		{
-			if (open_output_redir(fork_streams, current_redir) == -1)
-				return (false); // error: open failed
-		}
-		else if (current_redir->type == APPEND_REDIRECT)
-		{
-			if (open_append_redir(fork_streams, current_redir) == -1)
-				return (false); // error: open failed
-		}
-		else if (current_redir->type == HEREDOC_REDIRECT)
-		{
-			if (open_heredoc_redir(fork_streams, current_redir) == -1)
-				return (false); // error: open failed
-		}
-		current_node = current_node->next;
+		current_redir = (t_redirection *)redirections->content;
+		if (current_redir->type == INPUT_REDIRECT
+			&& open_input_redir(fork_streams, current_redir) == -1)
+			return (false);
+		else if (current_redir->type == OUTPUT_REDIRECT
+			&& open_output_redir(fork_streams, current_redir) == -1)
+			return (false);
+		else if (current_redir->type == APPEND_REDIRECT
+			&& open_append_redir(fork_streams, current_redir) == -1)
+			return (false);
+		else if (current_redir->type == HEREDOC_REDIRECT
+			&& open_heredoc_redir(fork_streams, current_redir) == -1)
+			return (false);
+		redirections = redirections->next;
 	}
 	return (true);
 }

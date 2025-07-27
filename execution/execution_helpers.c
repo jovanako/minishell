@@ -6,11 +6,13 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/22 18:23:01 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:49:17 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include <errno.h>
+#include <string.h>
 
 static char	**free_and_return(char **str_arr)
 {
@@ -94,4 +96,14 @@ t_list	*resolve_fork_ev(t_list *assignments, t_list *env_vars)
 		env_vars = env_vars->next;	
 	}
 	return (copy);
+}
+
+bool	check_can_read(char *target)
+{
+	if (open(target, O_RDONLY) == -1)
+	{
+		printf("minishell: %s: %s\n", target, strerror(errno));
+		return (false);
+	}
+	return (true);
 }

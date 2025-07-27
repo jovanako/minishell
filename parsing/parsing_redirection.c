@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:22:25 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 22:01:29 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:31:28 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_redirect_type	resolve_redirect_type(t_token_type token_type)
 
 static bool add_redirection(t_command *cmd, t_redirection *redir)
 {
-	t_list			*node;
+	t_list	*node;
 	
 	node = ft_lstnew(redir);
 	if (!node)

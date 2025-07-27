@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:08:33 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/23 22:07:17 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:39:45 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,13 @@ static int	handle_redirections(t_list *redirections)
 		if (redirection->type == OUTPUT_REDIRECT
 			|| redirection->type == APPEND_REDIRECT)
 			is_output_or_append(redirection, &fd, rights_flags);
+		else if (redirection->type == INPUT_REDIRECT
+			&& !check_can_read(redirection->target))
+			return (1);			
 		else if (redirection->type == HEREDOC_REDIRECT)
 		{
 			while (1)
-			{
 				is_heredoc(input, redirection);
-			}
 			free(input);
 		}
 		redirections = redirections->next;
