@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:22:25 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 19:24:48 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:42:49 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static bool	parse_redirection(t_parse_ctx *ctx, t_command *command)
 		{
 			printf("minishell: syntax error near unexpected token `newline'\n");
 			ctx->error = true;
-			return (false);
+			return (true);
 		}	 
 	}
 	redirection->target = token->lexeme;
@@ -72,6 +72,8 @@ bool 	parse_redirection_list(t_parse_ctx *ctx, t_command *command)
 	{
 		if (!parse_redirection(ctx, command))
 			return (false);	
+		if (ctx->error)
+			return (true);
 		p_advance(ctx);
 	}
 	return (true);
