@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 17:43:55 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 18:00:47 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,22 @@
 #include <errno.h>
 #include "execution.h"
 
-// static char	*contains_path(char *arg)
-// {
-// 	if (access(arg, F_OK) == -1 || access(arg, X_OK) == -1)
-// 	{
-// 		printf("minishell: %s: %s\n", arg, strerror(errno));
-// 		return (NULL);
-// 	}
-// 	return (arg);
-// }
+static char	*contains_path(char *arg)
+{
+	if (access(arg, F_OK) == -1 || access(arg, X_OK) == -1)
+	{
+		printf("minishell: %s: %s\n", arg, strerror(errno));
+		return (NULL);
+	}
+	return (arg);
+}
 
 static char	*resolve_exec_path(char *arg, t_list *env_vars)
 {
 	char	*result;
 
 	if (ft_strchr(arg, '/'))
-	{
-		if (access(arg, F_OK) == -1 || access(arg, X_OK) == -1)
-		{
-			printf("minishell: %s: %s\n", arg, strerror(errno));
-			return (NULL);
-		}
-		result = arg;
-	}
+		result = contains_path(arg);
 	else
 	{
 		result = ft_cmdpath(env_vars, arg);
