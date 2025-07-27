@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:14:42 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/26 19:49:35 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 20:34:42 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum e_sig_mode
 /*---------------------------------------------------*/
 
 // cd
-int	    ft_cd(char *path, t_list *lst);
+int	    ft_cd(char **argv, t_list *lst);
 
 // echo
 int	    ft_echo(char **tokens);

@@ -63,3 +63,11 @@ test_output_contains "hello" \
 '/usr/bin/cat infile'
 test_output_contains "minishell: cmd: command not found" \
 'cmd'
+test_output_contains "minishell: /etc/pam.conf: Permission denied" \
+'blablabla >> /etc/pam.conf'
+test_output_contains "minishell: /home: Is a directory" \
+'echo bla > /home'
+test_output_contains "minishell: /home: Is a directory" \
+'echo bla >> /home'
+test_output_contains "minishell: /home: Is a directory" \
+'echo bla > /home'

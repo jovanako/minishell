@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 19:49:35 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 20:33:19 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	exec_built_in(t_exec_ctx *ctx, t_command *cmd)
 	if (is_str_equal(argv[0], "echo"))
 		return (ft_echo(argv));
 	if (is_str_equal(argv[0], "cd"))
-		return (ft_cd(argv[1], ctx->env_vars)); // check if argv[1] exists
+		return (ft_cd(argv, ctx->env_vars)); // check if argv[1] exists
 	if (is_str_equal(argv[0], "pwd"))
 		return (ft_pwd());
 	if (is_str_equal(argv[0], "export")) 
