@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 20:05:18 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 15:33:09 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ static bool	execute_fork(t_exec_ctx *ctx, t_command *command, t_fork_streams *fs
 	if (!ctx->env_vars)
 		return (false);
 	if (is_built_in(command->argv[0]))
-	{
 		fork_built_in(ctx, command, fs);
-	}
 	else
 		fork_execve(command, ctx->env_vars, fs);
 	return (true);
@@ -75,9 +73,10 @@ static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
 
 // last input and output redirections win
 // input redirection takes precedence over input_fd
+// read end: 0 write end: 1
 static bool	execute_command(t_exec_ctx *ctx, int input_fd)
 {
-	int				fd[2]; // read end: 0 write end: 1
+	int				fd[2];
 	t_command		*command;
 	t_fork_streams	*fork_streams;
 
@@ -94,7 +93,10 @@ static bool	execute_command(t_exec_ctx *ctx, int input_fd)
 		fork_streams->output_fd = fd[1];
 	}
 	if (!add_redirs(fork_streams, command->redirections))
-		return (false);
+	{
+		ctx->error = true;
+		return (true);
+	}
 	if (!execute_fork(ctx, command, fork_streams))
 		return (false);
 	if (ctx->commands->next)

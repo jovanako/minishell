@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:24:40 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 20:03:59 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 14:18:29 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_execution_context
 	t_list	*commands;
 	t_list	*env_vars;
 	bool	exit;
+	bool	error;
 	int		status;
 }	t_exec_ctx;
 

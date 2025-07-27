@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/10 18:53:34 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 13:53:40 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <errno.h>
 # include <stdlib.h>
 # include <stdbool.h>
 # include <signal.h>

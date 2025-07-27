@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 19:42:14 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 20:37:40 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 14:29:51 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars)
 	ctx->commands = p_ctx->commands;
 	ctx->env_vars = env_vars;
 	ctx->exit = false;
+	ctx->error = false;
 	ctx->status = 0;
 	return (ctx);
 }
