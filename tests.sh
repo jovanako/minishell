@@ -24,8 +24,10 @@ EOF
     fi
 }
 
-test_output_contains "hello" "echo hello"
-test_output_contains "bla" "echo bla | grep a"
+test_output_contains "hello" \
+"echo hello"
+test_output_contains "bla" \
+"echo bla | grep a"
 test_output_contains "oranges" \
 'echo hello > infile
 echo world >> infile
@@ -35,9 +37,12 @@ cat infile | sort | grep g'
 test_output_contains "hello" \
 'echo hello > infile
 cat infile'
-test_output_contains "$USER" 'echo $USER'
-test_output_contains "USER=$USER" "env | grep USER="
-test_output_contains "XXX=$XXX" "XXX=xxx env | grep XXX"
+test_output_contains "$USER" \
+'echo $USER'
+test_output_contains "USER=$USER" \
+"env | grep USER="
+test_output_contains "XXX=$XXX" \
+"XXX=xxx env | grep XXX"
 test_output_contains "/home/jovana/Desktop/42Berlin/minishell" "pwd"
 test_output_contains "/home/jovana/Desktop/42Berlin" \
 'cd ..
@@ -49,6 +54,9 @@ test_output_contains "BLA=a" \
 'export BLA=bla
 BLA=a
 env | grep BLA'
+test_output_contains "VAR=bla bla" \
+'export VAR="bla bla"
+env | grep VAR'
 test_output_contains "minishell: something: No such file or directory" \
 '< something cat'
 test_output_contains "minishell: /etc/shadow: Permission denied" \
@@ -71,3 +79,23 @@ test_output_contains "minishell: /home: Is a directory" \
 'echo bla >> /home'
 test_output_contains "minishell: /home: Is a directory" \
 'echo bla > /home'
+test_output_contains "minishell: cd: too many arguments" \
+'cd bla bla'
+test_output_contains "minishell: cd: ffff: No such file or directory" \
+'cd ffff'
+test_output_contains "/tmp" \
+'cd /tmp
+pwd'
+test_output_contains "$HOME" \
+'cd
+pwd'
+test_output_contains "$PWD" \
+'pwd'
+test_output_contains "Makefile" \
+'ls | grep Makefile'
+test_output_contains "hello" \
+'echo hello | cat'
+test_output_contains "hello" \
+'echo hello > infile"
+cat < infile'
+# add exit tests
