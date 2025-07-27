@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/22 20:07:43 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:29:52 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 // output_fd - file descriptor of output stream. 1 if STDOUT
 
 #include <unistd.h>
+#include <string.h>
+#include <errno.h>
 #include "execution.h"
 
 static char	*resolve_exec_path(char *relative, t_list *env_vars)
@@ -30,6 +32,11 @@ static bool	child_process(t_command *cmd, t_list *ev, t_fork_streams *fork_strea
 	char	*path_name;
 
 	path_name = resolve_exec_path(cmd->argv[0], ev);
+	if (!path_name)
+	{
+		printf("minishell: %s: %s\n", cmd->argv[0], strerror(errno));
+		return (false);
+	}
 	if (fork_streams->input_fd != 0)
 	{
 		if (dup2(fork_streams->input_fd, STDIN_FILENO) == -1)
