@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:22:25 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 12:42:49 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:01:29 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ static bool add_redirection(t_command *cmd, t_redirection *redir)
 	return (true);
 }
 
+static void	print_syntax_error(t_parse_ctx *ctx)
+{
+	char	*t_lexeme;
+	t_token	*token;
+
+	token = (t_token *)ctx->current->content;
+	if (token->type == NULL_TERMINATOR_TOKEN)
+		t_lexeme = "newline";
+	else
+		t_lexeme = token->lexeme;
+	printf("minishell: syntax error near unexpected token `%s'\n", t_lexeme);
+}
+
 static bool	parse_redirection(t_parse_ctx *ctx, t_command *command)
 {
 	t_token			*token;
@@ -54,7 +67,7 @@ static bool	parse_redirection(t_parse_ctx *ctx, t_command *command)
 		token = (t_token *)ctx->current->content;
 		if (!is_current_type(ctx, WORD_TOKEN))
 		{
-			printf("minishell: syntax error near unexpected token `newline'\n");
+			print_syntax_error(ctx);
 			ctx->error = true;
 			return (true);
 		}	 

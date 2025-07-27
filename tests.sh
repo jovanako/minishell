@@ -96,6 +96,24 @@ test_output_contains "Makefile" \
 test_output_contains "hello" \
 'echo hello | cat'
 test_output_contains "hello" \
-'echo hello > infile"
+'echo hello > infile
 cat < infile'
+test_output_contains "1" \
+'wc -w < infile'
+test_output_contains "hello" \
+'< infile cat'
+test_output_contains "word" \
+'echo word > infile
+cat infile'
+test_output_contains "hello" \
+'echo hello > infile
+cat infile'
+test_output_contains "line2" \
+'echo line1 >> infile
+echo line2 >> infile
+cat infile | grep 2'
+test_output_contains "hello" \
+'echo hello > infile
+cat < infile > outfile
+cat outfile'
 # add exit tests
