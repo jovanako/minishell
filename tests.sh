@@ -49,8 +49,8 @@ test_output_contains "BLA=a" \
 'export BLA=bla
 BLA=a
 env | grep BLA'
-test_output_contains "minishell: bla: No such file or directory" \
-'< bla cat'
+test_output_contains "minishell: something: No such file or directory" \
+'< something cat'
 test_output_contains "minishell: /etc/shadow: Permission denied" \
 '< /etc/shadow cat'
 test_output_contains "minishell: /etc/pam.conf: Permission denied" \
