@@ -26,6 +26,8 @@ EOF
 
 test_output_contains "hello" \
 "echo hello"
+test_output_contains "bla{man$USER" \
+"echo bla{man$USER"
 test_output_contains "bla" \
 "echo bla | grep a"
 test_output_contains "oranges" \

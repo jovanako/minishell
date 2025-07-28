@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/26 20:15:46 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/28 19:28:21 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ BUILTINS = cd echo env exit export export_helpers pwd signals unset
 
 ENV = env_vars add_env_var get_env_var
 
-EXEC = execution execution_execve execution_built_in execution_helpers execution_no_command open_fork_stream cmdpath execution_context
+EXEC = execution execution_execve execution_built_in execution_helpers execution_no_command open_fork_stream cmdpath execution_context ev_list_to_array
 
 EXPANSION = expansion expansion_helpers slicing
 
