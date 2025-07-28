@@ -1,3 +1,5 @@
+VAR="nested 'quotes' are tricky"
+
 test_output_contains() {
     local expected="$1"
     local input_command="$2"
@@ -26,8 +28,26 @@ EOF
 
 test_output_contains "hello" \
 "echo hello"
+test_output_contains "nested 'quotes' are tricky" \
+"echo \"nested 'quotes' are tricky\""
+test_output_contains "nested \"quotes\" are tricky too" \
+"echo 'nested \"quotes\" are tricky too'"
+test_output_contains "hello world" \
+"echo \"hello world\""
+test_output_contains "hello world" \
+"echo 'hello world'"
+test_output_contains "invalid input" \
+"echo \"unterminated"
 test_output_contains "bla{man$USER" \
 "echo bla{man$USER"
+test_output_contains "$USER" \
+"echo \"$USER\""
+test_output_contains '$USER' \
+"echo '$USER'"
+test_output_contains "\n" \
+"echo $UNSET_VAR"
+test_output_contains "VAR=abc$USER" \
+"export VAR=abc$USER"
 test_output_contains "bla" \
 "echo bla | grep a"
 test_output_contains "oranges" \
@@ -85,6 +105,16 @@ test_output_contains "minishell: cd: too many arguments" \
 'cd bla bla'
 test_output_contains "minishell: cd: ffff: No such file or directory" \
 'cd ffff'
+test_output_contains "minishell: syntax error near unexpected token \`newline" \
+'| ls'
+test_output_contains "minishell: syntax error near unexpected token \`newline" \
+'<<'
+test_output_contains "minishell: syntax error near unexpected token \`newline" \
+'echo hello >'
+test_output_contains "minishell: syntax error near unexpected token \`newline" \
+'echo hello >>'
+test_output_contains "minishell: syntax error near unexpected token \`newline" \
+'echo hello <'
 test_output_contains "/tmp" \
 'cd /tmp
 pwd'
@@ -118,4 +148,6 @@ test_output_contains "hello" \
 'echo hello > infile
 cat < infile > outfile
 cat outfile'
+test_output_contains "" \
+'pwd'
 # add exit tests
