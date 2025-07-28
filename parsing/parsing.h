@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 10:03:01 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 19:33:57 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/28 22:23:02 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_redirection
 	char			*target;
 }	t_redirection;
 
-typedef struct s_parsing_context
+typedef struct s_parse_ctx
 {
 	t_list	*tokens;
 	t_list	*current;

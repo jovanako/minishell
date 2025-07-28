@@ -105,7 +105,7 @@ test_output_contains "minishell: cd: too many arguments" \
 'cd bla bla'
 test_output_contains "minishell: cd: ffff: No such file or directory" \
 'cd ffff'
-test_output_contains "minishell: syntax error near unexpected token \`newline" \
+test_output_contains "minishell: syntax error near unexpected token \`|" \
 '| ls'
 test_output_contains "minishell: syntax error near unexpected token \`newline" \
 '<<'
