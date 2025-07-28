@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/28 17:06:10 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:06:26 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ bool	parse_command_line(t_parse_ctx *ctx)
 t_parse_ctx	*parse(t_token_context *t_ctx)
 {
 	t_parse_ctx *ctx;
+	t_token		*token;
 	
 	if (!t_ctx)
 		return (NULL);
+	token = t_ctx->tokens->content;
+	if (ft_strcmp(token->lexeme, "|") == 0)
+		printf("minishell: syntax error near unexpected token `%c'\n", '|');
 	ctx = new_parsing_ctx(t_ctx);
 	if (!ctx)
 		return (NULL);
