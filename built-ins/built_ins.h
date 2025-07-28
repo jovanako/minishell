@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:14:42 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/28 19:43:53 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:56:12 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int			ft_export(char **tokens, t_list *ev, t_list *assignments);
 t_env_var	**create_array_of_pointers(t_list *ev, int size);
 void		sort_vars(t_env_var **array_of_vars, int size);
 bool		export_no_args(t_list *ev);
+bool		get_value(char **pair, t_assignment *a);
 
 // pwd
 int	    ft_pwd(void);

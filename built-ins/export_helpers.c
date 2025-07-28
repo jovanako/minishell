@@ -6,12 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 18:03:55 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/28 19:44:18 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:56:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_ins.h"
-// #include "../execution/execution.h"
 #include "../libft/libft.h"
 
 // refactor handle_kv_pair here
@@ -61,4 +60,15 @@ void	sort_vars(t_env_var **array_of_vars, int size)
 		}
 		i++;
 	}
+}
+
+bool	get_value(char **pair, t_assignment *a)
+{
+	pair[1] = ft_strdup(a->value);
+	if (!pair[1])
+	{
+		free(pair[0]);
+		return (false);		
+	}
+	return (true);
 }

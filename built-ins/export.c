@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:49 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/24 20:45:29 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/28 19:56:44 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	ft_free_pair(char **pair)
 
 static bool	handle_kv_pair(t_list **ev, t_list *asgn, char **pair, char *arg)
 {
-	// refactor in export_Helpers
 	t_assignment *a;
 	
 	if (ft_strchr(arg, '='))
@@ -71,14 +70,7 @@ static bool	handle_kv_pair(t_list **ev, t_list *asgn, char **pair, char *arg)
 	}
 	a = ft_lstfind(asgn, &match_assignment_key, pair[0]);
 	if (!pair[1] && a)
-	{
-		pair[1] = ft_strdup(a->value);
-		if (!pair[1])
-		{
-			free(pair[0]);
-			return (false);		
-		}
-	}
+		return (get_value(pair, a));
 	if (!add_env_var(ev, pair[0], pair[1], true))
 	{
 		ft_free_pair(pair);	
