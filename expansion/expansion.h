@@ -54,7 +54,4 @@ bool	is_unquoted(char c);
 bool	is_quote(char c);
 bool	handle_dollar(t_expansion_context *ctx, t_list *env_vars, int *i);
 
-// ?
-char	*ft_cmdpath(t_list *lst, char *cmd);
-
 #endif

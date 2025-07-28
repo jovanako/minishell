@@ -37,7 +37,7 @@ static bool	execute_fork(t_exec_ctx *ctx, t_command *command, t_fork_streams *fs
 	return (true);
 }
 
-static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
+static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections, t_list *env_vars)
 {
 	t_redirection	*current_redir;
 
@@ -54,7 +54,7 @@ static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections)
 			&& open_append_redir(fork_streams, current_redir) == -1)
 			return (false);
 		else if (current_redir->type == HEREDOC_REDIRECT
-			&& open_heredoc_redir(fork_streams, current_redir) == -1)
+			&& open_heredoc_redir(fork_streams, current_redir, env_vars) == -1)
 			return (false);
 		redirections = redirections->next;
 	}
@@ -82,7 +82,7 @@ static bool	execute_command(t_exec_ctx *ctx, int input_fd)
 			return (false);
 		fork_streams->output_fd = fd[1];
 	}
-	if (!add_redirs(fork_streams, command->redirections))
+	if (!add_redirs(fork_streams, command->redirections, ctx->env_vars))
 	{
 		ctx->error = true;
 		return (true);

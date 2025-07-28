@@ -18,7 +18,7 @@ NAME = minishell
 
 CC = gcc
 
-CFLAGS = -g -Wall -Wextra -Werror #remove g
+CFLAGS = -g -Wall -Wextra -Werror
 
 INC = -Llibft -lft -lreadline
 
@@ -30,7 +30,7 @@ BUILTINS = cd echo env exit export export_helpers pwd signals unset
 
 ENV = env_vars add_env_var get_env_var
 
-EXEC = execution execution_execve execution_built_in execution_helpers execution_no_command open_fork_stream cmdpath execution_context
+EXEC = execution execution_execve execution_built_in execution_helpers execution_no_command open_fork_stream cmdpath execution_context heredoc heredoc_expansion
 
 EXPANSION = expansion expansion_helpers slicing
 

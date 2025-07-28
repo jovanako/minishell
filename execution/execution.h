@@ -48,21 +48,43 @@ typedef struct s_execution_context
 /*---------------------FUNCTIONS---------------------*/
 /*---------------------------------------------------*/
 
-t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars);
-bool		fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fs);
+
+//	cmdpath
+char		*ft_cmdpath(t_list *lst, char *cmd);
+
+//	execution_built_in
 bool		fork_built_in(t_exec_ctx *ctx, t_command *cmd, t_fork_streams *s);
-int			open_input_redir(t_fork_streams *fs, t_redirection *redir);
-int			open_output_redir(t_fork_streams *fs, t_redirection *redir);
-int			open_append_redir(t_fork_streams *fs, t_redirection *redir);
-int			open_heredoc_redir(t_fork_streams *fs, t_redirection *redir);
-t_list		*resolve_fork_ev(t_list *assignments, t_list *env_vars);
 bool		is_built_in(char *cmd_name);
 bool		is_special_built_in(t_list *commands);
 int			exec_built_in(t_exec_ctx *ctx, t_command *cmd);
-char		**ev_list_to_arr(t_list *env_vars);
-int			handle_no_command(t_command *cmd, t_list *env_vars);
+
+//	execution_context
 t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars);
 void		*free_exec_ctx(t_exec_ctx *ctx);
+
+//	execution_execve
+bool		fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fs);
+
+//	execution_helpers
+t_list		*resolve_fork_ev(t_list *assignments, t_list *env_vars);
+char		**ev_list_to_arr(t_list *env_vars);
 bool		check_can_read(char *target);
+
+//	execution_no_command
+int			handle_no_command(t_command *cmd, t_list *env_vars);
+
+//	execution
+t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars);
+
+//	open_fork_stream
+int			open_input_redir(t_fork_streams *fs, t_redirection *redir);
+int			open_output_redir(t_fork_streams *fs, t_redirection *redir);
+int			open_append_redir(t_fork_streams *fs, t_redirection *redir);
+
+//	heredoc
+int			open_heredoc_redir(t_fork_streams *fork_streams, t_redirection *redir, t_list *env_vars);
+
+//	heredoc_epanstion
+int 		heredoc_write_input(int mode, int tmp_file, char *input, t_list *env_vars);
 
 #endif
