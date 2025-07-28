@@ -27,8 +27,8 @@ char	*ft_cmdpath(t_list *lst, char *cmd)
 	i = 0;
 	while (path_array[i])
 	{
-		cmd_path = ft_strjoin(path_array[i], full_cmd);
-		// TODO protection
+		if (!(cmd_path = ft_strjoin(path_array[i], full_cmd)))
+			return (NULL);
 		if (access(cmd_path, F_OK) == 0)
 		{
 			ft_free_strarray(path_array);
