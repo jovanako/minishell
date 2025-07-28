@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/28 19:28:21 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/28 19:41:19 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ INC = -Llibft -lft -lreadline
 #---------------------SOURCES-----------------------#
 #---------------------------------------------------#
 
-BUILTINS = cd echo env exit export export_helpers pwd signals unset
+BUILTINS = cd echo env exit export export_helpers export_no_args pwd signals unset
 
 ENV = env_vars add_env_var get_env_var
 
