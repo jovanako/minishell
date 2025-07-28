@@ -43,7 +43,7 @@ test_output_contains "bla{man$USER" \
 test_output_contains "$USER" \
 "echo \"$USER\""
 test_output_contains '$USER' \
-"echo '$USER'"
+"echo "'$USER'
 test_output_contains "\n" \
 "echo $UNSET_VAR"
 test_output_contains "VAR=abc$USER" \
