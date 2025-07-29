@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 21:36:33 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:50:03 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ static bool	free_result_and_return(t_expansion_context *ctx)
 	return (false);
 }
 
-static bool	expand_word(t_token *token, t_list *env_vars)
+static bool	expand_word(t_token *token, t_list *env_vars, int status)
 {
 	t_expansion_context ctx;
 
 	ctx = (t_expansion_context){ .lexeme = token->lexeme };
+	ctx.exit_status = status;
 	ctx.result = malloc(sizeof(char));
 	if (!ctx.result)
 		return (false);
@@ -41,7 +42,7 @@ static bool	expand_word(t_token *token, t_list *env_vars)
 	return (true);
 }
 
-static bool	expand(void *content, void *env_vars)
+static bool	expand(void *content, void *env_vars, int status)
 {
 	t_token *token;
 	bool	success;
@@ -49,18 +50,18 @@ static bool	expand(void *content, void *env_vars)
 	success = true;
 	token = (t_token *)content;
 	if (token->type == WORD_TOKEN || token->type == ASSIGNMENT_TOKEN)
-		success = expand_word(token, (t_list *)env_vars);
+		success = expand_word(token, (t_list *)env_vars, status);
 	return (success);
 }
 
-bool	expand_variables(t_list *tokens, t_list *env_vars)
+bool	expand_variables(t_list *tokens, t_list *env_vars, int status)
 {
 	t_list	*current_token;
 
 	current_token = tokens;
 	while (current_token)
 	{
-		if (!expand(current_token->content, env_vars))
+		if (!expand(current_token->content, env_vars, status))
 			return (false);
 		current_token = current_token->next;
 	}

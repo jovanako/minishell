@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:21:46 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 22:10:51 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:53:56 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ bool	handle_exit_expand(t_expansion_context *ctx, int *i)
 {
 	if (ctx->lexeme[*i] != '?')
 		return (false);
-	//append_value(ctx, ctx->status);
-	append_value(ctx, "0");
+	append_value(ctx, ft_itoa(ctx->exit_status));
+	// append_value(ctx, "0");
 	(*i)++;
 	ctx->current = *i;
 	return (true);

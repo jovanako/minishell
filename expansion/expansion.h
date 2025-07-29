@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 08:36:15 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/04 14:09:41 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:50:19 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_expansion_context
 	int		current;
 	char	*lexeme;
 	char	*result;
+	int		exit_status;
 }	t_expansion_context;
 
 /*---------------------------------------------------*/
@@ -38,7 +39,7 @@ typedef struct s_expansion_context
 /*---------------------------------------------------*/
 
 // expansion
-bool	expand_variables(t_list *tokens, t_list *env_vars);
+bool	expand_variables(t_list *tokens, t_list *env_vars, int status);
 bool	handle_exit_expand(t_expansion_context *ctx, int *i);
 
 // slicing

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 13:53:40 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:34:26 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@
 /*---------------------------------------------------*/
 
 extern volatile sig_atomic_t	g_last_sig;
+
+typedef struct s_ctx_holder
+{
+	t_token_context		*t_ctx;
+	t_parse_ctx			*p_ctx;
+	t_exec_ctx			*e_ctx;
+}	t_ctx_holder;
+
 
 /*	Enum?
  *	Exit code Conventions:
