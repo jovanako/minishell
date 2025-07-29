@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 22:28:01 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:11:23 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,19 @@
 static int	wait_for_children(t_list *commands)
 {
 	t_command	*cmd;
-	int			exit_status;
+	int			status;
 	
 	while (commands)
 	{
 		cmd = commands->content;
-		waitpid(cmd->pid, &exit_status, 0);
+		waitpid(cmd->pid, &status, 0);
 		commands = commands->next;
 	}
-	return (exit_status);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (1);
 }
 
 static bool	execute_fork(t_exec_ctx *ctx, t_command *command, t_fork_streams *fs)
