@@ -13,6 +13,13 @@
 #include "execution.h"
 #include "../minishell.h"
 
+int close_heredoc(char *delimiter, int error)
+{
+    if (delimiter)
+        free(delimiter);
+    return (error);
+}
+
 static char *heredoc_append_word(int *start, char *input)
 {
     char    *tmp;
@@ -23,7 +30,7 @@ static char *heredoc_append_word(int *start, char *input)
         i++;
     if (!(tmp = ft_substr(input, *start, i - *start)))
         return (NULL);
-    *start = i + 1;
+    *start = i;
     return (tmp);
 }
 
@@ -38,17 +45,17 @@ static char *heredoc_append_env(int *start, char *input, t_list *env_vars)
         return (ft_strdup("$"));
     while (input[i] && is_valid_env_var_char(input[i]))
         i++;
-    if (!(tmp = ft_substr(input, *start + 1, i - *start)))
+    if (!(tmp = ft_substr(input, *start + 1, i - *start - 1)))
         return (NULL);
     env = get_env_var(env_vars, tmp);
     free(tmp);
-    *start = i + 1;
+    *start = i;
     if (!env)
         return (ft_strdup("\0"));
     return (ft_strdup(env->value));
 }
 
-static int  heredoc_expand_input(char **input, t_list *env_vars)
+static char *heredoc_expand_input(char *input, t_list *env_vars)
 {
     char    *tmp;
     char    *res;
@@ -56,24 +63,23 @@ static int  heredoc_expand_input(char **input, t_list *env_vars)
     int     len;
 
     i = 0;
-    len = ft_strlen(*input);
+    len = ft_strlen(input);
     if (!(res = ft_strdup("")))
-        return (0);
+        return (NULL);
     while (i < len)
     {
-        if (*input[i] == '$')
-            tmp = heredoc_append_env(&i, *input, env_vars);
+        if (input[i] == '$')
+            tmp = heredoc_append_env(&i, input, env_vars);
         else
-            tmp = heredoc_append_word(&i, *input);
+            tmp = heredoc_append_word(&i, input);
         if (!tmp)
-            return (0);
+            return (NULL);
         if (!(res = ft_strappend(res, tmp)))
-            return (0);
+            return (NULL);
         free(tmp);
     }
-    free(*input);
-    *input = res;
-    return (1);
+    free(input);
+    return (res);
 }
 
 int heredoc_write_input(int mode, int tmp_file, char *input, t_list *env_vars)
@@ -84,7 +90,7 @@ int heredoc_write_input(int mode, int tmp_file, char *input, t_list *env_vars)
         return (0);
     if (mode == 2)
     {
-        if (!(heredoc_expand_input(&output, env_vars)))
+        if (!(output = heredoc_expand_input(output, env_vars)))
             return (0);
     }
     write(tmp_file, output, ft_strlen(output));
