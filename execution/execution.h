@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:24:40 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 22:49:35 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/29 20:50:01 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool		is_special_built_in(t_list *commands);
 int			exec_built_in(t_exec_ctx *ctx, t_command *cmd);
 
 //	execution_context
-t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars);
+t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars, int status);
 void		*free_exec_ctx(t_exec_ctx *ctx);
 
 //	execution_execve
@@ -74,7 +74,7 @@ bool		check_can_read(char *target);
 int			handle_no_command(t_command *cmd, t_list *env_vars);
 
 //	execution
-t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars);
+t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars, int status);
 
 //	open_fork_stream
 int			open_input_redir(t_fork_streams *fs, t_redirection *redir);
@@ -82,10 +82,10 @@ int			open_output_redir(t_fork_streams *fs, t_redirection *redir);
 int			open_append_redir(t_fork_streams *fs, t_redirection *redir);
 
 //	heredoc
-int			open_heredoc_redir(t_fork_streams *fork_streams, t_redirection *redir, t_list *env_vars);
+int			open_heredoc_redir(t_fork_streams *fs, t_redirection *rd, t_exec_ctx *ctx);
 
 //	heredoc_epanstion
 int 		close_heredoc(char *delimiter, int error);
-int 		heredoc_write_input(int mode, int tmp_file, char *input, t_list *env_vars);
+int 		heredoc_write_input(int mode, int tmp_file, char *input, t_exec_ctx *ctx);
 
 #endif

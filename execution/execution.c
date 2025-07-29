@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/29 19:11:23 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/29 20:43:37 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,37 +30,37 @@ static int	wait_for_children(t_list *commands)
 	return (1);
 }
 
-static bool	execute_fork(t_exec_ctx *ctx, t_command *command, t_fork_streams *fs)
+static bool	execute_fork(t_exec_ctx *ctx, t_command *cmd, t_fork_streams *fs)
 {
 	if (!ctx->env_vars)
 		return (false);
-	if (is_built_in(command->argv[0]))
-		fork_built_in(ctx, command, fs);
+	if (is_built_in(cmd->argv[0]))
+		fork_built_in(ctx, cmd, fs);
 	else
-		fork_execve(command, ctx->env_vars, fs);
+		fork_execve(cmd, ctx->env_vars, fs);
 	return (true);
 }
 
-static bool	add_redirs(t_fork_streams *fork_streams, t_list *redirections, t_list *env_vars)
+static bool	add_redirs(t_fork_streams *fs, t_list *redirs, t_exec_ctx *ctx)
 {
 	t_redirection	*current_redir;
 
-	while (redirections)
+	while (redirs)
 	{
-		current_redir = (t_redirection *)redirections->content;
+		current_redir = (t_redirection *)redirs->content;
 		if (current_redir->type == INPUT_REDIRECT
-			&& open_input_redir(fork_streams, current_redir) == -1)
+			&& open_input_redir(fs, current_redir) == -1)
 			return (false);
 		else if (current_redir->type == OUTPUT_REDIRECT
-			&& open_output_redir(fork_streams, current_redir) == -1)
+			&& open_output_redir(fs, current_redir) == -1)
 			return (false);
 		else if (current_redir->type == APPEND_REDIRECT
-			&& open_append_redir(fork_streams, current_redir) == -1)
+			&& open_append_redir(fs, current_redir) == -1)
 			return (false);
 		else if (current_redir->type == HEREDOC_REDIRECT
-			&& open_heredoc_redir(fork_streams, current_redir, env_vars) == -1)
+			&& open_heredoc_redir(fs, current_redir, ctx) == -1)
 			return (false);
-		redirections = redirections->next;
+		redirs = redirs->next;
 	}
 	return (true);
 }
@@ -86,7 +86,7 @@ static bool	execute_command(t_exec_ctx *ctx, int input_fd)
 			return (false);
 		fork_streams->output_fd = fd[1];
 	}
-	if (!add_redirs(fork_streams, command->redirections, ctx->env_vars))
+	if (!add_redirs(fork_streams, command->redirections, ctx))
 	{
 		ctx->error = true;
 		return (true);
@@ -102,14 +102,14 @@ static bool	execute_command(t_exec_ctx *ctx, int input_fd)
 	return (true);
 }
 
-t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars)
+t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars, int status)
 {
 	t_exec_ctx	*ctx;
 	t_command 	*cmd;
 	
 	if (!p_ctx)
 		return (NULL);
-	ctx = new_exec_ctx(p_ctx, env_vars);
+	ctx = new_exec_ctx(p_ctx, env_vars, status);
 	if (!ctx)
 		return (NULL);
 	if (!ctx->commands)

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/29 17:50:49 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/29 20:42:23 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static bool	eval_loop(t_list *env_vars)
 		ctx_holder.p_ctx = parse(ctx_holder.t_ctx);
 		if (ctx_holder.p_ctx && ctx_holder.p_ctx->error)
 			continue ;
-		ctx_holder.e_ctx = execute(ctx_holder.p_ctx, env_vars);
+		ctx_holder.e_ctx = execute(ctx_holder.p_ctx, env_vars, status);
 		if (!ctx_holder.e_ctx)
 			return (false);
 		if (ctx_holder.e_ctx->error)

@@ -6,13 +6,13 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 19:42:14 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 14:29:51 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/29 20:41:29 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars)
+t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars, int status)
 {
 	t_exec_ctx	*ctx;
 
@@ -23,7 +23,7 @@ t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars)
 	ctx->env_vars = env_vars;
 	ctx->exit = false;
 	ctx->error = false;
-	ctx->status = 0;
+	ctx->status = status;
 	return (ctx);
 }
 

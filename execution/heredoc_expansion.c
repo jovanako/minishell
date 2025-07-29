@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expansion.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 20:43:09 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/28 20:43:09 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/07/29 20:57:16 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char *heredoc_append_env(int *start, char *input, t_list *env_vars)
     return (ft_strdup(env->value));
 }
 
-static char *heredoc_expand_input(char *input, t_list *env_vars)
+static char *heredoc_expand_input(char *input, t_exec_ctx *ctx)
 {
     char    *tmp;
     char    *res;
@@ -69,7 +69,7 @@ static char *heredoc_expand_input(char *input, t_list *env_vars)
     while (i < len)
     {
         if (input[i] == '$')
-            tmp = heredoc_append_env(&i, input, env_vars);
+            tmp = heredoc_append_env(&i, input, ctx->env_vars);
         else
             tmp = heredoc_append_word(&i, input);
         if (!tmp)
@@ -82,7 +82,7 @@ static char *heredoc_expand_input(char *input, t_list *env_vars)
     return (res);
 }
 
-int heredoc_write_input(int mode, int tmp_file, char *input, t_list *env_vars)
+int heredoc_write_input(int mode, int tmp_file, char *input, t_exec_ctx *ctx)
 {
     char    *output;
 
@@ -90,7 +90,7 @@ int heredoc_write_input(int mode, int tmp_file, char *input, t_list *env_vars)
         return (0);
     if (mode == 2)
     {
-        if (!(output = heredoc_expand_input(output, env_vars)))
+        if (!(output = heredoc_expand_input(output, ctx)))
             return (0);
     }
     write(tmp_file, output, ft_strlen(output));

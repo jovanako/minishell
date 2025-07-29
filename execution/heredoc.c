@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:38:32 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/28 15:42:53 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/07/29 20:49:21 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	heredoc_quoted_delimiter(t_redirection *redir, char **delimiter)
 	}
 }
 
-static int	heredoc_loop(const int tmp_file, char *delimiter, int mode, t_list *env_vars)
+static int	heredoc_loop(const int tmp_file, char *delimiter, int mode, t_exec_ctx *ctx)
 {
 	char	*input;
 	int		i;
@@ -100,14 +100,14 @@ static int	heredoc_loop(const int tmp_file, char *delimiter, int mode, t_list *e
 		}
 		if (ft_strcmp(input, delimiter) == 0 || g_last_sig == SIGINT)
 			break;
-		if (!(heredoc_write_input(mode, tmp_file, input, env_vars)))
+		if (!(heredoc_write_input(mode, tmp_file, input, ctx)))
 			return (0);
 		i++;
     }
 	return (1);
 }
 
-int	open_heredoc_redir(t_fork_streams *fork_streams, t_redirection *redir, t_list *env_vars)
+int	open_heredoc_redir(t_fork_streams *fork_streams, t_redirection *redir, t_exec_ctx *ctx)
 {
 	char	*delimiter;
 	int		mode;
@@ -120,7 +120,7 @@ int	open_heredoc_redir(t_fork_streams *fork_streams, t_redirection *redir, t_lis
 	tmp_file = open("/tmp/minishell.tmp", O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (!tmp_file)
 		return (close_heredoc(delimiter, -1));
-	if (!(heredoc_loop(tmp_file, delimiter, mode, env_vars)))
+	if (!(heredoc_loop(tmp_file, delimiter, mode, ctx)))
 		return (close_heredoc(delimiter, -1));
 	close(tmp_file);
 	if (g_last_sig == SIGINT)
