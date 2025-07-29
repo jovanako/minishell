@@ -92,6 +92,7 @@ static int	heredoc_loop(const int tmp_file, char *delimiter, int mode, t_list *e
 		free(input);
 		rl_event_hook = ft_sig_heredoc;
 		input = readline("> ");
+		rl_event_hook = 0;
 		if (!input)
 		{
 			printf("-minishell: warning: here-document at line %d delimited by end-of-file (wanted '%s')\n", i, delimiter);
@@ -125,7 +126,6 @@ int	open_heredoc_redir(t_fork_streams *fork_streams, t_redirection *redir, t_lis
 	if (g_last_sig == SIGINT)
 	{
 		rl_done = 0;
-		rl_event_hook = 0;
 		tmp_file = open("/tmp/minishell.tmp", O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR);
 	}
 	else

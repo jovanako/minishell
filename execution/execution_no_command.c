@@ -60,10 +60,24 @@ static void	is_output_or_append(t_redirection *redirection, int *fd, int rights_
 
 static void	is_heredoc(char *input, t_redirection *redirection)
 {
+	int	i;
+
+	i = 1;
+	while (1)
+	{
 		free(input);
+		rl_event_hook = ft_sig_heredoc;
 		input = readline("> ");
-		if (!input || ft_strcmp(redirection->target, input) == 0)
-			return ;
+		rl_event_hook = 0;
+		if (!input)
+		{
+			printf("-minishell: warning: here-document at line %d delimited by end-of-file (wanted '%s')\n", i, input);
+			break;
+		}
+		if (ft_strcmp(redirection->target, input) == 0 || g_last_sig == SIGINT)
+			break;
+		i++;
+	}
 }
 
 static int	handle_redirections(t_list *redirections)
@@ -86,8 +100,7 @@ static int	handle_redirections(t_list *redirections)
 			return (1);			
 		else if (redirection->type == HEREDOC_REDIRECT)
 		{
-			while (1)
-				is_heredoc(input, redirection);
+			is_heredoc(input, redirection);
 			free(input);
 		}
 		redirections = redirections->next;
