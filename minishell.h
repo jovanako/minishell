@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/29 17:34:26 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/30 21:21:17 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_ctx_holder
 	t_token_context		*t_ctx;
 	t_parse_ctx			*p_ctx;
 	t_exec_ctx			*e_ctx;
+	int					status;
+	bool				exit;
 }	t_ctx_holder;
 
 

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/29 20:42:23 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/30 21:22:08 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,27 @@ static bool	eval_loop(t_list *env_vars)
 {
     char 			*input;
 	t_ctx_holder	ctx_holder;
-	bool			exit;
-	int				status;
 
 	input = NULL;
-	exit = false;
-	status = 0;
-	while (!exit)
+	ctx_holder.exit = false;
+	ctx_holder.status = 0;
+	while (!ctx_holder.exit)
 	{
 		read_input(&input);
 		ctx_holder.t_ctx = tokenize(input);
 		if (ctx_holder.t_ctx && ctx_holder.t_ctx->error)
 			continue ;
-		expand(ctx_holder.t_ctx, env_vars, status);
+		expand(ctx_holder.t_ctx, env_vars, ctx_holder.status);
 		ctx_holder.p_ctx = parse(ctx_holder.t_ctx);
 		if (ctx_holder.p_ctx && ctx_holder.p_ctx->error)
 			continue ;
-		ctx_holder.e_ctx = execute(ctx_holder.p_ctx, env_vars, status);
+		ctx_holder.e_ctx = execute(ctx_holder.p_ctx, env_vars, ctx_holder.status);
 		if (!ctx_holder.e_ctx)
 			return (false);
 		if (ctx_holder.e_ctx->error)
 			continue ;
-		exit = ctx_holder.e_ctx->exit;
-		status = ctx_holder.e_ctx->status;
+		ctx_holder.exit = ctx_holder.e_ctx->exit;
+		ctx_holder.status = ctx_holder.e_ctx->status;
 		clean_up(&ctx_holder);
 	}
 	return (true);
