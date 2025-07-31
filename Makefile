@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/07/28 19:41:19 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/07/31 21:19:44 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ ENV = env_vars add_env_var get_env_var
 
 EXEC = execution execution_execve execution_built_in execution_helpers execution_no_command open_fork_stream cmdpath execution_context ev_list_to_array heredoc heredoc_expansion
 
-EXPANSION = expansion expansion_helpers slicing
+EXPANSION = expansion expansion_helpers slicing cleanup
 
 MAIN = main
 
@@ -40,7 +40,7 @@ PARSING = parsing parsing_helpers parsing_assignment parsing_redirection parsing
 
 TOKENIZER = tokenizer tokenizer_helper token_readers heredoc_reader token_context
 
-UTILS = call_backs strings		
+UTILS = call_backs strings
 
 SRC = $(addsuffix .c, $(addprefix built-ins/, $(BUILTINS))) \
 	  $(addsuffix .c, $(addprefix env_vars/, $(ENV))) \

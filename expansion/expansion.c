@@ -6,17 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/29 17:50:03 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:13:25 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
-
-static bool	free_result_and_return(t_expansion_context *ctx)
-{
-	free(ctx->result);
-	return (false);
-}
 
 static bool	expand_word(t_token *token, t_list *env_vars, int status)
 {
@@ -42,7 +36,7 @@ static bool	expand_word(t_token *token, t_list *env_vars, int status)
 	return (true);
 }
 
-static bool	expand(void *content, void *env_vars, int status)
+static bool	expand_token(void *content, void *env_vars, int status)
 {
 	t_token *token;
 	bool	success;
@@ -61,7 +55,7 @@ bool	expand_variables(t_list *tokens, t_list *env_vars, int status)
 	current_token = tokens;
 	while (current_token)
 	{
-		if (!expand(current_token->content, env_vars, status))
+		if (!expand_token(current_token->content, env_vars, status))
 			return (false);
 		current_token = current_token->next;
 	}
@@ -87,3 +81,16 @@ bool	handle_dollar(t_expansion_context *ctx, t_list *env_vars, int *i)
 		append_value(ctx, var->value);
 	return (true);
 }
+
+bool	expand(t_token_context *ctx, t_list *env_vars, int status)
+{
+	if (!ctx)
+		return (false);
+	if (!expand_variables(ctx->tokens, env_vars, status))
+	{
+		ft_lstclear(&(ctx->tokens), &delete_token);
+		return (false);
+	}
+	return (true);
+}
+

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 19:16:18 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 22:15:48 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:48:07 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_parse_ctx	*new_parsing_ctx(t_token_context *t_ctx)
 
 void	*free_parsing_ctx(t_parse_ctx *ctx)
 {
+	if (!ctx)
+		return (NULL);
 	ft_lstclear(&(ctx->commands), &delete_command);
 	free(ctx);
 	return (NULL);

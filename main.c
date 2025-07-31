@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/30 21:22:08 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:12:52 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,22 @@ static bool	read_input(char **input)
 	return (true);
 }
 
-static bool	expand(t_token_context *ctx, t_list *env_vars, int status)
+static bool eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
 {
-	if (!ctx)
+	ctx_holder->t_ctx = tokenize(input);
+	if (ctx_holder->t_ctx && ctx_holder->t_ctx->error)
+		return (true);
+	expand(ctx_holder->t_ctx, env_vars, ctx_holder->status);
+	ctx_holder->p_ctx = parse(ctx_holder->t_ctx);
+	if (ctx_holder->p_ctx && ctx_holder->p_ctx->error)
+		return (true);
+	ctx_holder->e_ctx = execute(ctx_holder->p_ctx, env_vars, ctx_holder->status);
+	if (!ctx_holder->e_ctx)
 		return (false);
-	if (!expand_variables(ctx->tokens, env_vars, status))
-	{
-		ft_lstclear(&(ctx->tokens), &delete_token);
-		return (false);
-	}
+	if (ctx_holder->e_ctx->error)
+		return (true);
+	ctx_holder->exit = ctx_holder->e_ctx->exit;
+	ctx_holder->status = ctx_holder->e_ctx->status;
 	return (true);
 }
 
@@ -53,23 +60,17 @@ static bool	eval_loop(t_list *env_vars)
 	input = NULL;
 	ctx_holder.exit = false;
 	ctx_holder.status = 0;
+	ctx_holder.t_ctx = NULL;
+	ctx_holder.p_ctx = NULL;
+	ctx_holder.e_ctx = NULL;
 	while (!ctx_holder.exit)
 	{
 		read_input(&input);
-		ctx_holder.t_ctx = tokenize(input);
-		if (ctx_holder.t_ctx && ctx_holder.t_ctx->error)
-			continue ;
-		expand(ctx_holder.t_ctx, env_vars, ctx_holder.status);
-		ctx_holder.p_ctx = parse(ctx_holder.t_ctx);
-		if (ctx_holder.p_ctx && ctx_holder.p_ctx->error)
-			continue ;
-		ctx_holder.e_ctx = execute(ctx_holder.p_ctx, env_vars, ctx_holder.status);
-		if (!ctx_holder.e_ctx)
+		if (!eval(&ctx_holder, input, env_vars))
+		{
+			clean_up(&ctx_holder);
 			return (false);
-		if (ctx_holder.e_ctx->error)
-			continue ;
-		ctx_holder.exit = ctx_holder.e_ctx->exit;
-		ctx_holder.status = ctx_holder.e_ctx->status;
+		}
 		clean_up(&ctx_holder);
 	}
 	return (true);

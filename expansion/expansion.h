@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 08:36:15 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/29 17:50:19 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/31 21:17:31 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_expansion_context
 // expansion
 bool	expand_variables(t_list *tokens, t_list *env_vars, int status);
 bool	handle_exit_expand(t_expansion_context *ctx, int *i);
+bool	expand(t_token_context *ctx, t_list *env_vars, int status);
 
 // slicing
 bool	append_slice(t_expansion_context *ctx, char *end);
@@ -54,5 +55,8 @@ char	*extract_var_key(t_expansion_context *ctx, int *start);
 bool	is_unquoted(char c);
 bool	is_quote(char c);
 bool	handle_dollar(t_expansion_context *ctx, t_list *env_vars, int *i);
+
+// cleanup
+bool	free_result_and_return(t_expansion_context *ctx);
 
 #endif

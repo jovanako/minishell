@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:09:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 18:26:13 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:54:17 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ bool	read_word(t_token_context *context)
 	{
 		printf("minishell: invalid input\n");
 		context->error = true;
+		return (true);
 	}
 	if (!is_previous_token(context, WORD_TOKEN) 
 		&& is_valid_identifier(context))
