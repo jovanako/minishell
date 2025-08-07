@@ -34,7 +34,7 @@ static char *heredoc_append_word(int *start, char *input)
     return (tmp);
 }
 
-static char *heredoc_append_env(int *start, char *input, t_list *env_vars)
+static char *heredoc_append_env(int *start, char *input, t_exec_ctx *ctx)
 {
     char        *tmp;
     int         i;
@@ -42,12 +42,12 @@ static char *heredoc_append_env(int *start, char *input, t_list *env_vars)
 
     i = *start + 1;
     if (!input[i] || !is_valid_env_var_char(input[i]))
-        return (ft_strdup("$"));
+        return (heredoc_expand_dollar(start, input, ctx));
     while (input[i] && is_valid_env_var_char(input[i]))
         i++;
     if (!(tmp = ft_substr(input, *start + 1, i - *start - 1)))
         return (NULL);
-    env = get_env_var(env_vars, tmp);
+    env = get_env_var(ctx->env_vars, tmp);
     free(tmp);
     *start = i;
     if (!env)
@@ -69,7 +69,7 @@ static char *heredoc_expand_input(char *input, t_exec_ctx *ctx)
     while (i < len)
     {
         if (input[i] == '$')
-            tmp = heredoc_append_env(&i, input, ctx->env_vars);
+            tmp = heredoc_append_env(&i, input, ctx);
         else
             tmp = heredoc_append_word(&i, input);
         if (!tmp)

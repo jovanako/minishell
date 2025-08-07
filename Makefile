@@ -30,7 +30,7 @@ BUILTINS = cd echo env exit export export_helpers export_no_args pwd signals uns
 
 ENV = env_vars add_env_var get_env_var
 
-EXEC = execution execution_execve execution_built_in execution_helpers execution_no_command open_fork_stream cmdpath execution_context ev_list_to_array heredoc heredoc_expansion
+EXEC = execution execution_execve execution_built_in execution_helpers execution_no_command open_fork_stream cmdpath execution_context ev_list_to_array heredoc heredoc_expansion heredoc_helpers
 
 EXPANSION = expansion expansion_helpers slicing cleanup
 

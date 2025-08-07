@@ -48,7 +48,7 @@ static bool eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
 	if (ctx_holder->e_ctx->error)
 		return (true);
 	ctx_holder->exit = ctx_holder->e_ctx->exit;
-	ctx_holder->status = ctx_holder->e_ctx->status;
+	ctx_holder->status = ft_get_last_sig_exit(ctx_holder->e_ctx->status);
 	return (true);
 }
 
@@ -66,6 +66,7 @@ static bool	eval_loop(t_list *env_vars)
 	while (!ctx_holder.exit)
 	{
 		read_input(&input);
+		ctx_holder.status = ft_get_last_sig_exit(ctx_holder.status);
 		if (!eval(&ctx_holder, input, env_vars))
 		{
 			clean_up(&ctx_holder);

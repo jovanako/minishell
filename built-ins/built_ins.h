@@ -61,8 +61,8 @@ bool		get_value(char **pair, t_assignment *a);
 int	    ft_pwd(void);
 
 // signals
-int 	ft_sig_heredoc(void);
 void	ft_change_sigmode(t_sig_mode mode);
+int	    ft_get_last_sig_exit(int last_exit_code);
 
 // unset
 int	    ft_unset(char **keys, t_list *lst, t_list *assignments);

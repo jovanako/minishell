@@ -58,9 +58,7 @@ typedef struct s_ctx_holder
 	bool				exit;
 }	t_ctx_holder;
 
-
-/*	Enum?
- *	Exit code Conventions:
+/*	Exit code Conventions:
  *	0	- Success
  * 	1	- General Error
  * 	2	- Misuse of built-ins

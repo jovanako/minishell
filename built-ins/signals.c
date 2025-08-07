@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "built_ins.h"
+#include "../execution/execution.h"
 
 // TODO SIGQUIT still prints "^\", should do nothing
-// TODO EOF (ctrl-d) needs to print/call exit
 
 // in interactive mode SIGINT resets the prompt, SIGQUIT is ignored
 static void	ft_sig_interactive(int sig)
@@ -32,14 +32,14 @@ static void	ft_sig_interactive(int sig)
 static void	ft_sig_noninteractive(int sig)
 {
 	g_last_sig = sig;
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_on_new_line();
 }
 
-int	ft_sig_heredoc(void)
+static void	ft_sig_heredoc(int sig)
 {
-	if (g_last_sig == SIGINT)
-		rl_done = 1;
-	return (0);
+	g_last_sig = sig;
+	rl_on_new_line();
 }
 
 // changes the function that handles incoming SIGINT and SIGQUIT signals
@@ -47,13 +47,29 @@ void	ft_change_sigmode(t_sig_mode mode)
 {
 	struct sigaction	action;
 
-	g_last_sig = 0;
+	rl_event_hook = 0;
 	ft_bzero(&action, sizeof(action));
 	if (mode == SIG_INTERACTIVE)
 		action.sa_handler = &ft_sig_interactive;
 	else if (mode == SIG_NONINTERACTIVE)
 		action.sa_handler = &ft_sig_noninteractive;
+	else if (mode == SIG_HEREDOC)
+	{
+		action.sa_handler = &ft_sig_heredoc;
+		rl_event_hook = heredoc_event_hook;
+	}
 	sigaction(SIGINT, &action, NULL);
 	sigaction(SIGQUIT, &action, NULL);
 }
 
+int	ft_get_last_sig_exit(int last_exit_code)
+{
+	int	new_exit_code;
+
+	if (g_last_sig != 0)
+		new_exit_code = g_last_sig + 128;
+	else
+		new_exit_code = last_exit_code;
+	g_last_sig = 0;
+	return (new_exit_code);
+}

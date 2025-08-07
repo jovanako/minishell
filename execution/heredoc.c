@@ -36,10 +36,10 @@ static int	heredoc_find_next_quote(t_redirection *redir, char **delimiter, char 
 	while (redir->target[i] != quote)
 	{
 		if (!redir->target[i++])
-			return (0); // invalid input
+			return (0); // invalid input (2)
 	}
 	if (!(heredoc_append_slice(redir, delimiter, *start, i)))
-		return (0); // malloc error
+		return (0);
 	*start = i + 1;
 	return (1);
 }
@@ -61,7 +61,7 @@ static int	heredoc_quoted_delimiter(t_redirection *redir, char **delimiter)
 		{
 			quote = redir->target[i++];
 			if (!(heredoc_find_next_quote(redir, delimiter, quote, &i)))
-				return (0); // return heredoc_find_next_quote error
+				return (0);
 		}
 		else
 		{
@@ -75,7 +75,7 @@ static int	heredoc_quoted_delimiter(t_redirection *redir, char **delimiter)
 	else
 	{
 		if (!(*delimiter = ft_strdup(redir->target)))
-			return (0); // malloc error
+			return (0);
 		return (2);
 	}
 }
@@ -90,9 +90,9 @@ static int	heredoc_loop(const int tmp_file, char *delimiter, int mode, t_exec_ct
 	while (1)
 	{
 		free(input);
-		rl_event_hook = ft_sig_heredoc;
+		ft_change_sigmode(SIG_HEREDOC);
 		input = readline("> ");
-		rl_event_hook = 0;
+		ft_change_sigmode(SIG_NONINTERACTIVE);
 		if (!input)
 		{
 			printf("-minishell: warning: here-document at line %d delimited by end-of-file (wanted '%s')\n", i, delimiter);
@@ -121,7 +121,10 @@ int	open_heredoc_redir(t_fork_streams *fork_streams, t_redirection *redir, t_exe
 	if (!tmp_file)
 		return (close_heredoc(delimiter, -1));
 	if (!(heredoc_loop(tmp_file, delimiter, mode, ctx)))
+	{
+		close(tmp_file);
 		return (close_heredoc(delimiter, -1));
+	}
 	close(tmp_file);
 	if (g_last_sig == SIGINT)
 	{

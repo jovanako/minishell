@@ -66,12 +66,12 @@ static void	is_heredoc(char *input, t_redirection *redirection)
 	while (1)
 	{
 		free(input);
-		rl_event_hook = ft_sig_heredoc;
+		ft_change_sigmode(SIG_HEREDOC);
 		input = readline("> ");
-		rl_event_hook = 0;
+		ft_change_sigmode(SIG_NONINTERACTIVE);
 		if (!input)
 		{
-			printf("-minishell: warning: here-document at line %d delimited by end-of-file (wanted '%s')\n", i, input);
+			printf("-minishell: warning: here-document at line %d delimited by end-of-file (wanted '%s')\n", i, redirection->target);
 			break;
 		}
 		if (ft_strcmp(redirection->target, input) == 0 || g_last_sig == SIGINT)

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "expansion.h"
+#include "../built-ins/built_ins.h"
 
 char	*extract_var_key(t_expansion_context *ctx, int *start)
 {
@@ -55,10 +56,12 @@ bool	is_quote(char c)
 
 bool	handle_exit_expand(t_expansion_context *ctx, int *i)
 {
+	int	status;
+
 	if (ctx->lexeme[*i] != '?')
 		return (false);
-	append_value(ctx, ft_itoa(ctx->exit_status));
-	// append_value(ctx, "0");
+	status = ft_get_last_sig_exit(ctx->exit_status);
+	append_value(ctx, ft_itoa(status));
 	(*i)++;
 	ctx->current = *i;
 	return (true);
