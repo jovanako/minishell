@@ -12,20 +12,6 @@
 
 #include "built_ins.h"
 
-// returns the key (str) of env pointed to by lst
-// static char	*ft_getenv_k(t_list *lst)
-// {
-// 	t_env_var	*env_var;
-
-// 	if (lst)
-// 	{
-// 		env_var = (t_env_var *)lst->content;
-// 		if (env_var->key)
-// 			return (env_var->key);
-// 	}
-// 	return (NULL);
-// }
-
 // prints all environment variables
 int	ft_env(t_list *lst)
 {

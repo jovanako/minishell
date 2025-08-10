@@ -12,6 +12,22 @@
 
 #include "built_ins.h"
 
+static void	ft_lstdelfill_loop(t_list *to_del, t_list *curr)
+{
+	while (curr && to_del)
+	{
+		if (curr->next == to_del)
+		{
+			if (curr->next->next)
+				curr->next = curr->next->next;
+			else
+				curr->next = NULL;
+			ft_lstdelone(to_del, delete_env_var);
+		}
+		curr = curr->next;
+	}
+}
+
 static void	ft_lstdelfill(t_list **start, t_list *to_del)
 {
 	t_list	*curr;
@@ -21,25 +37,12 @@ static void	ft_lstdelfill(t_list **start, t_list *to_del)
 	{
 		if (curr == to_del)
 		{
-			// protection (start = to_del, start->next = NULL)
-			*start = curr->next;
+			if (curr->next)
+				*start = curr->next;
 			ft_lstdelone(to_del, delete_env_var);
 		}
 		else
-		{
-			while (curr && to_del)
-			{
-				if (curr->next == to_del)
-				{
-					if (curr->next->next)
-						curr->next = curr->next->next;
-					else
-						curr->next = NULL;
-					ft_lstdelone(to_del, delete_env_var);
-				}
-				curr = curr->next;
-			}
-		}
+			ft_lstdelfill_loop(to_del, curr);
 	}
 }
 

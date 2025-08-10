@@ -13,42 +13,11 @@
 #include "execution.h"
 #include "../minishell.h"
 
-static int	heredoc_append_slice(t_redirection *redir, char **delimiter, int start, int end)
-{
-	char	*slice;
-
-	if (!(slice = ft_substr(redir->target, start, end - start)))
-		return (0);
-	if (!(*delimiter = ft_strappend(*delimiter, slice)))
-	{
-		free(slice);
-		return (0);
-	}
-	free(slice);
-	return (1);
-}
-
-static int	heredoc_find_next_quote(t_redirection *redir, char **delimiter, char quote, int *start)
-{
-	int	i;
-
-	i = *start;
-	while (redir->target[i] != quote)
-	{
-		if (!redir->target[i++])
-			return (0); // invalid input (2)
-	}
-	if (!(heredoc_append_slice(redir, delimiter, *start, i)))
-		return (0);
-	*start = i + 1;
-	return (1);
-}
-
 /*	returns 0 on invalid input
 /	returns 1 on valid quotes
 /	returns 2 on unquoted
 */
-static int	heredoc_quoted_delimiter(t_redirection *redir, char **delimiter)
+static int	hd_quoted_delimiter(t_redirection *redir, char **delimiter)
 {
 	int		i;
 	char	quote;
@@ -57,30 +26,21 @@ static int	heredoc_quoted_delimiter(t_redirection *redir, char **delimiter)
 	quote = 0;
 	while (redir->target[i])
 	{
-		if (redir->target[i] == '\'' || redir->target[i] == '\"')
-		{
-			quote = redir->target[i++];
-			if (!(heredoc_find_next_quote(redir, delimiter, quote, &i)))
-				return (0);
-		}
-		else
-		{
-			if (!(heredoc_append_slice(redir, delimiter, i, i + 1)))
-				return (0);
-			i++;
-		}
+		if (!hd_quoted_dl_loop(redir, delimiter, &i, &quote))
+			return (0);
 	}
 	if (quote != 0)
 		return (1);
 	else
 	{
-		if (!(*delimiter = ft_strdup(redir->target)))
+		*delimiter = ft_strdup(redir->target);
+		if (!(*delimiter))
 			return (0);
 		return (2);
 	}
 }
 
-static int	heredoc_loop(const int tmp_file, char *delimiter, int mode, t_exec_ctx *ctx)
+static int	hd_loop(const int tmp_file, char *dl, int mode, t_exec_ctx *ctx)
 {
 	char	*input;
 	int		i;
@@ -95,10 +55,11 @@ static int	heredoc_loop(const int tmp_file, char *delimiter, int mode, t_exec_ct
 		ft_change_sigmode(SIG_NONINTERACTIVE);
 		if (!input)
 		{
-			printf("-minishell: warning: here-document at line %d delimited by end-of-file (wanted '%s')\n", i, delimiter);
+			printf("-minishell: warning: here-document at line "
+					"%d delimited by end-of-file (wanted '%s')\n", i, dl);
 			break;
 		}
-		if (ft_strcmp(input, delimiter) == 0 || g_last_sig == SIGINT)
+		if (ft_strcmp(input, dl) == 0 || g_last_sig == SIGINT)
 			break;
 		if (!(heredoc_write_input(mode, tmp_file, input, ctx)))
 			return (0);
@@ -107,34 +68,43 @@ static int	heredoc_loop(const int tmp_file, char *delimiter, int mode, t_exec_ct
 	return (1);
 }
 
-int	open_heredoc_redir(t_fork_streams *fork_streams, t_redirection *redir, t_exec_ctx *ctx)
+static int	open_hd_redir_helper(char *delimiter, t_fork_streams *f_s)
+{
+	int	tmp_file;
+
+	if (g_last_sig == SIGINT)
+	{
+		rl_done = 0;
+		tmp_file = open(TMP_FILE, O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR);
+	}
+	else
+		tmp_file = open(TMP_FILE, O_RDONLY);
+	if (!tmp_file)
+		return (close_heredoc(delimiter, -1));
+	f_s->input_fd = tmp_file;
+	return (close_heredoc(delimiter, f_s->input_fd));
+}
+
+int	open_hd_redir(t_fork_streams *f_s, t_redirection *redir, t_exec_ctx *ctx)
 {
 	char	*delimiter;
 	int		mode;
 	int		tmp_file;
 
-	if (!(delimiter = ft_strdup("")))
+	delimiter = ft_strdup("");
+	if (!delimiter)
 		return (close_heredoc(delimiter, -1));
-	if (!(mode = heredoc_quoted_delimiter(redir, &delimiter)))
+	mode = hd_quoted_delimiter(redir, &delimiter);
+	if (mode == 0)
 		return (close_heredoc(delimiter, -1));
-	tmp_file = open("/tmp/minishell.tmp", O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+	tmp_file = open(TMP_FILE, O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 	if (!tmp_file)
 		return (close_heredoc(delimiter, -1));
-	if (!(heredoc_loop(tmp_file, delimiter, mode, ctx)))
+	if (!(hd_loop(tmp_file, delimiter, mode, ctx)))
 	{
 		close(tmp_file);
 		return (close_heredoc(delimiter, -1));
 	}
 	close(tmp_file);
-	if (g_last_sig == SIGINT)
-	{
-		rl_done = 0;
-		tmp_file = open("/tmp/minishell.tmp", O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR);
-	}
-	else
-		tmp_file = open("/tmp/minishell.tmp", O_RDONLY);
-	if (!tmp_file)
-		return (close_heredoc(delimiter, -1));
-	fork_streams->input_fd = tmp_file;
-	return (close_heredoc(delimiter, fork_streams->input_fd));
+	return (open_hd_redir_helper(delimiter, f_s));
 }

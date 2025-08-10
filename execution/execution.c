@@ -50,18 +50,34 @@ static bool	add_redirs(t_fork_streams *fs, t_list *redirs, t_exec_ctx *ctx)
 		current_redir = (t_redirection *)redirs->content;
 		if (current_redir->type == INPUT_REDIRECT
 			&& open_input_redir(fs, current_redir) == -1)
-			return (false);
+			return (true);
 		else if (current_redir->type == OUTPUT_REDIRECT
 			&& open_output_redir(fs, current_redir) == -1)
-			return (false);
+			return (true);
 		else if (current_redir->type == APPEND_REDIRECT
 			&& open_append_redir(fs, current_redir) == -1)
-			return (false);
+			return (true);
 		else if (current_redir->type == HEREDOC_REDIRECT
-			&& open_heredoc_redir(fs, current_redir, ctx) == -1)
-			return (false);
+			&& open_hd_redir(fs, current_redir, ctx) == -1)
+			return (true);
 		redirs = redirs->next;
 	}
+	return (false);
+}
+
+static bool	execute_command_helper(int *fd, t_fork_streams *fork_streams, t_exec_ctx *ctx, t_command *command)
+{
+	if (ctx->commands->next)
+	{
+		if (pipe(fd) == -1)
+			return (false);
+		fork_streams->output_fd = fd[1];
+	}
+	ctx->error = add_redirs(fork_streams, command->redirections, ctx);
+	if (ctx->error)
+		return (true);
+	if (!execute_fork(ctx, command, fork_streams))
+		return (false);
 	return (true);
 }
 
@@ -80,19 +96,7 @@ static bool	execute_command(t_exec_ctx *ctx, int input_fd)
 		return (false);
 	fork_streams->input_fd = input_fd;
 	fork_streams->output_fd = STDOUT_FILENO;
-	if (ctx->commands->next)
-	{
-		if (pipe(fd) == -1)
-			return (false);
-		fork_streams->output_fd = fd[1];
-	}
-	if (!add_redirs(fork_streams, command->redirections, ctx))
-	{
-		ctx->error = true;
-		return (true);
-	}
-	if (!execute_fork(ctx, command, fork_streams))
-		return (false);
+	execute_command_helper(fd, fork_streams, ctx, command);
 	if (ctx->commands->next)
 	{
 		ctx->commands = ctx->commands->next;

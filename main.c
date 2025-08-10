@@ -95,4 +95,3 @@ int main(int argc, char *argv[], char *envp[])
 	ft_lstclear(&env_vars, &delete_env_var);
 	return (0);
 }
-
