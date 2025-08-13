@@ -22,7 +22,7 @@ int	exec_built_in(t_exec_ctx *ctx, t_command *cmd)
 	if (is_str_equal(argv[0], "echo"))
 		return (ft_echo(argv));
 	if (is_str_equal(argv[0], "cd"))
-		return (ft_cd(argv, ctx->env_vars)); // check if argv[1] exists
+		return (ft_cd(argv, ctx->env_vars));
 	if (is_str_equal(argv[0], "pwd"))
 		return (ft_pwd());
 	if (is_str_equal(argv[0], "export"))
@@ -32,7 +32,7 @@ int	exec_built_in(t_exec_ctx *ctx, t_command *cmd)
 	if (is_str_equal(argv[0], "env"))
 		return (ft_env(ctx->env_vars));
 	if (is_str_equal(argv[0], "exit"))
-		return (ft_exit(ctx, argv)); // handle as a signal
+		return (ft_exit(ctx, argv));
 	return (0); // TODO fix
 }
 
@@ -60,6 +60,28 @@ bool	is_special_built_in(t_list *commands)
 		|| is_str_equal(cmd_name, "cd"));
 }
 
+static void	fork_built_in_child(t_exec_ctx *ctx,
+	t_command *command, t_fork_streams *s)
+{
+	if (s->input_fd != 0)
+	{
+		if (dup2(s->input_fd, STDIN_FILENO) == -1)
+			exit(1);
+		close(s->input_fd);
+	}
+	if (s->output_fd != 1)
+	{
+		if (dup2(s->output_fd, STDOUT_FILENO) == -1)
+			exit(1);
+		close(s->output_fd);
+	}
+	ctx->env_vars = resolve_fork_ev(command->assignments, ctx->env_vars);
+	if (!ctx->env_vars)
+		exit(1);
+	exit(exec_built_in(ctx, command));
+}
+
+//	pid 0 = child
 bool	fork_built_in(t_exec_ctx *ctx, t_command *command, t_fork_streams *s)
 {
 	pid_t	pid;
@@ -67,25 +89,8 @@ bool	fork_built_in(t_exec_ctx *ctx, t_command *command, t_fork_streams *s)
 	pid = fork();
 	if (pid == -1)
 		return (false);
-	if (pid == 0) // child
-	{
-		if (s->input_fd != 0)
-		{
-			if (dup2(s->input_fd, STDIN_FILENO) == -1)
-				exit(1);
-			close(s->input_fd);
-		}
-		if (s->output_fd != 1)
-		{
-			if (dup2(s->output_fd, STDOUT_FILENO) == -1)
-				exit(1);
-			close(s->output_fd);
-		}
-		ctx->env_vars = resolve_fork_ev(command->assignments, ctx->env_vars);
-		if (!ctx->env_vars)
-			exit(1);
-		exit(exec_built_in(ctx, command));
-	}
+	if (pid == 0)
+		fork_built_in_child(ctx, command, s);
 	if (s->input_fd != STDIN_FILENO)
 		close(s->input_fd);
 	if (s->output_fd != STDOUT_FILENO)

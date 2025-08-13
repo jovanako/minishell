@@ -13,6 +13,14 @@
 #include "execution.h"
 #include "../built-ins/built_ins.h"
 
+static char	*ft_cmdpath_free(char **path_array, char *full_cmd, char *ret)
+{
+	ft_free_strarray(path_array);
+	if (full_cmd)
+		free(full_cmd);
+	return (ret);
+}
+
 char	*ft_cmdpath(t_list *lst, char *cmd)
 {
 	int		i;
@@ -22,8 +30,12 @@ char	*ft_cmdpath(t_list *lst, char *cmd)
 	char	**path_array;
 
 	full_cmd = ft_strjoin("/", cmd);
+	if (!full_cmd)
+		return (NULL);
 	path = ft_getenv_v(ft_getenv(lst, "PATH"));
 	path_array = ft_split(path, ':');
+	if (!path_array)
+		return (ft_cmdpath_free(path_array, full_cmd, NULL));
 	i = 0;
 	while (path_array[i])
 	{
@@ -31,14 +43,8 @@ char	*ft_cmdpath(t_list *lst, char *cmd)
 		if (!cmd_path)
 			return (NULL);
 		if (access(cmd_path, F_OK) == 0)
-		{
-			ft_free_strarray(path_array);
-			free(full_cmd);
-			return (cmd_path);
-		}
+			return (ft_cmdpath_free(path_array, full_cmd, cmd_path));
 		i++;
 	}
-	ft_free_strarray(path_array);
-	free(full_cmd);
-	return (NULL);
+	return (ft_cmdpath_free(path_array, full_cmd, NULL));
 }

@@ -82,3 +82,21 @@ bool	check_can_read(char *target)
 	}
 	return (true);
 }
+
+int	wait_for_children(t_list *commands)
+{
+	t_command	*cmd;
+	int			status;
+
+	while (commands)
+	{
+		cmd = commands->content;
+		waitpid(cmd->pid, &status, 0);
+		commands = commands->next;
+	}
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
+	return (1);
+}

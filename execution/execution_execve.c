@@ -52,7 +52,8 @@ static char	*resolve_exec_path(char *arg, t_list *env_vars)
 	return (result);
 }
 
-static int	child_process(t_command *cmd, t_list *ev, t_fork_streams *fork_streams)
+static int	child_process(t_command *cmd, t_list *ev,
+	t_fork_streams *fork_streams)
 {
 	char	*path_name;
 
@@ -76,6 +77,7 @@ static int	child_process(t_command *cmd, t_list *ev, t_fork_streams *fork_stream
 	return (0);
 }
 
+//	pid 0 = child
 bool	fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fork_streams)
 {
 	pid_t	pid;
@@ -84,7 +86,7 @@ bool	fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fork_streams)
 	pid = fork();
 	if (pid == -1)
 		return (false);
-	if (pid == 0) // child
+	if (pid == 0)
 	{
 		env_cpy = resolve_fork_ev(cmd->assignments, ev);
 		if (!env_cpy)

@@ -12,24 +12,6 @@
 
 #include "execution.h"
 
-static int	wait_for_children(t_list *commands)
-{
-	t_command	*cmd;
-	int			status;
-
-	while (commands)
-	{
-		cmd = commands->content;
-		waitpid(cmd->pid, &status, 0);
-		commands = commands->next;
-	}
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
-	return (1);
-}
-
 static bool	execute_fork(t_exec_ctx *ctx, t_command *cmd, t_fork_streams *fs)
 {
 	if (!ctx->env_vars)
@@ -65,7 +47,8 @@ static bool	add_redirs(t_fork_streams *fs, t_list *redirs, t_exec_ctx *ctx)
 	return (false);
 }
 
-static bool	execute_command_helper(int *fd, t_fork_streams *fork_streams, t_exec_ctx *ctx, t_command *command)
+static bool	execute_command_helper(int *fd, t_fork_streams *fork_streams,
+	t_exec_ctx *ctx, t_command *command)
 {
 	if (ctx->commands->next)
 	{
