@@ -27,7 +27,7 @@ char	*ft_strcpy(char *s)
 {
 	char	*result;
 	int		i;
-	
+
 	i = 0;
 	result = malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (!result)
@@ -43,7 +43,7 @@ char	*ft_strcpy(char *s)
 
 void	ft_free_strarray(char **s_a)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s_a)

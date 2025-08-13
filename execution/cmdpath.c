@@ -15,11 +15,11 @@
 
 char	*ft_cmdpath(t_list *lst, char *cmd)
 {
-    int		i;
-    char	*path;
-    char	*full_cmd;
-    char	*cmd_path;
-    char	**path_array;
+	int		i;
+	char	*path;
+	char	*full_cmd;
+	char	*cmd_path;
+	char	**path_array;
 
 	full_cmd = ft_strjoin("/", cmd);
 	path = ft_getenv_v(ft_getenv(lst, "PATH"));
@@ -27,7 +27,8 @@ char	*ft_cmdpath(t_list *lst, char *cmd)
 	i = 0;
 	while (path_array[i])
 	{
-		if (!(cmd_path = ft_strjoin(path_array[i], full_cmd)))
+		cmd_path = ft_strjoin(path_array[i], full_cmd);
+		if (!cmd_path)
 			return (NULL);
 		if (access(cmd_path, F_OK) == 0)
 		{

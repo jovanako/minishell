@@ -14,7 +14,7 @@
 
 static void	delete_assignment(void *content)
 {
-	t_assignment *assignment;
+	t_assignment	*assignment;
 
 	assignment = (t_assignment *)content;
 	free(assignment->key);
@@ -24,7 +24,7 @@ static void	delete_assignment(void *content)
 
 static void	delete_redirection(void *content)
 {
-	t_redirection *redirection;
+	t_redirection	*redirection;
 
 	redirection = (t_redirection *)content;
 	free(redirection);
@@ -32,7 +32,7 @@ static void	delete_redirection(void *content)
 
 void	delete_command(void *content)
 {
-	t_command *command;
+	t_command	*command;
 
 	command = (t_command *)content;
 	free(command->argv);

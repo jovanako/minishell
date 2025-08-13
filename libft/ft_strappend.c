@@ -12,12 +12,14 @@
 
 #include "libft.h"
 
-char    *ft_strappend(char *s1, const char *s2)
+char	*ft_strappend(char *s1, const char *s2)
 {
-    char    *tmp;
+	char	*tmp;
 
-    if (!(tmp = ft_strjoin(s1, s2)))
-        return (NULL);
-    free(s1);
-    return (tmp);
+	tmp = ft_strjoin(s1, s2);
+	if (!tmp)
+		return (NULL);
+	if (s1)
+		free(s1);
+	return (tmp);
 }

@@ -15,24 +15,24 @@
 static t_token_type	get_token_type(t_list *node)
 {
 	t_token	*token;
-	
+
 	if (!node)
 		return (UNDEFINED);
-	token = (t_token*)node->content;
-	return token->type;
+	token = (t_token *)node->content;
+	return (token->type);
 }
 
 static int	size_of_argv(t_parse_ctx *ctx)
 {
 	int		size;
 	t_list	*node;
-	
+
 	size = 0;
 	node = ctx->current;
 	while (get_token_type(node) == WORD_TOKEN)
 	{
 		size++;
-		node = node->next;	
+		node = node->next;
 	}
 	return (size);
 }
@@ -40,7 +40,7 @@ static int	size_of_argv(t_parse_ctx *ctx)
 bool	parse_argv(t_parse_ctx *ctx, t_command *command)
 {
 	int		i;
-	char 	**argv;
+	char	**argv;
 
 	i = 0;
 	argv = malloc(sizeof(char *) * (size_of_argv(ctx) + 1));

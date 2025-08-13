@@ -17,10 +17,10 @@
 /*---------------------INCLUDES----------------------*/
 /*---------------------------------------------------*/
 
-#include "../libft/libft.h"
-#include "../tokenizer/tokenizer.h"
-#include "../utils/utils.h"
-#include "../env_vars/env_vars.h"
+# include "../libft/libft.h"
+# include "../tokenizer/tokenizer.h"
+# include "../utils/utils.h"
+# include "../env_vars/env_vars.h"
 
 /*---------------------------------------------------*/
 /*----------------------STRUCTS----------------------*/

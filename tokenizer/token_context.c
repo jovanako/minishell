@@ -12,7 +12,7 @@
 
 #include "tokenizer.h"
 
-t_token_context *new_ctx(char *input)
+t_token_context	*new_ctx(char *input)
 {
 	t_token_context	*ctx;
 

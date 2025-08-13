@@ -29,7 +29,7 @@ bool	parse_simple_command(t_parse_ctx *ctx)
 	if (!parse_argv(ctx, command))
 		return (false);
 	if (!parse_redirection_list(ctx, command))
-		return (false);	
+		return (false);
 	node = ft_lstnew(command);
 	if (!node)
 		return (false);
@@ -40,10 +40,9 @@ bool	parse_simple_command(t_parse_ctx *ctx)
 bool	parse_command_line(t_parse_ctx *ctx)
 {
 	t_token	*current;
-	
+
 	if (!parse_simple_command(ctx))
 		return (false);
-	
 	while (p_match(ctx, PIPE_TOKEN))
 	{
 		current = ctx->current->content;
@@ -55,15 +54,15 @@ bool	parse_command_line(t_parse_ctx *ctx)
 		}
 		if (!parse_simple_command(ctx))
 			return (false);
-	}	
+	}
 	return (true);
 }
 
 t_parse_ctx	*parse(t_token_context *t_ctx)
 {
-	t_parse_ctx *ctx;
+	t_parse_ctx	*ctx;
 	t_token		*token;
-	
+
 	if (!t_ctx)
 		return (NULL);
 	token = t_ctx->tokens->content;

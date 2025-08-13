@@ -17,7 +17,7 @@ static bool	get_env_value(void *content, void *var_key)
 	t_env_var	*var;
 	char		*k;
 	size_t		len;
-	
+
 	var = content;
 	k = var_key;
 	len = ft_strlen(k);

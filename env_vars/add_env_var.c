@@ -12,7 +12,7 @@
 
 #include "env_vars.h"
 
-static bool update_var(t_env_var *env_var, char *val, bool exported)
+static bool	update_var(t_env_var *env_var, char *val, bool exported)
 {
 	env_var->exported = exported;
 	env_var->value = val;
@@ -23,7 +23,7 @@ static bool	add_new_var(t_list **env_vars, char *key, char *val, bool exported)
 {
 	t_env_var	*new_var;
 	t_list		*node;
-	
+
 	new_var = malloc(sizeof(t_env_var));
 	if (!new_var)
 		return (false);
@@ -48,8 +48,8 @@ bool	add_env_var(t_list **env_vars, char *key, char *val, bool exported)
 	if (existing_env_var)
 	{
 		if (val == NULL)
-			val = existing_env_var->value;	
+			val = existing_env_var->value;
 		return (update_var(existing_env_var, val, exported));
 	}
-	return add_new_var(env_vars, key, val, exported);
+	return (add_new_var(env_vars, key, val, exported));
 }

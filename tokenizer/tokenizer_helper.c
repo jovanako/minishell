@@ -60,7 +60,7 @@ bool	is_previous_token(t_token_context *ctx, t_token_type type)
 	tokens = ctx->tokens;
 	current_token = NULL;
 	while (tokens)
-	{		
+	{
 		current_token = tokens->content;
 		tokens = tokens->next;
 	}

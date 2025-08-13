@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 // input_fd - file descriptor of input stream. 0 if STDIN
 // output_fd - file descriptor of output stream. 1 if STDOUT
 
@@ -49,7 +48,6 @@ static char	*resolve_exec_path(char *arg, t_list *env_vars)
 			printf("minishell: %s: %s\n", arg, strerror(errno));
 			return (NULL);
 		}
-			
 	}
 	return (result);
 }

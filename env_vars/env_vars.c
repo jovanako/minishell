@@ -18,7 +18,7 @@ static t_list	*parse_env_var(char *s)
 	int			key_len;
 	int			value_len;
 	t_env_var	*new_var;
-	
+
 	new_var = malloc (sizeof(t_env_var));
 	if (!new_var)
 		return (NULL);
@@ -37,8 +37,8 @@ static t_list	*parse_env_var(char *s)
 
 void	delete_env_var(void *var)
 {
-	t_env_var *env_var;
-	
+	t_env_var	*env_var;
+
 	env_var = (t_env_var *)var;
 	free(env_var->key);
 	free(env_var->value);

@@ -41,14 +41,14 @@ bool	p_match(t_parse_ctx *ctx, t_token_type token_type)
 t_token	*get_current(t_parse_ctx *ctx)
 {
 	if (ctx->current)
-		return (t_token *)ctx->current->content;
+		return ((t_token *)ctx->current->content);
 	return (NULL);
 }
 
 t_token	*p_advance(t_parse_ctx *ctx)
 {
 	t_list	*temp;
-	
+
 	temp = ctx->current;
 	if (!is_at_end(ctx))
 		ctx->current = ctx->current->next;

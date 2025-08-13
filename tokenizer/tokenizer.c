@@ -59,7 +59,7 @@ static bool	read_token(t_token_context *context)
 {
 	char	c;
 	bool	success;
-	
+
 	c = advance(context);
 	if (c == '<')
 		success = read_less_than(context);
@@ -78,7 +78,7 @@ static bool	read_token(t_token_context *context)
 
 t_token_context	*tokenize(char *input)
 {
-	t_token_context *ctx;
+	t_token_context	*ctx;
 
 	if (!input)
 		return (NULL);

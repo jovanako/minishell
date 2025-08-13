@@ -26,7 +26,7 @@ static int	handle_assignments(t_list *assignments, t_list *ev)
 	val = NULL;
 	while (assignments)
 	{
-		assignment = assignments->content;		
+		assignment = assignments->content;
 		key = ft_strcpy(assignment->key);
 		val = ft_strcpy(assignment->value);
 		existing_env_var = get_env_var(ev, assignment->key);
@@ -42,20 +42,18 @@ static int	handle_assignments(t_list *assignments, t_list *ev)
 	return (0);
 }
 
-static void	is_output_or_append(t_redirection *redirection, int *fd, int rights_flags)
+static void	is_output_or_append(t_redirection *redir, int *fd, int rights_flags)
 {
-	if (redirection->type == OUTPUT_REDIRECT)
-		{
-			*fd = open(redirection->target, O_CREAT 
-				| O_WRONLY | O_TRUNC, rights_flags);
-			close(*fd);
-		}	
-		else if (redirection->type == APPEND_REDIRECT)
-		{
-			*fd = open(redirection->target, O_CREAT 
-				| O_WRONLY | O_APPEND, rights_flags);
-			close(*fd);
-		}
+	if (redir->type == OUTPUT_REDIRECT)
+	{
+		*fd = open(redir->target, O_CREAT | O_WRONLY | O_TRUNC, rights_flags);
+		close(*fd);
+	}
+	else if (redir->type == APPEND_REDIRECT)
+	{
+		*fd = open(redir->target, O_CREAT | O_WRONLY | O_APPEND, rights_flags);
+		close(*fd);
+	}
 }
 
 static void	is_heredoc(char *input, t_redirection *redirection)
@@ -71,11 +69,13 @@ static void	is_heredoc(char *input, t_redirection *redirection)
 		ft_change_sigmode(SIG_NONINTERACTIVE);
 		if (!input)
 		{
-			printf("-minishell: warning: here-document at line %d delimited by end-of-file (wanted '%s')\n", i, redirection->target);
-			break;
+			printf("-minishell: warning: here-document at line "
+				"%d delimited by end-of-file (wanted '%s')\n",
+				i, redirection->target);
+			break ;
 		}
 		if (ft_strcmp(redirection->target, input) == 0 || g_last_sig == SIGINT)
-			break;
+			break ;
 		i++;
 	}
 }
@@ -84,7 +84,7 @@ static int	handle_redirections(t_list *redirections)
 {
 	t_redirection	*redirection;
 	int				fd;
-	int 			rights_flags;
+	int				rights_flags;
 	char			*input;
 
 	input = NULL;
@@ -97,7 +97,7 @@ static int	handle_redirections(t_list *redirections)
 			is_output_or_append(redirection, &fd, rights_flags);
 		else if (redirection->type == INPUT_REDIRECT
 			&& !check_can_read(redirection->target))
-			return (1);			
+			return (1);
 		else if (redirection->type == HEREDOC_REDIRECT)
 		{
 			is_heredoc(input, redirection);

@@ -12,7 +12,7 @@
 
 #include "built_ins.h"
 
-static int count_exported(t_list *ev)
+static int	count_exported(t_list *ev)
 {
 	t_env_var	*var;
 	int			count;

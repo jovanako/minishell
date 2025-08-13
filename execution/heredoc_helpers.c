@@ -13,16 +13,16 @@
 #include "execution.h"
 #include "../built-ins/built_ins.h"
 
-char    *heredoc_expand_dollar(int *start, char *input, t_exec_ctx *ctx)
+char	*heredoc_expand_dollar(int *start, char *input, t_exec_ctx *ctx)
 {
-    (*start)++;
-    if (input[*start] && input[*start] == '?')
-    {
-        (*start)++;
-        return (ft_itoa(ft_get_last_sig_exit(ctx->status)));
-    }
-    else
-        return (ft_strdup("$"));
+	(*start)++;
+	if (input[*start] && input[*start] == '?')
+	{
+		(*start)++;
+		return (ft_itoa(ft_get_last_sig_exit(ctx->status)));
+	}
+	else
+		return (ft_strdup("$"));
 }
 
 int	heredoc_event_hook(void)
@@ -62,12 +62,12 @@ static int	hd_find_next_q(t_redirection *re, char **dl, char q, int *start)
 	return (1);
 }
 
-int hd_quoted_dl_loop(t_redirection *redir, char **dl, int *start, char *q)
+int	hd_quoted_dl_loop(t_redirection *redir, char **dl, int *start, char *q)
 {
-    int i;
+	int	i;
 
-    i = *start;
-    if (redir->target[i] == '\'' || redir->target[i] == '\"')
+	i = *start;
+	if (redir->target[i] == '\'' || redir->target[i] == '\"')
 	{
 		*q = redir->target[i++];
 		if (!(hd_find_next_q(redir, dl, *q, &i)))
@@ -79,6 +79,6 @@ int hd_quoted_dl_loop(t_redirection *redir, char **dl, int *start, char *q)
 			return (0);
 		i++;
 	}
-    *start = i;
-    return (1);
+	*start = i;
+	return (1);
 }

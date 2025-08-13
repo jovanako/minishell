@@ -29,9 +29,7 @@ t_env_var	**create_array_of_pointers(t_list *ev, int size)
 	{
 		env_var = (t_env_var *)ev->content;
 		if (env_var->value && env_var->exported)
-		{
-			array_of_vars[i] = env_var;	
-		}
+			array_of_vars[i] = env_var;
 		i++;
 		ev = ev->next;
 	}
@@ -43,7 +41,7 @@ void	sort_vars(t_env_var **array_of_vars, int size)
 	int			i;
 	int			j;
 	t_env_var	*temp;
-	
+
 	i = 0;
 	while (i < size - 1)
 	{
@@ -68,7 +66,7 @@ bool	get_value(char **pair, t_assignment *a)
 	if (!pair[1])
 	{
 		free(pair[0]);
-		return (false);		
+		return (false);
 	}
 	return (true);
 }

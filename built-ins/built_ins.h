@@ -26,9 +26,9 @@
 
 typedef enum e_sig_mode
 {
-    SIG_INTERACTIVE,
-    SIG_NONINTERACTIVE,
-    SIG_HEREDOC,
+	SIG_INTERACTIVE,
+	SIG_NONINTERACTIVE,
+	SIG_HEREDOC,
 }	t_sig_mode;
 
 /*---------------------------------------------------*/
@@ -36,19 +36,19 @@ typedef enum e_sig_mode
 /*---------------------------------------------------*/
 
 // cd
-int	    ft_cd(char **argv, t_list *lst);
+int			ft_cd(char **argv, t_list *lst);
 
 // echo
-int	    ft_echo(char **tokens);
+int			ft_echo(char **tokens);
 
 // env
-int	    ft_env(t_list *lst);
-int	    ft_modenv(t_list *lst, char *value);
-t_list	*ft_getenv(t_list *lst, char *key);
-char	*ft_getenv_v(t_list *lst);
+int			ft_env(t_list *lst);
+int			ft_modenv(t_list *lst, char *value);
+t_list		*ft_getenv(t_list *lst, char *key);
+char		*ft_getenv_v(t_list *lst);
 
 // exit
-int		ft_exit(t_exec_ctx *ctx, char *argv[]);
+int			ft_exit(t_exec_ctx *ctx, char *argv[]);
 
 // export
 int			ft_export(char **tokens, t_list *ev, t_list *assignments);
@@ -58,15 +58,13 @@ bool		export_no_args(t_list *ev);
 bool		get_value(char **pair, t_assignment *a);
 
 // pwd
-int	    ft_pwd(void);
+int			ft_pwd(void);
 
 // signals
-void	ft_change_sigmode(t_sig_mode mode);
-int	    ft_get_last_sig_exit(int last_exit_code);
+void		ft_change_sigmode(t_sig_mode mode);
+int			ft_get_last_sig_exit(int last_exit_code);
 
 // unset
-int	    ft_unset(char **keys, t_list *lst, t_list *assignments);
-
-
+int			ft_unset(char **keys, t_list *lst, t_list *assignments);
 
 #endif

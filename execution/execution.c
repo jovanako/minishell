@@ -16,7 +16,7 @@ static int	wait_for_children(t_list *commands)
 {
 	t_command	*cmd;
 	int			status;
-	
+
 	while (commands)
 	{
 		cmd = commands->content;
@@ -100,7 +100,7 @@ static bool	execute_command(t_exec_ctx *ctx, int input_fd)
 	if (ctx->commands->next)
 	{
 		ctx->commands = ctx->commands->next;
-		execute_command(ctx, fd[0]); 
+		execute_command(ctx, fd[0]);
 	}
 	free(fork_streams);
 	return (true);
@@ -109,15 +109,15 @@ static bool	execute_command(t_exec_ctx *ctx, int input_fd)
 t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars, int status)
 {
 	t_exec_ctx	*ctx;
-	t_command 	*cmd;
-	
+	t_command	*cmd;
+
 	if (!p_ctx)
 		return (NULL);
 	ctx = new_exec_ctx(p_ctx, env_vars, status);
 	if (!ctx)
 		return (NULL);
 	if (!ctx->commands)
-		return (NULL);	
+		return (NULL);
 	cmd = ctx->commands->content;
 	if (!cmd->argv[0])
 		ctx->status = handle_no_command(cmd, ctx->env_vars);

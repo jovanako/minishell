@@ -17,12 +17,12 @@ static bool	is_new_token(char c)
 	return (c == '<' || c == '>' || c == '|' || c == ' ' || c == '\t');
 }
 
-static bool quotes_are_open(bool quotes_closed, bool double_quotes_closed)
+static bool	quotes_are_open(bool quotes_closed, bool double_quotes_closed)
 {
 	return (!quotes_closed || !double_quotes_closed);
 }
 
-static char start_matches(t_token_context *context, char c)
+static char	start_matches(t_token_context *context, char c)
 {
 	return (context->line[context->start] == c);
 }
@@ -35,7 +35,7 @@ bool	read_word(t_token_context *context)
 	quotes_closed = !start_matches(context, '\'');
 	double_quotes_closed = !start_matches(context, '"');
 	while (peek(context) != '\0'
-		&& (!is_new_token(peek(context)) 
+		&& (!is_new_token(peek(context))
 			|| quotes_are_open(quotes_closed, double_quotes_closed)))
 	{
 		if (peek(context) == '"' && quotes_closed)
@@ -50,7 +50,7 @@ bool	read_word(t_token_context *context)
 		context->error = true;
 		return (true);
 	}
-	if (!is_previous_token(context, WORD_TOKEN) 
+	if (!is_previous_token(context, WORD_TOKEN)
 		&& is_valid_identifier(context))
 		return (add_token(context, ASSIGNMENT_TOKEN));
 	return (add_token(context, WORD_TOKEN));

@@ -13,8 +13,8 @@
 #ifndef ENV_VARS_H
 # define ENV_VARS_H
 
-#include "../libft/libft.h"
-#include "../utils/utils.h"
+# include "../libft/libft.h"
+# include "../utils/utils.h"
 
 typedef struct s_env_var
 {

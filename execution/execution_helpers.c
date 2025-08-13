@@ -56,7 +56,7 @@ static bool	resolve_ev(t_list **env_vars, t_list **copy)
 			if (!add_env_var(copy, key, value, true))
 				return (false);
 		}
-		(*env_vars) = (*env_vars)->next;	
+		(*env_vars) = (*env_vars)->next;
 	}
 	return (true);
 }

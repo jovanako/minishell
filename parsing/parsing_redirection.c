@@ -25,10 +25,10 @@ static t_redirect_type	resolve_redirect_type(t_token_type token_type)
 	return (UNKNOWN_REDIRECT);
 }
 
-static bool add_redirection(t_command *cmd, t_redirection *redir)
+static bool	add_redirection(t_command *cmd, t_redirection *redir)
 {
 	t_list	*node;
-	
+
 	node = ft_lstnew(redir);
 	if (!node)
 		return (false);
@@ -53,7 +53,7 @@ static bool	parse_redirection(t_parse_ctx *ctx, t_command *command)
 {
 	t_token			*token;
 	t_redirection	*redirection;
-	
+
 	token = (t_token *)ctx->current->content;
 	redirection = malloc(sizeof(t_redirection));
 	if (!redirection)
@@ -70,13 +70,13 @@ static bool	parse_redirection(t_parse_ctx *ctx, t_command *command)
 			print_syntax_error(ctx);
 			ctx->error = true;
 			return (true);
-		}	 
+		}
 	}
 	redirection->target = token->lexeme;
 	return (add_redirection(command, redirection));
 }
 
-bool 	parse_redirection_list(t_parse_ctx *ctx, t_command *command)
+bool	parse_redirection_list(t_parse_ctx *ctx, t_command *command)
 {
 	while (is_current_type(ctx, INPUT_REDIR_TOKEN)
 		|| is_current_type(ctx, OUTPUT_REDIR_TOKEN)
@@ -84,7 +84,7 @@ bool 	parse_redirection_list(t_parse_ctx *ctx, t_command *command)
 		|| is_current_type(ctx, HEREDOC_TOKEN))
 	{
 		if (!parse_redirection(ctx, command))
-			return (false);	
+			return (false);
 		if (ctx->error)
 			return (true);
 		p_advance(ctx);

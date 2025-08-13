@@ -23,7 +23,7 @@ static char	**free_and_return(char **str_arr)
 		i++;
 	}
 	free(str_arr);
-	return (NULL); 
+	return (NULL);
 }
 
 char	**ev_list_to_arr(t_list *env_vars)

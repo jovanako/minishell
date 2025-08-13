@@ -25,7 +25,7 @@ int	ft_cd(char **argv, t_list *lst)
 		argv[1] = ft_getenv_v(ft_getenv(lst, "HOME"));
 	if (chdir(argv[1]))
 	{
-        printf("minishell: cd: %s: %s\n", argv[1], strerror(errno));
+		printf("minishell: cd: %s: %s\n", argv[1], strerror(errno));
 		return (1);
 	}
 	ft_modenv(ft_getenv(lst, "OLDPWD"), ft_getenv_v(ft_getenv(lst, "PWD")));

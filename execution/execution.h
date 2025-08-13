@@ -17,13 +17,13 @@
 /*---------------------INCLUDES----------------------*/
 /*---------------------------------------------------*/
 
-#include "../libft/libft.h"
-#include "../parsing/parsing.h"
-#include "../utils/utils.h"
-#include <stdbool.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
+# include "../libft/libft.h"
+# include "../parsing/parsing.h"
+# include "../utils/utils.h"
+# include <stdbool.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
 
 /*---------------------------------------------------*/
 /*----------------------STRUCTS----------------------*/
@@ -47,7 +47,6 @@ typedef struct s_execution_context
 /*---------------------------------------------------*/
 /*---------------------FUNCTIONS---------------------*/
 /*---------------------------------------------------*/
-
 
 //	cmdpath
 char		*ft_cmdpath(t_list *lst, char *cmd);
@@ -85,12 +84,12 @@ int			open_append_redir(t_fork_streams *fs, t_redirection *redir);
 int			open_hd_redir(t_fork_streams *fs, t_redirection *rd, t_exec_ctx *ctx);
 
 //	heredoc_expanstion
-int 		close_heredoc(char *delimiter, int error);
-int 		heredoc_write_input(int mode, int tmp_file, char *input, t_exec_ctx *ctx);
+int			close_heredoc(char *delimiter, int error);
+int			heredoc_write_input(int mode, int tmp_file, char *input, t_exec_ctx *ctx);
 
 //	heredoc_helpers
-char    	*heredoc_expand_dollar(int *start, char *input, t_exec_ctx *ctx);
+char		*heredoc_expand_dollar(int *start, char *input, t_exec_ctx *ctx);
 int			heredoc_event_hook(void);
-int 		hd_quoted_dl_loop(t_redirection *redir, char **dl, int *start, char *q);
+int			hd_quoted_dl_loop(t_redirection *redir, char **dl, int *start, char *q);
 
 #endif

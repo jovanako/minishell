@@ -14,8 +14,8 @@
 
 void	delete_token(void *t)
 {
-	t_token *token;
-	
+	t_token	*token;
+
 	token = (t_token *)t;
 	free(token->lexeme);
 	free(token);
@@ -25,7 +25,7 @@ bool	match_assignment_key(void *a, void *k)
 {
 	t_assignment	*assignment;
 	char			*key;
-	
+
 	key = k;
 	assignment = a;
 	return (ft_strcmp(assignment->key, key) == 0);

@@ -17,7 +17,7 @@
 int	exec_built_in(t_exec_ctx *ctx, t_command *cmd)
 {
 	char	**argv;
-	
+
 	argv = cmd->argv;
 	if (is_str_equal(argv[0], "echo"))
 		return (ft_echo(argv));
@@ -25,14 +25,14 @@ int	exec_built_in(t_exec_ctx *ctx, t_command *cmd)
 		return (ft_cd(argv, ctx->env_vars)); // check if argv[1] exists
 	if (is_str_equal(argv[0], "pwd"))
 		return (ft_pwd());
-	if (is_str_equal(argv[0], "export")) 
-	 	return (ft_export(argv, ctx->env_vars, cmd->assignments));
-	if (is_str_equal(argv[0], "unset")) 
+	if (is_str_equal(argv[0], "export"))
+		return (ft_export(argv, ctx->env_vars, cmd->assignments));
+	if (is_str_equal(argv[0], "unset"))
 		return (ft_unset(argv, ctx->env_vars, cmd->assignments));
-	if (is_str_equal(argv[0],"env"))
+	if (is_str_equal(argv[0], "env"))
 		return (ft_env(ctx->env_vars));
 	if (is_str_equal(argv[0], "exit"))
-	 	return (ft_exit(ctx, argv)); // handle as a signal
+		return (ft_exit(ctx, argv)); // handle as a signal
 	return (0); // TODO fix
 }
 
@@ -44,20 +44,20 @@ bool	is_built_in(char *cmd_name)
 		|| is_str_equal(cmd_name, "export")
 		|| is_str_equal(cmd_name, "unset")
 		|| is_str_equal(cmd_name, "env")
-		|| is_str_equal(cmd_name, "exit"));		
+		|| is_str_equal(cmd_name, "exit"));
 }
 
 bool	is_special_built_in(t_list *commands)
 {
 	char	*cmd_name;
-	
+
 	if (ft_lstsize(commands) != 1)
 		return (false);
 	cmd_name = ((t_command *)commands->content)->argv[0];
 	return (is_str_equal(cmd_name, "export")
-			|| is_str_equal(cmd_name, "unset")
-			|| is_str_equal(cmd_name, "exit")
-			|| is_str_equal(cmd_name, "cd"));
+		|| is_str_equal(cmd_name, "unset")
+		|| is_str_equal(cmd_name, "exit")
+		|| is_str_equal(cmd_name, "cd"));
 }
 
 bool	fork_built_in(t_exec_ctx *ctx, t_command *command, t_fork_streams *s)

@@ -12,7 +12,7 @@
 
 #include "parsing.h"
 
-bool 	parse_assignment(t_parse_ctx *ctx, t_command *command)
+bool	parse_assignment(t_parse_ctx *ctx, t_command *command)
 {
 	t_token			*token;
 	t_assignment	*assignment;
@@ -30,12 +30,12 @@ bool 	parse_assignment(t_parse_ctx *ctx, t_command *command)
 	if (!assignment->key)
 		return (false);
 	assignment->value = ft_substr(token->lexeme, i + 1,
-		ft_strlen(token->lexeme) - i - 1);
+			ft_strlen(token->lexeme) - i - 1);
 	if (!assignment->value)
 		return (false);
 	node = ft_lstnew(assignment);
 	if (!node)
-		return(false);
+		return (false);
 	ft_lstadd_back(&(command->assignments), node);
 	return (true);
 }

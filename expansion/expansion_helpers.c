@@ -24,7 +24,7 @@ char	*extract_var_key(t_expansion_context *ctx, int *start)
 	else
 	{
 		while (ft_isalnum(ctx->lexeme[end]) || ctx->lexeme[end] == '_')
-			end++;	
+			end++;
 	}
 	result = ft_substr(ctx->lexeme, *start, end - *start);
 	*start = end;

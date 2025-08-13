@@ -14,7 +14,7 @@
 
 volatile sig_atomic_t	g_last_sig;
 
-static void clean_up(t_ctx_holder *ctx_holder)
+static void	clean_up(t_ctx_holder *ctx_holder)
 {
 	ctx_holder->t_ctx = free_token_ctx(ctx_holder->t_ctx);
 	ctx_holder->p_ctx = free_parsing_ctx(ctx_holder->p_ctx);
@@ -33,7 +33,7 @@ static bool	read_input(char **input)
 	return (true);
 }
 
-static bool eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
+static bool	eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
 {
 	ctx_holder->t_ctx = tokenize(input);
 	if (ctx_holder->t_ctx && ctx_holder->t_ctx->error)
@@ -42,7 +42,8 @@ static bool eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
 	ctx_holder->p_ctx = parse(ctx_holder->t_ctx);
 	if (ctx_holder->p_ctx && ctx_holder->p_ctx->error)
 		return (true);
-	ctx_holder->e_ctx = execute(ctx_holder->p_ctx, env_vars, ctx_holder->status);
+	ctx_holder->e_ctx = execute(ctx_holder->p_ctx,
+			env_vars, ctx_holder->status);
 	if (!ctx_holder->e_ctx)
 		return (false);
 	if (ctx_holder->e_ctx->error)
@@ -54,7 +55,7 @@ static bool eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
 
 static bool	eval_loop(t_list *env_vars)
 {
-    char 			*input;
+	char			*input;
 	t_ctx_holder	ctx_holder;
 
 	input = NULL;
@@ -77,7 +78,7 @@ static bool	eval_loop(t_list *env_vars)
 	return (true);
 }
 
-int main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	t_list	*env_vars;
 

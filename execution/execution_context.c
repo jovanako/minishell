@@ -27,7 +27,7 @@ t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars, int status)
 	return (ctx);
 }
 
-void *free_exec_ctx(t_exec_ctx *ctx)
+void	*free_exec_ctx(t_exec_ctx *ctx)
 {
 	if (!ctx)
 		return (NULL);

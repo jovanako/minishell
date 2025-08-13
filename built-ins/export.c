@@ -52,8 +52,8 @@ static void	ft_free_pair(char **pair)
 
 static bool	handle_kv_pair(t_list **ev, t_list *asgn, char **pair, char *arg)
 {
-	t_assignment *a;
-	
+	t_assignment	*a;
+
 	if (ft_strchr(arg, '='))
 	{
 		if (!ft_env_split(pair, arg))
@@ -73,7 +73,7 @@ static bool	handle_kv_pair(t_list **ev, t_list *asgn, char **pair, char *arg)
 		return (get_value(pair, a));
 	if (!add_env_var(ev, pair[0], pair[1], true))
 	{
-		ft_free_pair(pair);	
+		ft_free_pair(pair);
 		return (false);
 	}
 	return (true);
@@ -83,7 +83,7 @@ int	ft_export(char **argv, t_list *ev, t_list *assignments)
 {
 	int		i;
 	char	*pair[2];
-	
+
 	if (array_size(argv) == 1)
 	{
 		if (!export_no_args(ev))
@@ -102,7 +102,7 @@ int	ft_export(char **argv, t_list *ev, t_list *assignments)
 		pair[1] = NULL;
 		if (!handle_kv_pair(&ev, assignments, pair, argv[i]))
 			return (1);
-		i++;		
+		i++;
 	}
 	return (0);
 }

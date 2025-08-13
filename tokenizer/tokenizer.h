@@ -17,8 +17,8 @@
 /*---------------------INCLUDES----------------------*/
 /*---------------------------------------------------*/
 
-#include "../libft/libft.h"
-#include <stdio.h>
+# include "../libft/libft.h"
+# include <stdio.h>
 
 /*---------------------------------------------------*/
 /*----------------------STRUCTS----------------------*/
@@ -62,7 +62,7 @@ bool			match(char expected_char, t_token_context *context);
 bool			is_valid_identifier(t_token_context *ctx);
 bool			is_previous_token(t_token_context *ctx, t_token_type type);
 bool			add_token(t_token_context *context, t_token_type type);
-t_token_context *new_ctx(char *input);
+t_token_context	*new_ctx(char *input);
 t_token_context	*tokenize(char *input);
 void			*free_token_ctx(t_token_context *ctx);
 void			delete_token(void *t);

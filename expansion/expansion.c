@@ -14,7 +14,7 @@
 
 static bool	expand_word(t_token *token, t_list *env_vars, int status)
 {
-	t_expansion_context ctx;
+	t_expansion_context	ctx;
 
 	ctx = (t_expansion_context){ .lexeme = token->lexeme };
 	ctx.exit_status = status;
@@ -26,7 +26,8 @@ static bool	expand_word(t_token *token, t_list *env_vars, int status)
 	{
 		if (token->lexeme[ctx.current] == '\'' && !slice_single_quoted(&ctx))
 			return (free_result_and_return(&ctx));
-		if (token->lexeme[ctx.current] == '"' && !slice_double_quoted(&ctx, env_vars))
+		if (token->lexeme[ctx.current] == '"'
+			&& !slice_double_quoted(&ctx, env_vars))
 			return (free_result_and_return(&ctx));
 		if (!slice_unquoted(&ctx, env_vars))
 			return (free_result_and_return(&ctx));
@@ -38,7 +39,7 @@ static bool	expand_word(t_token *token, t_list *env_vars, int status)
 
 static bool	expand_token(void *content, void *env_vars, int status)
 {
-	t_token *token;
+	t_token	*token;
 	bool	success;
 
 	success = true;
@@ -93,4 +94,3 @@ bool	expand(t_token_context *ctx, t_list *env_vars, int status)
 	}
 	return (true);
 }
-

@@ -56,15 +56,15 @@ static int	hd_loop(const int tmp_file, char *dl, int mode, t_exec_ctx *ctx)
 		if (!input)
 		{
 			printf("-minishell: warning: here-document at line "
-					"%d delimited by end-of-file (wanted '%s')\n", i, dl);
-			break;
+				"%d delimited by end-of-file (wanted '%s')\n", i, dl);
+			break ;
 		}
 		if (ft_strcmp(input, dl) == 0 || g_last_sig == SIGINT)
-			break;
+			break ;
 		if (!(heredoc_write_input(mode, tmp_file, input, ctx)))
 			return (0);
 		i++;
-    }
+	}
 	return (1);
 }
 
