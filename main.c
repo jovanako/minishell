@@ -14,11 +14,12 @@
 
 volatile sig_atomic_t	g_last_sig;
 
-static void	clean_up(t_ctx_holder *ctx_holder)
+static bool	clean_up(t_ctx_holder *ctx_holder)
 {
 	ctx_holder->t_ctx = free_token_ctx(ctx_holder->t_ctx);
 	ctx_holder->p_ctx = free_parsing_ctx(ctx_holder->p_ctx);
 	ctx_holder->e_ctx = free_exec_ctx(ctx_holder->e_ctx);
+	return (false);
 }
 
 static bool	read_input(char **input)
@@ -68,10 +69,12 @@ static bool	eval_loop(t_list *env_vars)
 	{
 		read_input(&input);
 		ctx_holder.status = ft_get_last_sig_exit(ctx_holder.status);
-		if (!eval(&ctx_holder, input, env_vars))
+		if (!input)
+			ctx_holder.exit = ft_exit_sigeof();
+		else if (*input)
 		{
-			clean_up(&ctx_holder);
-			return (false);
+			if (!eval(&ctx_holder, input, env_vars))
+				return (clean_up(&ctx_holder));
 		}
 		clean_up(&ctx_holder);
 	}

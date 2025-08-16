@@ -32,6 +32,8 @@ static void	ft_sig_interactive(int sig)
 static void	ft_sig_noninteractive(int sig)
 {
 	g_last_sig = sig;
+	if (sig == SIGQUIT)
+		ft_putstr_fd("Quit (core dumped)", STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_on_new_line();
 }
@@ -45,21 +47,30 @@ static void	ft_sig_heredoc(int sig)
 // changes the function that handles incoming SIGINT and SIGQUIT signals
 void	ft_change_sigmode(t_sig_mode mode)
 {
-	struct sigaction	action;
+	struct sigaction	action_sigint;
+	struct sigaction	action_sigquit;
 
 	rl_event_hook = 0;
-	ft_bzero(&action, sizeof(action));
+	ft_bzero(&action_sigint, sizeof(action_sigint));
+	ft_bzero(&action_sigquit, sizeof(action_sigquit));
 	if (mode == SIG_INTERACTIVE)
-		action.sa_handler = &ft_sig_interactive;
+	{
+		action_sigint.sa_handler = &ft_sig_interactive;
+		action_sigquit.sa_handler = SIG_IGN;
+	}
 	else if (mode == SIG_NONINTERACTIVE)
-		action.sa_handler = &ft_sig_noninteractive;
+	{
+		action_sigint.sa_handler = &ft_sig_noninteractive;
+		action_sigquit.sa_handler = &ft_sig_noninteractive;
+	}
 	else if (mode == SIG_HEREDOC)
 	{
-		action.sa_handler = &ft_sig_heredoc;
+		action_sigint.sa_handler = &ft_sig_heredoc;
+		action_sigquit.sa_handler = SIG_IGN;
 		rl_event_hook = heredoc_event_hook;
 	}
-	sigaction(SIGINT, &action, NULL);
-	sigaction(SIGQUIT, &action, NULL);
+	sigaction(SIGINT, &action_sigint, NULL);
+	sigaction(SIGQUIT, &action_sigquit, NULL);
 }
 
 int	ft_get_last_sig_exit(int last_exit_code)

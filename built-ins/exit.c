@@ -32,8 +32,8 @@ int	ft_exit(t_exec_ctx *ctx, char *argv[])
 	return (exit_code);
 }
 
-int	ft_exit_shell(int exit_code)
+bool	ft_exit_sigeof(void)
 {
-	exit(exit_code);
-	return (1);
+	printf("exit\n");
+	return (true);
 }

@@ -49,6 +49,7 @@ char		*ft_getenv_v(t_list *lst);
 
 // exit
 int			ft_exit(t_exec_ctx *ctx, char *argv[]);
+bool		ft_exit_sigeof(void);
 
 // export
 int			ft_export(char **tokens, t_list *ev, t_list *assignments);
