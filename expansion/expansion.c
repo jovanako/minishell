@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/19 16:29:42 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/19 17:21:21 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static bool	expand_word(t_token *token, t_list *env_vars, int status)
 	t_expansion_context	*ctx;
 
 	ctx = new_e_ctx(token->lexeme, status);
-	ctx->result = malloc(sizeof(char));
-	if (!ctx->result)
+	if (!ctx)
 		return (false);
 	ft_bzero(ctx->result, 1);
 	while (token->lexeme[ctx->current])
@@ -33,7 +32,7 @@ static bool	expand_word(t_token *token, t_list *env_vars, int status)
 	}
 	free(token->lexeme);
 	token->lexeme = ctx->result;
-	free_expansion_ctx(ctx);
+	free(ctx);
 	return (true);
 }
 
@@ -71,8 +70,8 @@ bool	handle_dollar(t_expansion_context *ctx, t_list *env_vars, int *i)
 	if (!append_slice(ctx, &(ctx->lexeme[*i])))
 		return (false);
 	(*i)++;
-	if (handle_exit_expand(ctx, i))
-		return (true);
+	if (ctx->lexeme[*i] == '?')
+		return (handle_exit_expand(ctx, i));
 	var_key = extract_var_key(ctx, i);
 	if (!var_key)
 		return (false);

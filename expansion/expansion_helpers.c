@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:21:46 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/19 15:22:54 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/19 17:13:19 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,8 @@ bool	handle_exit_expand(t_expansion_context *ctx, int *i)
 {
 	int	status;
 
-	if (ctx->lexeme[*i] != '?')
-		return (false);
 	status = ft_get_last_sig_exit(ctx->exit_status);
-	if (!append_value(ctx, ft_itoa(status))) // if false
+	if (!append_value(ctx, ft_itoa(status)))
 		return (false);
 	(*i)++;
 	ctx->current = *i;
