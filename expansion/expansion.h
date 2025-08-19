@@ -39,23 +39,23 @@ typedef struct s_expand_ctx
 /*---------------------------------------------------*/
 
 // expansion
-bool	expand_variables(t_list *tokens, t_list *env_vars, int status);
-bool	handle_exit_expand(t_expand_ctx *ctx, int *i);
-bool	expand(t_token_context *ctx, t_list *env_vars, int status);
+bool			expand_variables(t_list *tokens, t_list *env_vars, int status);
+bool			handle_exit_expand(t_expand_ctx *ctx, int *i);
+bool			expand(t_token_context *ctx, t_list *env_vars, int status);
 
 // slicing
-bool	append_slice(t_expand_ctx *ctx, char *end);
-bool	slice_single_quoted(t_expand_ctx *ctx);
-bool	slice_double_quoted(t_expand_ctx *ctx, t_list *env_vars);
-bool	slice_unquoted(t_expand_ctx *ctx, t_list *env_vars);
+bool			append_slice(t_expand_ctx *ctx, char *end);
+bool			slice_single_quoted(t_expand_ctx *ctx);
+bool			slice_double_quoted(t_expand_ctx *ctx, t_list *env_vars);
+bool			slice_unquoted(t_expand_ctx *ctx, t_list *env_vars);
 
 // expansion_helpers
-bool				append_value(t_expand_ctx *ctx, char *var_value);
-char				*extract_var_key(t_expand_ctx *ctx, int *start);
-bool				is_unquoted(char c);
-bool				is_quote(char c);
-bool				handle_dollar(t_expand_ctx *ctx, t_list *env_vars, int *i);
+bool			append_value(t_expand_ctx *ctx, char *var_value);
+char			*extract_var_key(t_expand_ctx *ctx, int *start);
+bool			is_unquoted(char c);
+bool			is_quote(char c);
+bool			handle_dollar(t_expand_ctx *ctx, t_list *env_vars, int *i);
 t_expand_ctx	*new_e_ctx(char *lexeme, int status);
-bool				*free_expansion_ctx(t_expand_ctx *ctx);
+bool			*free_expansion_ctx(t_expand_ctx *ctx);
 
 #endif
