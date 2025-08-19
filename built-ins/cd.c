@@ -16,6 +16,8 @@
 // changes cwd to path and updates env vars accordingly
 int	ft_cd(char **argv, t_list *lst)
 {
+	char	*tmp;
+
 	if (array_size(argv) > 2)
 	{
 		printf("minishell: cd: too many arguments\n");
@@ -29,6 +31,11 @@ int	ft_cd(char **argv, t_list *lst)
 		return (1);
 	}
 	ft_modenv(ft_getenv(lst, "OLDPWD"), ft_getenv_v(ft_getenv(lst, "PWD")));
-	ft_modenv(ft_getenv(lst, "PWD"), argv[1]);
+	tmp = NULL;
+	tmp = getcwd(tmp, PATH_MAX);
+	if (tmp)
+		ft_modenv(ft_getenv(lst, "PWD"), tmp);
+	else
+		return (1);
 	return (0);
 }
