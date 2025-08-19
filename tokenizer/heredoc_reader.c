@@ -6,11 +6,16 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 19:00:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/28 20:54:15 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:31:17 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
+
+static bool	is_valid_delimiter(char c)
+{
+	return (c != '<' && c != '>' && c != '|' && c != '&');
+}
 
 bool	read_heredoc_delimiter(t_token_context *context)
 {
@@ -23,7 +28,8 @@ bool	read_heredoc_delimiter(t_token_context *context)
 		&& context->line[context->current] != '\t'
 		&& context->line[context->current] != '\0')
 		advance(context);
-	if (context->current - context->start == 0)
+	if (context->current - context->start == 0
+		|| !is_valid_delimiter(context->line[context->start]))
 	{
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		context->error = true;

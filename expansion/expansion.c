@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/19 17:21:21 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:34:20 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	expand_word(t_token *token, t_list *env_vars, int status)
 {
-	t_expansion_context	*ctx;
+	t_expand_ctx	*ctx;
 
 	ctx = new_e_ctx(token->lexeme, status);
 	if (!ctx)
@@ -62,7 +62,7 @@ bool	expand_variables(t_list *tokens, t_list *env_vars, int status)
 	return (true);
 }
 
-bool	handle_dollar(t_expansion_context *ctx, t_list *env_vars, int *i)
+bool	handle_dollar(t_expand_ctx *ctx, t_list *env_vars, int *i)
 {
 	char		*var_key;
 	t_env_var	*var;

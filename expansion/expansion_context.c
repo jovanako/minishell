@@ -6,17 +6,17 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:05:37 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/19 17:21:12 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:34:02 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 
-t_expansion_context	*new_e_ctx(char *lexeme, int status)
+t_expand_ctx	*new_e_ctx(char *lexeme, int status)
 {
-	t_expansion_context	*ctx;
+	t_expand_ctx	*ctx;
 
-	ctx = malloc(sizeof(t_expansion_context));
+	ctx = malloc(sizeof(t_expand_ctx));
 	if (!ctx)
 		return (NULL);
 	ctx->current = 0;
@@ -31,7 +31,7 @@ t_expansion_context	*new_e_ctx(char *lexeme, int status)
 	return (ctx);
 }
 
-bool	*free_expansion_ctx(t_expansion_context *ctx)
+bool	*free_expansion_ctx(t_expand_ctx *ctx)
 {
 	if (!ctx)
 		return (false);

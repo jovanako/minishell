@@ -6,14 +6,14 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:21:46 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/19 17:13:19 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:34:12 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 #include "../built-ins/built_ins.h"
 
-char	*extract_var_key(t_expansion_context *ctx, int *start)
+char	*extract_var_key(t_expand_ctx *ctx, int *start)
 {
 	char	*result;
 	int		end;
@@ -32,7 +32,7 @@ char	*extract_var_key(t_expansion_context *ctx, int *start)
 	return (result);
 }
 
-bool	append_value(t_expansion_context *ctx, char *var_value)
+bool	append_value(t_expand_ctx *ctx, char *var_value)
 {
 	char	*tmp;
 
@@ -54,7 +54,7 @@ bool	is_quote(char c)
 	return (c == '\'' || c == '"');
 }
 
-bool	handle_exit_expand(t_expansion_context *ctx, int *i)
+bool	handle_exit_expand(t_expand_ctx *ctx, int *i)
 {
 	int	status;
 

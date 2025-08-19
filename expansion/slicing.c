@@ -6,13 +6,13 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:33:19 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 21:37:04 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:34:32 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 
-bool	append_slice(t_expansion_context *ctx, char *end)
+bool	append_slice(t_expand_ctx *ctx, char *end)
 {
 	char	*slice;
 	char	*tmp;
@@ -32,7 +32,7 @@ bool	append_slice(t_expansion_context *ctx, char *end)
 	return (true);
 }
 
-bool	slice_single_quoted(t_expansion_context *ctx)
+bool	slice_single_quoted(t_expand_ctx *ctx)
 {
 	char	*end;
 
@@ -41,7 +41,7 @@ bool	slice_single_quoted(t_expansion_context *ctx)
 	return (append_slice(ctx, end));
 }
 
-bool	slice_double_quoted(t_expansion_context *ctx, t_list *env_vars)
+bool	slice_double_quoted(t_expand_ctx *ctx, t_list *env_vars)
 {
 	int			i;
 
@@ -65,7 +65,7 @@ bool	slice_double_quoted(t_expansion_context *ctx, t_list *env_vars)
 	return (true);
 }
 
-bool	slice_unquoted(t_expansion_context *ctx, t_list *env_vars)
+bool	slice_unquoted(t_expand_ctx *ctx, t_list *env_vars)
 {
 	int	i;
 
