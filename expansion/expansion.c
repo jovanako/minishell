@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/31 21:13:25 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/19 16:29:42 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 static bool	expand_word(t_token *token, t_list *env_vars, int status)
 {
-	t_expansion_context	ctx;
+	t_expansion_context	*ctx;
 
-	ctx = (t_expansion_context){ .lexeme = token->lexeme };
-	ctx.exit_status = status;
-	ctx.result = malloc(sizeof(char));
-	if (!ctx.result)
+	ctx = new_e_ctx(token->lexeme, status);
+	ctx->result = malloc(sizeof(char));
+	if (!ctx->result)
 		return (false);
-	ft_bzero(ctx.result, 1);
-	while (token->lexeme[ctx.current])
+	ft_bzero(ctx->result, 1);
+	while (token->lexeme[ctx->current])
 	{
-		if (token->lexeme[ctx.current] == '\'' && !slice_single_quoted(&ctx))
-			return (free_result_and_return(&ctx));
-		if (token->lexeme[ctx.current] == '"'
-			&& !slice_double_quoted(&ctx, env_vars))
-			return (free_result_and_return(&ctx));
-		if (!slice_unquoted(&ctx, env_vars))
-			return (free_result_and_return(&ctx));
+		if (token->lexeme[ctx->current] == '\'' && !slice_single_quoted(ctx))
+			return (free_expansion_ctx(ctx));
+		if (token->lexeme[ctx->current] == '"'
+			&& !slice_double_quoted(ctx, env_vars))
+			return (free_expansion_ctx(ctx));
+		if (!slice_unquoted(ctx, env_vars))
+			return (free_expansion_ctx(ctx));
 	}
 	free(token->lexeme);
-	token->lexeme = ctx.result;
+	token->lexeme = ctx->result;
+	free_expansion_ctx(ctx);
 	return (true);
 }
 

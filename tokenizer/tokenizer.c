@@ -6,19 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:02:51 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 20:07:07 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/19 15:12:58 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static void	print_token(void *t) // delete later
-// {
-// 	t_token *token;
-
-// 	token = (t_token *)t;
-// 	printf("type: %d lexeme: %s\n", token->type, token->lexeme);
-// }
 
 static bool	read_less_than(t_token_context *context)
 {
