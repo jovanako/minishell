@@ -1,3 +1,5 @@
+#!/bin/bash
+
 test_counter=1
 
 test_output_contains() {
@@ -123,10 +125,10 @@ test_output_contains "XXX=$XXX" \
 "XXX=xxx env | grep XXX"
 
 #[18]
-test_output_contains "/home/jovana/Desktop/42Berlin/minishell" "pwd"
+test_output_contains "/home/jkovacev/minishell" "pwd"
 
 #[19]
-test_output_contains "/home/jovana/Desktop/42Berlin" \
+test_output_contains "/home/jkovacev" \
 'cd ..
 pwd'
 

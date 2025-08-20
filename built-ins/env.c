@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:34 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/21 15:11:20 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:39:09 by culbrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	ft_modenv(t_list *lst, char *value)
 	if (!lst)
 		return (1);
 	env_var = (t_env_var *)lst->content;
+	if (env_var->value)
+		free(env_var->value);
 	env_var->value = value;
 	lst->content = (void *)env_var;
 	return (0);

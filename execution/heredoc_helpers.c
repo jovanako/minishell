@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_helpers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:12:21 by culbrich          #+#    #+#             */
-/*   Updated: 2025/08/07 13:12:21 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:55:11 by culbrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	hd_find_next_q(t_redirection *re, char **dl, char q, int *start)
 	while (re->target[i] != q)
 	{
 		if (!re->target[i++])
-			return (0); // invalid input (2)
+			return (0);
 	}
 	if (!(hd_append_slice(re, dl, *start, i)))
 		return (0);

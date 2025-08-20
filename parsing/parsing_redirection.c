@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:22:25 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 22:31:28 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/20 15:13:01 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static bool	parse_redirection(t_parse_ctx *ctx, t_command *command)
 		{
 			print_syntax_error(ctx);
 			ctx->error = true;
+			free(redirection);
 			return (true);
 		}
 	}

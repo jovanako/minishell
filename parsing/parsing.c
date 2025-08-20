@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/31 20:54:47 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:28:37 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ bool	parse_simple_command(t_parse_ctx *ctx)
 		return (false);
 	command->assignments = NULL;
 	command->redirections = NULL;
+	command->pid = -1;
 	if (!parse_assignment_list(ctx, command))
 		return (false);
 	if (!parse_redirection_list(ctx, command))

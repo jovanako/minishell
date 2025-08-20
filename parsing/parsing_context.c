@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_context.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 19:16:18 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/31 20:48:07 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/20 15:05:30 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
