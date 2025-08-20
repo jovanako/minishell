@@ -11,23 +11,43 @@ $input_command
 EOF
 )
 
-	# Define ANSI color codes
+    # Define ANSI color codes
     GREEN='\033[0;32m'
     RED='\033[0;31m'
+    YELLOW='\033[0;33m'
     NC='\033[0m' # No Color / reset
 
     # Check if the expected string is in the output
     if grep -q "$expected" <<< "$output"; then
         echo -e "${GREEN}[$test_counter] PASS:${NC} '$expected' found in output of '$input_command'"
+
+        # --- Only run Valgrind if functional test passed ---
+        local valgrind_log="valgrind_${test_counter}.log"
+        valgrind --leak-check=full --errors-for-leak-kinds=all \
+				 --suppressions=readline.supp \
+                 --error-exitcode=42 \
+                 ./minishell <<EOF &> "$valgrind_log"
+$input_command
+EOF
+        local valgrind_status=$?
+
+        if [ $valgrind_status -eq 42 ]; then
+            echo -e "${RED}[Valgrind FAIL]${NC} Memory errors detected. See $valgrind_log"
+            exit 1   # 🔴 Stop script immediately
+        else
+            echo -e "${GREEN}[Valgrind PASS]${NC} No leaks/errors detected"
+            rm "$valgrind_log" # cleanup if clean run
+        fi
+        # ---------------------------------------------------
     else
         echo -e "${RED}[$test_counter] FAIL:${NC} '$expected' not found in output of '$input_command'"
         echo "Command: $input_command"
-		echo "Expected: $expected"
-		echo "Output:"
+        echo "Expected: $expected"
+        echo "Output:"
         echo "$output"
     fi
 
-	((test_counter++))
+    ((test_counter++))
 }
 
 #[1]
