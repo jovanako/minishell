@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 22:25:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/30 21:21:17 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/20 17:11:00 by culbrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <limits.h>
 # include "libft/libft.h"
 # include "tokenizer/tokenizer.h"
 # include "parsing/parsing.h"

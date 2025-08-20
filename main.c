@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/19 18:05:12 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/20 18:04:50 by culbrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 volatile sig_atomic_t	g_last_sig;
 
-static bool	clean_up(t_ctx_holder *ctx_holder)
+static int	clean_up(t_ctx_holder *ctx_holder)
 {
+	int	ret;
+
+	ret = ctx_holder->status;
 	ctx_holder->t_ctx = free_token_ctx(ctx_holder->t_ctx);
 	ctx_holder->p_ctx = free_parsing_ctx(ctx_holder->p_ctx);
 	ctx_holder->e_ctx = free_exec_ctx(ctx_holder->e_ctx);
-	return (false);
+	return (ret);
 }
 
 static bool	read_input(char **input)
@@ -60,10 +63,11 @@ static bool	eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
 	return (true);
 }
 
-static bool	eval_loop(t_list *env_vars)
+static int	eval_loop(t_list *env_vars)
 {
 	char			*input;
 	t_ctx_holder	ctx_holder;
+	int				ret;
 
 	input = NULL;
 	ctx_holder.exit = false;
@@ -82,26 +86,22 @@ static bool	eval_loop(t_list *env_vars)
 			if (!eval(&ctx_holder, input, env_vars))
 				return (clean_up(&ctx_holder));
 		}
-		clean_up(&ctx_holder);
+		ret = clean_up(&ctx_holder);
 	}
-	return (true);
+	return (ret);
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_list	*env_vars;
+	int		ret;
 
 	(void)argc;
 	(void)argv;
 	env_vars = create_env_vars(envp);
 	if (!env_vars)
 		return (1);
-	if (!eval_loop(env_vars))
-	{
-		printf("exit\n");
-		ft_lstclear(&env_vars, &delete_env_var);
-		return (1);
-	}
+	ret = eval_loop(env_vars);
 	ft_lstclear(&env_vars, &delete_env_var);
-	return (0);
+	return (ret);
 }

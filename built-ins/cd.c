@@ -37,7 +37,7 @@ int	ft_cd(char **argv, t_list *lst)
 {
 	if (array_size(argv) > 2)
 	{
-		printf("minishell: cd: too many arguments\n");
+		ft_putendl_fd("minishell: cd: too many arguments", STDERR_FILENO);
 		return (1);
 	}
 	if (!argv[1])
