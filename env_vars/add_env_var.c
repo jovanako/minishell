@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 14:28:38 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 22:42:09 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/20 20:25:10 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static bool	update_var(t_env_var *env_var, char *val, bool exported)
 {
+	if (env_var->value)
+		free(env_var->value);
 	env_var->exported = exported;
 	env_var->value = val;
 	return (true);
@@ -47,6 +49,7 @@ bool	add_env_var(t_list **env_vars, char *key, char *val, bool exported)
 	existing_env_var = get_env_var(*env_vars, key);
 	if (existing_env_var)
 	{
+		free(key);
 		if (val == NULL)
 			val = existing_env_var->value;
 		return (update_var(existing_env_var, val, exported));
