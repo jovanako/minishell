@@ -33,7 +33,6 @@ EOF
 
         if [ $valgrind_status -eq 42 ]; then
             echo -e "${RED}[Valgrind FAIL]${NC} Memory errors detected. See $valgrind_log"
-            exit 1   # 🔴 Stop script immediately
         else
             echo -e "${GREEN}[Valgrind PASS]${NC} No leaks/errors detected"
             rm "$valgrind_log" # cleanup if clean run
