@@ -25,7 +25,10 @@ EOF
 
         # --- Only run Valgrind if functional test passed ---
         local valgrind_log="valgrind_${test_counter}.log"
-        valgrind --leak-check=full --errors-for-leak-kinds=all \
+        valgrind --leak-check=full \
+				 --track-fds=yes \
+				 --show-leak-kinds=all \
+				 --errors-for-leak-kinds=all \
 				 --suppressions=readline.supp \
                  --error-exitcode=42 \
                  ./minishell <<EOF &> "$valgrind_log"
@@ -125,10 +128,10 @@ test_output_contains "XXX=$XXX" \
 "XXX=xxx env | grep XXX"
 
 #[18]
-test_output_contains "/home/jkovacev/minishell" "pwd"
+test_output_contains "$(pwd)" "pwd"
 
 #[19]
-test_output_contains "/home/jkovacev" \
+test_output_contains "$(dirname $(pwd))" \
 'cd ..
 pwd'
 
