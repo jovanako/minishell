@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/29 20:43:37 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/22 21:41:10 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,10 @@ t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars, int status)
 	{
 		if (!execute_command(ctx, 0))
 			return (NULL);
-		ctx->status = wait_for_children(ctx->commands);
+		if (ctx->error)
+			ctx->status = 1;
+		else
+			ctx->status = wait_for_children(ctx->commands);
 	}
 	return (ctx);
 }

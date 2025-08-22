@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/20 18:04:50 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/08/22 21:46:45 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static bool	eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
 			env_vars, ctx_holder->status);
 	if (!ctx_holder->e_ctx)
 		return (false);
-	if (ctx_holder->e_ctx->error)
-		return (true);
 	ctx_holder->exit = ctx_holder->e_ctx->exit;
 	ctx_holder->status = ft_get_last_sig_exit(ctx_holder->e_ctx->status);
 	return (true);
