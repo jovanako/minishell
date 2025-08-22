@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/08/19 16:32:41 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/08/22 20:25:52 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CC = gcc
 
 CFLAGS = -g -Wall -Wextra -Werror
 
-INC = -Llibft -lft -lreadline
+INC = -Llibft -lft -Lerr_printf -lerrprintf -lreadline
 
 #---------------------------------------------------#
 #---------------------SOURCES-----------------------#
@@ -62,6 +62,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "\n"
 	@make -C libft/ bonus
+	@make -C err_printf
 	@echo "\033[0;32mCompiling..."
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(INC)
 	@echo "\n\033[0mDone !"
@@ -73,6 +74,7 @@ $(NAME): $(OBJ)
 clean:
 	@echo "\033[0;31mCleaning libft..."
 	@make fclean -C libft/
+	@make fclean -C err_printf/
 	@echo "\nRemoving objects..."
 	@rm -f $(OBJ)
 	@echo "\033[0m"

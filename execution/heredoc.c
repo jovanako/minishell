@@ -6,11 +6,12 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:38:32 by culbrich          #+#    #+#             */
-/*   Updated: 2025/08/19 17:53:00 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/22 20:34:43 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "../err_printf/err_printf.h"
 #include "../minishell.h"
 
 /*	returns 0 on invalid input
@@ -55,7 +56,7 @@ static int	hd_loop(const int tmp_file, char *dl, int mode, t_exec_ctx *ctx)
 		ft_change_sigmode(SIG_NONINTERACTIVE);
 		if (!input)
 		{
-			printf("-minishell: warning: here-document at line "
+			err_printf("-minishell: warning: here-document at line "
 				"%d delimited by end-of-file (wanted '%s')\n", i, dl);
 			break ;
 		}

@@ -6,10 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 10:09:49 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/31 20:54:17 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/22 20:37:40 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../err_printf/err_printf.h"
 #include "../minishell.h"
 
 static bool	is_new_token(char c)
@@ -46,7 +47,7 @@ bool	read_word(t_token_context *context)
 	}
 	if (quotes_are_open(quotes_closed, double_quotes_closed))
 	{
-		printf("minishell: invalid input\n");
+		err_printf("minishell: invalid input\n");
 		context->error = true;
 		return (true);
 	}

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/29 18:33:09 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/22 20:42:27 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 #include <string.h>
 #include <errno.h>
 #include "execution.h"
+#include "../err_printf/err_printf.h"
 
 static char	*contains_path(char *arg)
 {
 	if (access(arg, F_OK) == -1 || access(arg, X_OK) == -1)
 	{
-		printf("minishell: %s: %s\n", arg, strerror(errno));
+		err_printf("minishell: %s: %s\n", arg, strerror(errno));
 		return (NULL);
 	}
 	return (arg);
@@ -40,12 +41,12 @@ static char	*resolve_exec_path(char *arg, t_list *env_vars)
 		result = ft_cmdpath(env_vars, arg);
 		if (!result)
 		{
-			printf("minishell: %s: command not found\n", arg);
+			err_printf("minishell: %s: command not found\n", arg);
 			return (NULL);
 		}
 		if (access(result, X_OK) == -1)
 		{
-			printf("minishell: %s: %s\n", arg, strerror(errno));
+			err_printf("minishell: %s: %s\n", arg, strerror(errno));
 			return (NULL);
 		}
 	}

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_redirection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 20:22:25 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/20 15:13:01 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/22 20:43:57 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "../err_printf/err_printf.h"
 
 static t_redirect_type	resolve_redirect_type(t_token_type token_type)
 {
@@ -46,7 +47,7 @@ static void	print_syntax_error(t_parse_ctx *ctx)
 		t_lexeme = "newline";
 	else
 		t_lexeme = token->lexeme;
-	printf("minishell: syntax error near unexpected token `%s'\n", t_lexeme);
+	err_printf("minishell: syntax error near unexpected token `%s'\n", t_lexeme);
 }
 
 static bool	parse_redirection(t_parse_ctx *ctx, t_command *command)

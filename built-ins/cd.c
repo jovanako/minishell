@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:18 by culbrich          #+#    #+#             */
-/*   Updated: 2025/08/20 14:52:14 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/08/22 20:32:44 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_ins.h"
+#include "../err_printf/err_printf.h"
 #include <sys/stat.h>
 
 //	returns 0 on success, 1 on error
@@ -44,7 +45,7 @@ int	ft_cd(char **argv, t_list *lst)
 		argv[1] = ft_getenv_v(ft_getenv(lst, "HOME"));
 	if (chdir(argv[1]))
 	{
-		printf("minishell: cd: %s: %s\n", argv[1], strerror(errno));
+		err_printf("minishell: cd: %s: %s\n", argv[1], strerror(errno));
 		return (1);
 	}
 	if (ft_update_pwd(lst))

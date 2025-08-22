@@ -6,13 +6,14 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 12:08:33 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/27 22:39:45 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/22 20:43:15 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "../minishell.h"
 #include "../utils/utils.h"
+#include "../err_printf/err_printf.h"
 
 static int	handle_assignments(t_list *assignments, t_list *ev)
 {
@@ -69,7 +70,7 @@ static void	is_heredoc(char *input, t_redirection *redirection)
 		ft_change_sigmode(SIG_NONINTERACTIVE);
 		if (!input)
 		{
-			printf("-minishell: warning: here-document at line "
+			err_printf("-minishell: warning: here-document at line "
 				"%d delimited by end-of-file (wanted '%s')\n",
 				i, redirection->target);
 			break ;

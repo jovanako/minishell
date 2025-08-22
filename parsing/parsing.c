@@ -6,10 +6,11 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/22 19:31:18 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/22 20:36:36 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../err_printf/err_printf.h"
 #include "../minishell.h"
 
 static bool	parse_args_and_redirs(t_parse_ctx *ctx, t_command *command)
@@ -66,7 +67,7 @@ static bool	parse_command_line(t_parse_ctx *ctx)
 		current = ctx->current->content;
 		if (ft_strlen(current->lexeme) == 0)
 		{
-			printf("minishell: syntax error near unexpected token `%c'\n", '|');
+			err_printf("minishell: syntax error near unexpected token `|'\n");
 			ctx->error = true;
 			return (true);
 		}
@@ -87,7 +88,7 @@ t_parse_ctx	*parse(t_token_context *t_ctx)
 	ctx = new_parsing_ctx(t_ctx);
 	if (ft_strcmp(token->lexeme, "|") == 0)
 	{
-		printf("minishell: syntax error near unexpected token `%c'\n", '|');
+		err_printf("minishell: syntax error near unexpected token `|'\n");
 		ctx->error = true;
 		return (ctx);
 	}

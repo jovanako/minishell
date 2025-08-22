@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution_helpers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/20 14:19:28 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/22 20:42:52 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "../err_printf/err_printf.h"
 #include <errno.h>
 #include <string.h>
 
@@ -77,7 +78,7 @@ bool	check_can_read(char *target)
 {
 	if (open(target, O_RDONLY) == -1)
 	{
-		printf("minishell: %s: %s\n", target, strerror(errno));
+		err_printf("minishell: %s: %s\n", target, strerror(errno));
 		return (false);
 	}
 	return (true);
