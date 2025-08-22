@@ -3,16 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkovacev <jkovacev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:10:24 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/20 14:28:37 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/22 19:31:18 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	parse_simple_command(t_parse_ctx *ctx)
+static bool	parse_args_and_redirs(t_parse_ctx *ctx, t_command *command)
+{
+	while (!is_current_type(ctx, PIPE_TOKEN)
+		&& !is_current_type(ctx, NULL_TERMINATOR_TOKEN))
+	{
+		if (is_current_type(ctx, WORD_TOKEN)
+			&& !parse_argv(ctx, command))
+			return (false);
+		if ((is_current_type(ctx, INPUT_REDIR_TOKEN)
+			|| is_current_type(ctx, OUTPUT_REDIR_TOKEN)
+			|| is_current_type(ctx, APPEND_TOKEN)
+			|| is_current_type(ctx, HEREDOC_TOKEN))
+			&& !parse_redirection_list(ctx, command))
+			return (false);		
+	}
+	return (true);
+}
+
+static bool	parse_simple_command(t_parse_ctx *ctx)
 {
 	t_command	*command;
 	t_list		*node;
@@ -22,14 +40,13 @@ bool	parse_simple_command(t_parse_ctx *ctx)
 		return (false);
 	command->assignments = NULL;
 	command->redirections = NULL;
+	command->argv = NULL;
 	command->pid = -1;
 	if (!parse_assignment_list(ctx, command))
 		return (false);
 	if (!parse_redirection_list(ctx, command))
 		return (false);
-	if (!parse_argv(ctx, command))
-		return (false);
-	if (!parse_redirection_list(ctx, command))
+	if (!parse_args_and_redirs(ctx, command))
 		return (false);
 	node = ft_lstnew(command);
 	if (!node)
@@ -38,7 +55,7 @@ bool	parse_simple_command(t_parse_ctx *ctx)
 	return (true);
 }
 
-bool	parse_command_line(t_parse_ctx *ctx)
+static bool	parse_command_line(t_parse_ctx *ctx)
 {
 	t_token	*current;
 

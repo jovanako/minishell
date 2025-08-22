@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:55:41 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/26 19:24:48 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/22 19:26:02 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,34 +22,46 @@ static t_token_type	get_token_type(t_list *node)
 	return (token->type);
 }
 
-static int	size_of_argv(t_parse_ctx *ctx)
+static int	get_argv_size(char **argv)
 {
-	int		size;
-	t_list	*node;
+	int	i;
 
-	size = 0;
-	node = ctx->current;
-	while (get_token_type(node) == WORD_TOKEN)
+	i = 0;
+	while (argv && argv[i])
+		i++;
+	return (i);
+}
+
+static	bool	add_argument(t_command *cmd, char *arg)
+{
+	int		i;
+	int		argv_size;
+	char	**tmp_argv;
+	
+	argv_size = get_argv_size(cmd->argv);
+	tmp_argv = malloc((argv_size + 2) * sizeof(char *));
+	if (!tmp_argv)
+		return (false);
+	i = 0;
+	while (i < argv_size)
 	{
-		size++;
-		node = node->next;
+		tmp_argv[i] = cmd->argv[i];
+		i++;
 	}
-	return (size);
+	tmp_argv[i] = arg;
+	tmp_argv[i + 1] = NULL;
+	free(cmd->argv);
+	cmd->argv = tmp_argv;
+	return (true);
 }
 
 bool	parse_argv(t_parse_ctx *ctx, t_command *command)
 {
-	int		i;
-	char	**argv;
-
-	i = 0;
-	argv = malloc(sizeof(char *) * (size_of_argv(ctx) + 1));
 	while (get_token_type(ctx->current) == WORD_TOKEN)
 	{
-		argv[i++] = get_current(ctx)->lexeme;
+		if (!add_argument(command, get_current(ctx)->lexeme))
+			return (false);
 		p_advance(ctx);
 	}
-	argv[i] = NULL;
-	command->argv = argv;
 	return (true);
 }
