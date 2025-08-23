@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   file_system.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 18:23:17 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 21:25:13 by jkovacev         ###   ########.fr       */
+/*   Created: 2025/08/23 21:20:50 by jkovacev          #+#    #+#             */
+/*   Updated: 2025/08/23 21:25:01 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "utils.h"
+#include <sys/stat.h>
 
-# include <stdbool.h>
-# include "../expansion/expansion.h"
-# include "../parsing/parsing.h"
+bool	is_dir(char *path)
+{
+	struct stat path_stat;
 
-bool	is_str_equal(char *s1, char *s2);
-void	delete_token(void *t);
-bool	match_assignment_key(void *a, void *k);
-char	*ft_strcpy(char *s);
-void	ft_free_strarray(char **s_a);
-bool	ft_isnumber(char *s);
-int		array_size(char **arr);
-bool	is_dir(char *path);
-
-#endif
+	if (stat(path, &path_stat) != 0)
+		return (false);
+	return (S_ISDIR(path_stat.st_mode));
+}

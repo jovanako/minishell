@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/08/23 19:27:35 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/08/23 21:25:36 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ PARSING = parsing parsing_helpers parsing_assignment parsing_redirection parsing
 
 TOKENIZER = tokenizer tokenizer_helper token_readers heredoc_reader token_context
 
-UTILS = call_backs strings
+UTILS = call_backs strings file_system
 
 SRC = $(addsuffix .c, $(addprefix built-ins/, $(BUILTINS))) \
 	  $(addsuffix .c, $(addprefix env_vars/, $(ENV))) \

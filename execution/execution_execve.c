@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 21:14:33 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 21:29:18 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ static char	*contains_path(char *arg)
 	{
 		err_printf("minishell: %s: %s\n", arg, strerror(errno));
 		return (NULL);
+	}
+	if (is_dir(arg))
+	{
+		err_printf("minishell: %s: Is a directory\n", arg);
+		return (NULL);	
 	}
 	return (arg);
 }
@@ -49,6 +54,11 @@ static char	*resolve_exec_path(char *arg, t_list *env_vars)
 			err_printf("minishell: %s: %s\n", arg, strerror(errno));
 			return (NULL);
 		}
+		if (is_dir(arg))
+		{
+			err_printf("minishell: %s: Is a directory\n", arg);
+			return (NULL);	
+		}
 	}
 	return (result);
 }
@@ -61,7 +71,7 @@ static int	child_process(t_command *cmd, t_list *ev,
 	path_name = resolve_exec_path(cmd->argv[0], ev);
 	if (!path_name)
 	{
-		if (errno == EACCES)
+		if (errno == EACCES || is_dir(cmd->argv[0]))
 			return (126);
 		return (127);
 	}
