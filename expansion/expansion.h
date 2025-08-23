@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 08:36:15 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/19 18:33:33 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 19:24:44 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,8 @@ bool			is_quote(char c);
 bool			handle_dollar(t_expand_ctx *ctx, t_list *env_vars, int *i);
 t_expand_ctx	*new_e_ctx(char *lexeme, int status);
 bool			*free_expansion_ctx(t_expand_ctx *ctx);
+
+// empty_input_checker
+void			remove_empty_tokens(t_token_context *ctx);
 
 #endif

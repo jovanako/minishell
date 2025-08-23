@@ -6,7 +6,7 @@
 #    By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/07 17:02:03 by jkovacev          #+#    #+#              #
-#    Updated: 2025/08/22 20:25:52 by jkovacev         ###   ########.fr        #
+#    Updated: 2025/08/23 19:27:35 by jkovacev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ ENV = env_vars add_env_var get_env_var
 
 EXEC = execution execution_execve execution_built_in execution_helpers execution_no_command open_fork_stream cmdpath execution_context ev_list_to_array heredoc heredoc_expansion heredoc_helpers
 
-EXPANSION = expansion expansion_context expansion_helpers slicing
+EXPANSION = expansion expansion_context expansion_helpers slicing remove_empty_tokens
 
 MAIN = main
 

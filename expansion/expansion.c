@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 14:26:35 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/19 18:34:20 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 18:53:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ bool	expand(t_token_context *ctx, t_list *env_vars, int status)
 		ft_lstclear(&(ctx->tokens), &delete_token);
 		return (false);
 	}
+	remove_empty_tokens(ctx);
 	return (true);
 }

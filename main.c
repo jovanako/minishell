@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 10:17:29 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 19:47:34 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static bool	eval(t_ctx_holder *ctx_holder, char *input, t_list **env_vars)
 		return (true);
 	}
 	expand(ctx_holder->t_ctx, *env_vars, ctx_holder->status);
+	if (ft_lstsize(ctx_holder->t_ctx->tokens) == 1)
+		return (true);
 	ctx_holder->p_ctx = parse(ctx_holder->t_ctx);
 	if (ctx_holder->p_ctx && ctx_holder->p_ctx->error)
 	{
