@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 10:49:54 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 21:14:33 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ static int	child_process(t_command *cmd, t_list *ev,
 
 	path_name = resolve_exec_path(cmd->argv[0], ev);
 	if (!path_name)
+	{
+		if (errno == EACCES)
+			return (126);
 		return (127);
+	}
 	if (fork_streams->input_fd != 0)
 	{
 		if (dup2(fork_streams->input_fd, STDIN_FILENO) == -1)
