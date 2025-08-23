@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 21:29:18 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 21:37:27 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,6 @@ static char	*resolve_exec_path(char *arg, t_list *env_vars)
 		{
 			err_printf("minishell: %s: %s\n", arg, strerror(errno));
 			return (NULL);
-		}
-		if (is_dir(arg))
-		{
-			err_printf("minishell: %s: Is a directory\n", arg);
-			return (NULL);	
 		}
 	}
 	return (result);
