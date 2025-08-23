@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 16:24:34 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/22 21:46:45 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:17:29 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static bool	read_input(char **input)
 	return (true);
 }
 
-static bool	eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
+static bool	eval(t_ctx_holder *ctx_holder, char *input, t_list **env_vars)
 {
 	ctx_holder->t_ctx = tokenize(input);
 	if (ctx_holder->t_ctx && ctx_holder->t_ctx->error)
@@ -45,7 +45,7 @@ static bool	eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
 		ctx_holder->status = 2;
 		return (true);
 	}
-	expand(ctx_holder->t_ctx, env_vars, ctx_holder->status);
+	expand(ctx_holder->t_ctx, *env_vars, ctx_holder->status);
 	ctx_holder->p_ctx = parse(ctx_holder->t_ctx);
 	if (ctx_holder->p_ctx && ctx_holder->p_ctx->error)
 	{
@@ -61,7 +61,7 @@ static bool	eval(t_ctx_holder *ctx_holder, char *input, t_list *env_vars)
 	return (true);
 }
 
-static int	eval_loop(t_list *env_vars)
+static int	eval_loop(t_list **env_vars)
 {
 	char			*input;
 	t_ctx_holder	ctx_holder;
@@ -99,7 +99,7 @@ int	main(int argc, char *argv[], char *envp[])
 	env_vars = create_env_vars(envp);
 	if (!env_vars)
 		return (1);
-	ret = eval_loop(env_vars);
+	ret = eval_loop(&env_vars);
 	ft_lstclear(&env_vars, &delete_env_var);
 	return (ret);
 }

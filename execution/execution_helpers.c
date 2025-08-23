@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/22 20:42:52 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 17:17:38 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,15 @@ static bool	resolve_ev(t_list **env_vars, t_list **copy)
 	return (true);
 }
 
-t_list	*resolve_fork_ev(t_list *assignments, t_list *env_vars)
+t_list	**resolve_fork_ev(t_list *assignments, t_list **env_vars)
 {
-	t_list			*copy;
+	t_list			**copy;
 
-	copy = NULL;
-	if (!resolve_assignments(assignments, &copy))
+	copy = malloc(sizeof(t_list *));
+	*copy = NULL;
+	if (!resolve_assignments(assignments, copy))
 		return (NULL);
-	if (!resolve_ev(&env_vars, &copy))
+	if (!resolve_ev(env_vars, copy))
 		return (NULL);
 	return (copy);
 }

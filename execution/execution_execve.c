@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/22 20:42:27 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:49:54 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ static int	child_process(t_command *cmd, t_list *ev,
 }
 
 //	pid 0 = child
-bool	fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fork_streams)
+bool	fork_execve(t_command *cmd, t_list **ev, t_fork_streams *fork_streams)
 {
 	pid_t	pid;
-	t_list	*env_cpy;
+	t_list	**env_cpy;
 
 	pid = fork();
 	if (pid == -1)
@@ -90,9 +90,9 @@ bool	fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fork_streams)
 	if (pid == 0)
 	{
 		env_cpy = resolve_fork_ev(cmd->assignments, ev);
-		if (!env_cpy)
+		if (!(*env_cpy))
 			exit(1);
-		exit(child_process(cmd, env_cpy, fork_streams));
+		exit(child_process(cmd, *env_cpy, fork_streams));
 	}
 	if (fork_streams->input_fd != STDIN_FILENO)
 		close(fork_streams->input_fd);

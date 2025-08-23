@@ -6,13 +6,13 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 19:42:14 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/31 20:48:27 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 09:55:19 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars, int status)
+t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list **env_vars, int status)
 {
 	t_exec_ctx	*ctx;
 

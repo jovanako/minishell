@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:21:46 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/19 18:34:12 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 18:00:49 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,16 @@ bool	is_quote(char c)
 
 bool	handle_exit_expand(t_expand_ctx *ctx, int *i)
 {
-	int	status;
+	int		status;
+	char	*status_str;
 
 	status = ft_get_last_sig_exit(ctx->exit_status);
-	if (!append_value(ctx, ft_itoa(status)))
+	status_str = ft_itoa(status);
+	if (!status_str)
 		return (false);
+	if (!append_value(ctx, status_str))
+		return (false);
+	free(status_str);
 	(*i)++;
 	ctx->current = *i;
 	return (true);

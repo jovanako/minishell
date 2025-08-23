@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/22 21:41:10 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:48:58 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	execute_fork(t_exec_ctx *ctx, t_command *cmd, t_fork_streams *fs)
 {
-	if (!ctx->env_vars)
+	if (!(*ctx->env_vars))
 		return (false);
 	if (is_built_in(cmd->argv[0]))
 		fork_built_in(ctx, cmd, fs);
@@ -89,7 +89,7 @@ static bool	execute_command(t_exec_ctx *ctx, int input_fd)
 	return (true);
 }
 
-t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars, int status)
+t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list **env_vars, int status)
 {
 	t_exec_ctx	*ctx;
 	t_command	*cmd;
@@ -103,7 +103,7 @@ t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars, int status)
 		return (NULL);
 	cmd = ctx->commands->content;
 	if (!cmd->argv[0])
-		ctx->status = handle_no_command(cmd, ctx->env_vars);
+		ctx->status = handle_no_command(cmd, *ctx->env_vars);
 	else if (is_special_built_in(ctx->commands))
 		ctx->status = exec_built_in(ctx, cmd);
 	else

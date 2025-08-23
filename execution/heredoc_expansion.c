@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 20:43:09 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/29 20:57:16 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 09:59:25 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*heredoc_append_env(int *start, char *input, t_exec_ctx *ctx)
 	tmp = ft_substr(input, *start + 1, i - *start - 1);
 	if (!tmp)
 		return (NULL);
-	env = get_env_var(ctx->env_vars, tmp);
+	env = get_env_var(*ctx->env_vars, tmp);
 	free(tmp);
 	*start = i;
 	if (!env)

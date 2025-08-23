@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:24:40 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/29 20:50:01 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:49:05 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_fork_streams
 typedef struct s_execution_context
 {
 	t_list	*commands;
-	t_list	*env_vars;
+	t_list	**env_vars;
 	bool	exit;
 	bool	error;
 	int		status;
@@ -58,14 +58,14 @@ bool		is_special_built_in(t_list *commands);
 int			exec_built_in(t_exec_ctx *ctx, t_command *cmd);
 
 //	execution_context
-t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list *env_vars, int status);
+t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list **env_vars, int status);
 void		*free_exec_ctx(t_exec_ctx *ctx);
 
 //	execution_execve
-bool		fork_execve(t_command *cmd, t_list *ev, t_fork_streams *fs);
+bool		fork_execve(t_command *cmd, t_list **ev, t_fork_streams *fs);
 
 //	execution_helpers
-t_list		*resolve_fork_ev(t_list *assignments, t_list *env_vars);
+t_list		**resolve_fork_ev(t_list *assignments, t_list **env_vars);
 char		**ev_list_to_arr(t_list *env_vars);
 bool		check_can_read(char *target);
 int			wait_for_children(t_list *commands);
@@ -74,7 +74,7 @@ int			wait_for_children(t_list *commands);
 int			handle_no_command(t_command *cmd, t_list *env_vars);
 
 //	execution
-t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list *env_vars, int status);
+t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list **env_vars, int status);
 
 //	open_fork_stream
 int			open_input_redir(t_fork_streams *fs, t_redirection *redir);

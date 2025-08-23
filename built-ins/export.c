@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:49 by culbrich          #+#    #+#             */
-/*   Updated: 2025/08/22 20:41:28 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:07:44 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ static bool	handle_kv_pair(t_list **ev, t_list *asgn, char **pair, char *arg)
 	return (true);
 }
 
-int	ft_export(char **argv, t_list *ev, t_list *assignments)
+int	ft_export(char **argv, t_list **ev, t_list *assignments)
 {
 	int		i;
 	char	*pair[2];
 
 	if (array_size(argv) == 1)
 	{
-		if (!export_no_args(ev))
+		if (!export_no_args(*ev))
 			return (false);
 		return (true);
 	}
@@ -102,7 +102,7 @@ int	ft_export(char **argv, t_list *ev, t_list *assignments)
 	{
 		pair[0] = NULL;
 		pair[1] = NULL;
-		if (!handle_kv_pair(&ev, assignments, pair, argv[i]))
+		if (!handle_kv_pair(ev, assignments, pair, argv[i]))
 			return (1);
 		i++;
 	}

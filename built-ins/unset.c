@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:56:08 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/21 15:10:26 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:08:58 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	ft_lstdelfill(t_list **start, t_list *to_del)
 	}
 }
 
-int	ft_unset(char **keys, t_list *lst, t_list *assignments)
+int	ft_unset(char **keys, t_list **env_vars, t_list *assignments)
 {
 	int		i;
 
@@ -54,7 +54,7 @@ int	ft_unset(char **keys, t_list *lst, t_list *assignments)
 	while (keys[i])
 	{
 		if (!ft_lstfind(assignments, &match_assignment_key, keys[i]))
-			ft_lstdelfill(&lst, ft_getenv(lst, keys[i]));
+			ft_lstdelfill(env_vars, ft_getenv(*env_vars, keys[i]));
 		i++;
 	}
 	return (0);

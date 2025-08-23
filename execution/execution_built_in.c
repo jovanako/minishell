@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_built_in.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: culbrich <culbrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/20 14:54:03 by culbrich         ###   ########.fr       */
+/*   Updated: 2025/08/23 10:38:44 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	exec_built_in(t_exec_ctx *ctx, t_command *cmd)
 	if (is_str_equal(argv[0], "echo"))
 		return (ft_echo(argv));
 	if (is_str_equal(argv[0], "cd"))
-		return (ft_cd(argv, ctx->env_vars));
+		return (ft_cd(argv, *ctx->env_vars));
 	if (is_str_equal(argv[0], "pwd"))
 		return (ft_pwd());
 	if (is_str_equal(argv[0], "export"))
@@ -30,7 +30,7 @@ int	exec_built_in(t_exec_ctx *ctx, t_command *cmd)
 	if (is_str_equal(argv[0], "unset"))
 		return (ft_unset(argv, ctx->env_vars, cmd->assignments));
 	if (is_str_equal(argv[0], "env"))
-		return (ft_env(ctx->env_vars));
+		return (ft_env(*ctx->env_vars));
 	if (is_str_equal(argv[0], "exit"))
 		return (ft_exit(ctx, argv));
 	return (0);
@@ -76,7 +76,7 @@ static void	fork_built_in_child(t_exec_ctx *ctx,
 		close(s->output_fd);
 	}
 	ctx->env_vars = resolve_fork_ev(command->assignments, ctx->env_vars);
-	if (!ctx->env_vars)
+	if (!(*ctx->env_vars))
 		exit(1);
 	exit(exec_built_in(ctx, command));
 }
