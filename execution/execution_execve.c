@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 21:37:27 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:40:44 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ static int	child_process(t_command *cmd, t_list *ev,
 			return (126);
 		return (127);
 	}
-	if (fork_streams->input_fd != 0)
+	if (fork_streams->input_fd != STDIN_FILENO)
 	{
 		if (dup2(fork_streams->input_fd, STDIN_FILENO) == -1)
 			return (1);
 		close(fork_streams->input_fd);
 	}
-	if (fork_streams->output_fd != 1)
+	if (fork_streams->output_fd != STDOUT_FILENO)
 	{
 		if (dup2(fork_streams->output_fd, STDOUT_FILENO) == -1)
 			return (1);
