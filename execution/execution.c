@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/24 16:40:02 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:12:11 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,14 @@ static bool	execute_command(t_exec_ctx *ctx, t_list *cmds, int input_fd)
 		return (false);
 	fork_streams->input_fd = input_fd;
 	fork_streams->output_fd = STDOUT_FILENO;
+	fork_streams->pipe_in = input_fd;
+	fork_streams->pipe_out = STDOUT_FILENO;
 	execute_command_helper(fd, fork_streams, ctx, cmds);
 	if (cmds->next)
+	{
+		free(fork_streams);
 		return (execute_command(ctx, cmds->next, fd[0]));
+	}
 	free(fork_streams);
 	return (true);
 }
