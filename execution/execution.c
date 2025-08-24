@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/24 16:07:07 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:40:02 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ static bool	execute_command_helper(int *fd, t_fork_streams *fork_streams,
 	ctx->error = add_redirs(fork_streams, command->redirections, ctx);
 	if (ctx->error)
 	{
-		close(fork_streams->output_fd);
-		close(fork_streams->input_fd);
+		if (fork_streams->output_fd != STDOUT_FILENO)
+			close(fork_streams->output_fd);
+		if (fork_streams->input_fd != STDIN_FILENO)
+			close(fork_streams->input_fd);
 	}
 	if (!execute_fork(ctx, command, fork_streams))
 		return (false);
