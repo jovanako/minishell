@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 10:48:58 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:24:12 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,12 @@ static bool	add_redirs(t_fork_streams *fs, t_list *redirs, t_exec_ctx *ctx)
 }
 
 static bool	execute_command_helper(int *fd, t_fork_streams *fork_streams,
-	t_exec_ctx *ctx, t_command *command)
+	t_exec_ctx *ctx, t_list *cmds)
 {
-	if (ctx->commands->next)
+	t_command *command;
+
+	command = (t_command *)cmds->content;
+	if (cmds->next)
 	{
 		if (pipe(fd) == -1)
 			return (false);
@@ -67,24 +70,19 @@ static bool	execute_command_helper(int *fd, t_fork_streams *fork_streams,
 // last input and output redirections win
 // input redirection takes precedence over input_fd
 // read end: 0 write end: 1
-static bool	execute_command(t_exec_ctx *ctx, int input_fd)
+static bool	execute_command(t_exec_ctx *ctx, t_list *cmds, int input_fd)
 {
 	int				fd[2];
-	t_command		*command;
 	t_fork_streams	*fork_streams;
 
-	command = ctx->commands->content;
 	fork_streams = malloc(sizeof(t_fork_streams));
 	if (!fork_streams)
 		return (false);
 	fork_streams->input_fd = input_fd;
 	fork_streams->output_fd = STDOUT_FILENO;
-	execute_command_helper(fd, fork_streams, ctx, command);
-	if (ctx->commands->next)
-	{
-		ctx->commands = ctx->commands->next;
-		execute_command(ctx, fd[0]);
-	}
+	execute_command_helper(fd, fork_streams, ctx, cmds);
+	if (cmds->next)
+		return (execute_command(ctx, cmds->next, fd[0]));
 	free(fork_streams);
 	return (true);
 }
@@ -108,7 +106,7 @@ t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list **env_vars, int status)
 		ctx->status = exec_built_in(ctx, cmd);
 	else
 	{
-		if (!execute_command(ctx, 0))
+		if (!execute_command(ctx, ctx->commands, 0))
 			return (NULL);
 		if (ctx->error)
 			ctx->status = 1;
