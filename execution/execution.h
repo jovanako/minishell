@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:24:40 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 10:49:05 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:05:40 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_fork_streams
 {
 	int	input_fd;
 	int	output_fd;
+	int pipe_in;
+	int pipe_out;
 }	t_fork_streams;
 
 typedef struct s_execution_context

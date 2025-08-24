@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 11:16:07 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/24 13:40:44 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:09:46 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ bool	fork_execve(t_command *cmd, t_list **ev, t_fork_streams *fork_streams)
 		return (false);
 	if (pid == 0)
 	{
+		if (fork_streams->input_fd != fork_streams->pipe_in)
+			close(fork_streams->pipe_in);
+		if (fork_streams->output_fd != fork_streams->pipe_out)
+			close(fork_streams->pipe_out);
 		env_cpy = resolve_fork_ev(cmd->assignments, ev);
 		if (!(*env_cpy))
 			exit(1);
