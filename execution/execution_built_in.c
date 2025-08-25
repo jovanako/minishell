@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/25 11:03:38 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 12:23:29 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static void	fork_built_in_child(t_exec_ctx *ctx,
 			exit(1);
 		close(s->output_fd);
 	}
+	free(s);
 	resolved_ev = resolve_fork_ev(command->assignments, ctx->env_vars);
 	ft_lstclear(ctx->env_vars, delete_env_var);
 	ctx->env_vars = resolved_ev;

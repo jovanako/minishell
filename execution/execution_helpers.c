@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 09:32:00 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 17:17:38 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 12:25:02 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,15 @@ static bool	resolve_assignments(t_list *assignments, t_list **copy)
 
 static bool	resolve_ev(t_list **env_vars, t_list **copy)
 {
-	t_env_var		*env_var;
-	char			*key;
-	char			*value;
+	t_env_var	*env_var;
+	t_list		*current;	
+	char		*key;
+	char		*value;
 
-	while (*env_vars)
+	current = *env_vars;
+	while (current)
 	{
-		env_var = (*env_vars)->content;
+		env_var = current->content;
 		if (env_var->value && env_var->exported)
 		{
 			key = ft_strcpy(env_var->key);
@@ -57,7 +59,7 @@ static bool	resolve_ev(t_list **env_vars, t_list **copy)
 			if (!add_env_var(copy, key, value, true))
 				return (false);
 		}
-		(*env_vars) = (*env_vars)->next;
+		current = current->next;
 	}
 	return (true);
 }
@@ -72,6 +74,7 @@ t_list	**resolve_fork_ev(t_list *assignments, t_list **env_vars)
 		return (NULL);
 	if (!resolve_ev(env_vars, copy))
 		return (NULL);
+	ft_lstclear(env_vars, delete_env_var);
 	return (copy);
 }
 
