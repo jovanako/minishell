@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:55:49 by culbrich          #+#    #+#             */
-/*   Updated: 2025/08/23 10:07:44 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:33:48 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static bool	handle_kv_pair(t_list **ev, t_list *asgn, char **pair, char *arg)
 			return (false);
 	}
 	a = ft_lstfind(asgn, &match_assignment_key, pair[0]);
-	if (!pair[1] && a)
-		return (get_value(pair, a));
+	if (!pair[1] && a && !get_value(pair, a))
+		return (false);
 	if (!add_env_var(ev, pair[0], pair[1], true))
 	{
 		ft_free_pair(pair);
