@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:24:40 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/24 16:05:40 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 12:48:41 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int			exec_built_in(t_exec_ctx *ctx, t_command *cmd);
 //	execution_context
 t_exec_ctx	*new_exec_ctx(t_parse_ctx *p_ctx, t_list **env_vars, int status);
 void		*free_exec_ctx(t_exec_ctx *ctx);
+void		deep_free_exec_ctx(t_exec_ctx *ctx);
 
 //	execution_execve
 bool		fork_execve(t_command *cmd, t_list **ev, t_fork_streams *fs);

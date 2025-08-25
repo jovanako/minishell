@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 19:42:14 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 09:55:19 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 12:48:01 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ void	*free_exec_ctx(t_exec_ctx *ctx)
 		return (NULL);
 	free(ctx);
 	return (NULL);
+}
+
+void	deep_free_exec_ctx(t_exec_ctx *ctx)
+{
+	ft_lstclear(&ctx->commands, delete_command);
+	ft_lstclear(ctx->env_vars, delete_env_var);
+	free_exec_ctx(ctx);
 }
