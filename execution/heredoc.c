@@ -70,10 +70,13 @@ static int	hd_loop(const int tmp_file, char *dl, int mode, t_exec_ctx *ctx)
 	return (1);
 }
 
-static int	open_hd_redir_helper(char *delimiter, t_fork_streams *f_s)
+static int	open_hd_redir_helper(char *delimiter, t_fork_streams *f_s,
+	t_redirection *redir)
 {
 	int	tmp_file;
 
+	if (f_s->input_fd != STDIN_FILENO)
+			close(f_s->input_fd);
 	if (g_last_sig == SIGINT)
 	{
 		rl_done = 0;
@@ -81,8 +84,11 @@ static int	open_hd_redir_helper(char *delimiter, t_fork_streams *f_s)
 	}
 	else
 		tmp_file = open(TMP_FILE, O_RDONLY);
-	if (!tmp_file)
+	if (tmp_file == -1)
+	{
+		err_printf("minishell: %s: %s\n", redir->target, strerror(errno));
 		return (close_heredoc(delimiter, -1));
+	}
 	f_s->input_fd = tmp_file;
 	return (close_heredoc(delimiter, f_s->input_fd));
 }
@@ -98,15 +104,21 @@ int	open_hd_redir(t_fork_streams *f_s, t_redirection *redir, t_exec_ctx *ctx)
 		return (close_heredoc(delimiter, -1));
 	mode = hd_quoted_delimiter(redir, &delimiter);
 	if (mode == 0)
+	{
+		err_printf("minishell: heredoc invalid delimiter\n");
 		return (close_heredoc(delimiter, -1));
+	}
 	tmp_file = open(TMP_FILE, O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
-	if (!tmp_file)
+	if (tmp_file == -1)
+	{
+		err_printf("minishell: %s: %s\n", redir->target, strerror(errno));
 		return (close_heredoc(delimiter, -1));
+	}
 	if (!(hd_loop(tmp_file, delimiter, mode, ctx)))
 	{
 		close(tmp_file);
 		return (close_heredoc(delimiter, -1));
 	}
 	close(tmp_file);
-	return (open_hd_redir_helper(delimiter, f_s));
+	return (open_hd_redir_helper(delimiter, f_s, redir));
 }
