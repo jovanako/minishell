@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:22:28 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/24 21:12:11 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:43:09 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_exec_ctx	*execute(t_parse_ctx *p_ctx, t_list **env_vars, int status)
 	if (!ctx->commands)
 		return (NULL);
 	cmd = ctx->commands->content;
-	if (!cmd->argv[0])
+	if (!cmd->argv || !cmd->argv[0])
 		ctx->status = handle_no_command(cmd, *ctx->env_vars);
 	else if (is_special_built_in(ctx->commands))
 		ctx->status = exec_built_in(ctx, cmd);
