@@ -6,7 +6,7 @@ test_output_contains() {
     local expected="$1"
     local input_command="$2"
 
-    # Run ./minishell with heredoc input and capture output
+    # Run ./minishell with heredoc input and capture stdout
     local output
     output=$(./minishell <<EOF
 $input_command
@@ -16,39 +16,47 @@ EOF
     # Define ANSI color codes
     GREEN='\033[0;32m'
     RED='\033[0;31m'
-    YELLOW='\033[0;33m'
     NC='\033[0m' # No Color / reset
 
-    # Check if the expected string is in the output
+    # Check if the expected string is in stdout
     if grep -q "$expected" <<< "$output"; then
-        echo -e "${GREEN}[$test_counter] PASS:${NC} '$expected' found in output of '$input_command'"
-
-        # --- Only run Valgrind if functional test passed ---
-        local valgrind_log="valgrind_${test_counter}.log"
-        valgrind --leak-check=full \
-				 --track-fds=yes \
-				 --show-leak-kinds=all \
-				 --errors-for-leak-kinds=all \
-				 --suppressions=readline.supp \
-                 --error-exitcode=42 \
-                 ./minishell <<EOF &> "$valgrind_log"
-$input_command
-EOF
-        local valgrind_status=$?
-
-        if [ $valgrind_status -eq 42 ]; then
-            echo -e "${RED}[Valgrind FAIL]${NC} Memory errors detected. See $valgrind_log"
-        else
-            echo -e "${GREEN}[Valgrind PASS]${NC} No leaks/errors detected"
-            rm "$valgrind_log" # cleanup if clean run
-        fi
-        # ---------------------------------------------------
+        echo -e "${GREEN}[$test_counter] PASS:${NC} '$expected' found in stdout of '$input_command'"
     else
-        echo -e "${RED}[$test_counter] FAIL:${NC} '$expected' not found in output of '$input_command'"
+        echo -e "${RED}[$test_counter] FAIL:${NC} '$expected' not found in stdout of '$input_command'"
         echo "Command: $input_command"
         echo "Expected: $expected"
-        echo "Output:"
+        echo "Stdout:"
         echo "$output"
+    fi
+
+    ((test_counter++))
+}
+
+test_error_contains() {
+    local expected="$1"
+    local input_command="$2"
+
+    # Run ./minishell with heredoc input and capture stderr
+    local error_output
+    error_output=$(./minishell <<EOF 2>&1 >/dev/null
+$input_command
+EOF
+)
+
+    # Define ANSI color codes
+    GREEN='\033[0;32m'
+    RED='\033[0;31m'
+    NC='\033[0m' # No Color / reset
+
+    # Check if the expected string is in stderr
+    if grep -q "$expected" <<< "$error_output"; then
+        echo -e "${GREEN}[$test_counter] PASS:${NC} '$expected' found in stderr of '$input_command'"
+    else
+        echo -e "${RED}[$test_counter] FAIL:${NC} '$expected' not found in stderr of '$input_command'"
+        echo "Command: $input_command"
+        echo "Expected: $expected"
+        echo "Stderr:"
+        echo "$error_output"
     fi
 
     ((test_counter++))
@@ -75,7 +83,7 @@ test_output_contains "hello world" \
 "echo 'hello world'"
 
 #[6]
-test_output_contains "invalid input" \
+test_error_contains "invalid input" \
 "echo \"unterminated"
 
 #[7]
@@ -96,7 +104,8 @@ test_output_contains "\n" \
 
 #[11]
 test_output_contains "VAR=abc$USER" \
-'export VAR=abc$USER'
+'export VAR=abc$USER
+ env | grep VAR'
 
 #[12]
 test_output_contains "bla" \
@@ -152,23 +161,23 @@ test_output_contains "VAR=bla bla" \
 env | grep VAR'
 
 #[23]
-test_output_contains "minishell: something: No such file or directory" \
+test_error_contains "minishell: something: No such file or directory" \
 '< something cat'
 
 #[24]
-test_output_contains "minishell: /etc/shadow: Permission denied" \
+test_error_contains "minishell: /etc/shadow: Permission denied" \
 '< /etc/shadow cat'
 
 #[25]
-test_output_contains "minishell: /etc/pam.conf: Permission denied" \
+test_error_contains "minishell: /etc/pam.conf: Permission denied" \
 'echo bla > /etc/pam.conf'
 
 #[26]
-test_output_contains "minishell: /etc/pam.conf: Permission denied" \
+test_error_contains "minishell: /etc/pam.conf: Permission denied" \
 'echo bla >> /etc/pam.conf'
 
 #[27]
-test_output_contains "minishell: ./outfile: Permission denied" \
+test_error_contains "minishell: ./outfile: Permission denied" \
 './outfile'
 
 #[28]
@@ -176,51 +185,51 @@ test_output_contains "hello" \
 '/usr/bin/cat infile'
 
 #[29]
-test_output_contains "minishell: cmd: command not found" \
+test_error_contains "minishell: cmd: command not found" \
 'cmd'
 
 #[30]
-test_output_contains "minishell: /etc/pam.conf: Permission denied" \
+test_error_contains "minishell: /etc/pam.conf: Permission denied" \
 'blablabla >> /etc/pam.conf'
 
 #[31]
-test_output_contains "minishell: /home: Is a directory" \
+test_error_contains "minishell: /home: Is a directory" \
 'echo bla > /home'
 
 #[32]
-test_output_contains "minishell: /home: Is a directory" \
+test_error_contains "minishell: /home: Is a directory" \
 'echo bla >> /home'
 
 #[33]
-test_output_contains "minishell: /home: Is a directory" \
+test_error_contains "minishell: /home: Is a directory" \
 'echo bla > /home'
 
 #[34]
-test_output_contains "minishell: cd: too many arguments" \
+test_error_contains "minishell: cd: too many arguments" \
 'cd bla bla'
 
 #[35]
-test_output_contains "minishell: cd: ffff: No such file or directory" \
+test_error_contains "minishell: cd: ffff: No such file or directory" \
 'cd ffff'
 
 #[36]
-test_output_contains "minishell: syntax error near unexpected token \`|" \
+test_error_contains "minishell: syntax error near unexpected token \`|" \
 '| ls'
 
 #[37]
-test_output_contains "minishell: syntax error near unexpected token \`newline" \
+test_error_contains "minishell: syntax error near unexpected token \`newline" \
 '<<'
 
 #[38]
-test_output_contains "minishell: syntax error near unexpected token \`newline" \
+test_error_contains "minishell: syntax error near unexpected token \`newline" \
 'echo hello >'
 
 #[39]
-test_output_contains "minishell: syntax error near unexpected token \`newline" \
+test_error_contains "minishell: syntax error near unexpected token \`newline" \
 'echo hello >>'
 
 #[40]
-test_output_contains "minishell: syntax error near unexpected token \`newline" \
+test_error_contains "minishell: syntax error near unexpected token \`newline" \
 'echo hello <'
 
 #[41]

@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 14:28:38 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/20 20:25:10 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:04:25 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ bool	add_env_var(t_list **env_vars, char *key, char *val, bool exported)
 	{
 		free(key);
 		if (val == NULL)
-			val = existing_env_var->value;
+		{
+			val = ft_strdup(existing_env_var->value);
+			if (!val)
+				return (false);	
+		}
 		return (update_var(existing_env_var, val, exported));
 	}
 	return (add_new_var(env_vars, key, val, exported));
