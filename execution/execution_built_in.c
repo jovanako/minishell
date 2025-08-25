@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/25 12:48:53 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 14:00:06 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	fork_built_in_child(t_exec_ctx *ctx,
 		exit(1);
 	exit_status = exec_built_in(ctx, command);
 	deep_free_exec_ctx(ctx);
-	free(ctx->env_vars);
+	free(resolved_ev);
 	exit(exit_status);
 }
 
