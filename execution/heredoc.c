@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:38:32 by culbrich          #+#    #+#             */
-/*   Updated: 2025/08/22 20:34:43 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:39:18 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	hd_quoted_delimiter(t_redirection *redir, char **delimiter)
 		return (1);
 	else
 	{
+		free(*delimiter);
 		*delimiter = ft_strdup(redir->target);
 		if (!(*delimiter))
 			return (0);
