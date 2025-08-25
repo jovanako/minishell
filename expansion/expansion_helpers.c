@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 14:21:46 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 18:00:49 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:44:46 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ bool	append_value(t_expand_ctx *ctx, char *var_value)
 {
 	char	*tmp;
 
+	if (!var_value)
+		return (true);
 	tmp = ctx->result;
 	ctx->result = ft_strjoin(ctx->result, var_value);
 	free(tmp);
