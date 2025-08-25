@@ -80,11 +80,11 @@ test_output_contains "invalid input" \
 
 #[7]
 test_output_contains "bla{man$USER" \
-"echo bla{man$USER"
+'echo bla{man$USER'
 
 #[8]
 test_output_contains "$USER" \
-"echo \"$USER\""
+'echo "$USER"'
 
 #[9]
 test_output_contains '$USER' \
@@ -92,11 +92,11 @@ test_output_contains '$USER' \
 
 #[10]
 test_output_contains "\n" \
-"echo $UNSET_VAR"
+'echo $UNSET_VAR'
 
 #[11]
 test_output_contains "VAR=abc$USER" \
-"export VAR=abc$USER"
+'export VAR=abc$USER'
 
 #[12]
 test_output_contains "bla" \

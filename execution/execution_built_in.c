@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 16:21:54 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/08/23 10:38:44 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 11:03:38 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ bool	is_special_built_in(t_list *commands)
 static void	fork_built_in_child(t_exec_ctx *ctx,
 	t_command *command, t_fork_streams *s)
 {
+	t_list**	resolved_ev;
+
 	if (s->input_fd != 0)
 	{
 		if (dup2(s->input_fd, STDIN_FILENO) == -1)
@@ -75,7 +77,9 @@ static void	fork_built_in_child(t_exec_ctx *ctx,
 			exit(1);
 		close(s->output_fd);
 	}
-	ctx->env_vars = resolve_fork_ev(command->assignments, ctx->env_vars);
+	resolved_ev = resolve_fork_ev(command->assignments, ctx->env_vars);
+	ft_lstclear(ctx->env_vars, delete_env_var);
+	ctx->env_vars = resolved_ev;
 	if (!(*ctx->env_vars))
 		exit(1);
 	exit(exec_built_in(ctx, command));
