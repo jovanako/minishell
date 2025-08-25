@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:00:02 by culbrich          #+#    #+#             */
-/*   Updated: 2025/07/03 21:43:09 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 20:21:49 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*ft_cmdpath(t_list *lst, char *cmd)
 			return (NULL);
 		if (access(cmd_path, F_OK) == 0)
 			return (ft_cmdpath_free(path_array, full_cmd, cmd_path));
+		free(cmd_path);
 		i++;
 	}
 	return (ft_cmdpath_free(path_array, full_cmd, NULL));
