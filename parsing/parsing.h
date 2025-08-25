@@ -6,7 +6,7 @@
 /*   By: jkovacev <jkovacev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 10:03:01 by jkovacev          #+#    #+#             */
-/*   Updated: 2025/07/28 22:23:02 by jkovacev         ###   ########.fr       */
+/*   Updated: 2025/08/25 14:12:14 by jkovacev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ bool		parse_argv(t_parse_ctx *ctx, t_command *command);
 t_parse_ctx	*parse(t_token_context *t_ctx);
 t_parse_ctx	*new_parsing_ctx(t_token_context *t_ctx);
 void		delete_command(void *content);
+void		deep_delete_command(void *content);
 void		*free_parsing_ctx(t_parse_ctx *ctx);
 #endif
